@@ -31,10 +31,12 @@ public:
 
 		static_assert(std::is_base_of_v<Component, T>, "Type must inherit from component");
 		auto component = std::make_unique<T>(std::forward<Args>(args)...);
-		component->setowner(this);
+		component->SetParent(this);
+		component->Start();
 
 		T& ref = *component;
 		_components.emplace_back(std::move(component));
+		
 		return ref;
 
 
@@ -44,13 +46,15 @@ public:
 	T* GetComponent() const {
 
 		for (auto& c : _components) {
-			if (auto casted = dynamic_cast<T*>(comp.get()))
+			if (auto casted = dynamic_cast<T*>(c.get()))
 				return casted;
 		}
 		return nullptr;
 	}
 
-
+	Renderer* getRenderer() {
+		return _renderer.get();
+	}
 
 	GameObject(const sf::Vector2f& position);
 

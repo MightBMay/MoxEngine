@@ -22,11 +22,13 @@ public:
 
     void SetScale(const sf::Vector2f& scale) { _transformable.setScale(scale); }
 
-    void Move(float x, float y) {
-        Move(_transformable.getPosition() + sf::Vector2f(x, y));
-    }
-    void Move(sf::Vector2f& amount) {
+    void Move(const sf::Vector2f& amount) {
         sf::Vector2f newPosition = _transformable.getPosition() + amount;
+        SetPosition(newPosition);
+    }
+
+    void Move(const sf::Vector2f& direction, const float speed) {
+        sf::Vector2f newPosition = _transformable.getPosition() + (direction*speed);
         SetPosition(newPosition);
     }
 
