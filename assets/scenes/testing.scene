@@ -1,0 +1,64 @@
+{
+    "objects": [
+        {
+            "components": [],
+            "name": "NewObject",
+            "position": [
+                0.0,
+                0.0
+            ],
+            "renderer": {
+                "radius": 32.0,
+                "type": "circle",
+                "vertexCount": 32
+            },
+            "rotation": 0.0,
+            "scale": [
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "components": [
+                {
+                    "speed": 500.0,
+                    "type": "PlayerMovement"
+                }
+            ],
+            "name": "NewObject",
+            "position": [
+                -223.7014617919922,
+                -45.8942985534668
+            ],
+            "renderer": {
+                "height": 32.0,
+                "type": "rectangle",
+                "width": 32.0
+            },
+            "rotation": 0.0,
+            "scale": [
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "components": [],
+            "name": "NewObject",
+            "position": [
+                0.0,
+                0.0
+            ],
+            "renderer": {
+                "radius": 32.0,
+                "type": "circle",
+                "vertexCount": 32
+            },
+            "rotation": 0.0,
+            "scale": [
+                1.0,
+                1.0
+            ]
+        }
+    ],
+    "scene name": "testing.scene"
+}

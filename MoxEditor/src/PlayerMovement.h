@@ -56,9 +56,17 @@ public:
 	}
 
 	virtual void getInspectorParams() override {
-		if (ImGui::InputFloat("Move Speed", &_moveSpeed)) {
+		std::string label = "PlayerMovement##" + std::to_string(reinterpret_cast<uintptr_t>(this));
+		if (ImGui::InputFloat(label.c_str(), &_moveSpeed)) {
 		
 		}
+	}
+
+	virtual nlohmann::json SaveToJSON() const override {
+		nlohmann::json data;
+		data["type"] = GetName();
+		data["speed"] = _moveSpeed;
+		return data;
 	}
 
 

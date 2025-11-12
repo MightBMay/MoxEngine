@@ -120,7 +120,6 @@ void GUI_Inspector::Draw() {
 
     auto components = selected->getComponents();
     if (!components.empty()) {
-        ImGui::SeparatorText("Components");
         for (size_t i = 0; i < components.size(); ++i) {
             auto& comp = components[i];
 

@@ -1,17 +1,49 @@
 {
-  "scene name": "testScene",
+  "scene name":  "test scene",
   "objects": [
     {
       "name": "obj0",
-      "position": [ 500, 0 ],
-      "rotation": 0,
-      "scale": [ 1, 1 ],
+      "position": [
+        500.0,
+        0.0
+      ],
       "renderer": {
+        "radius": 64.0,
         "type": "circle",
-        "radius": 64,
         "vertexCount": 6
-      }
+      },
+      "rotation": 0.0,
+      "scale": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "components": [
+        {
+          "onclicktext": "test text\n",
+          "type": "Button"
+        },
+        {
+          "speed": 123.0,
+          "type": "PlayerMovement"
+        }
+      ],
+      "name": "testing object",
+      "position": [
+        123.0,
+        456.0
+      ],
+      "renderer": {
+        "height": 456.0,
+        "type": "rectangle",
+        "width": 123.0
+      },
+      "rotation": 63.999996185302734,
+      "scale": [
+        123.0,
+        456.0
+      ]
     }
-    
   ]
 }

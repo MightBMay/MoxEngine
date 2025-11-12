@@ -53,6 +53,15 @@ public:
 	virtual sf::FloatRect GetGlobalBounds() const override {
 		return _transform->GetSFTransform().transformRect(_rectShape->getGlobalBounds());
 	}
+	
+	virtual nlohmann::json SaveToJSON() const override {
+		nlohmann::json data;
+		sf::Vector2f size = _rectShape->getSize();
+		data["type"] = "rectangle";
+		data["width"] = size.x;
+		data["height"] = size.y;
+		return data;
+	}
 
 
 private:

@@ -38,4 +38,7 @@ public:
 	}
 
 
+	virtual nlohmann::json SaveToJSON() const = 0;
+
+
 };

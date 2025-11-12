@@ -22,4 +22,6 @@ public:
 	virtual void getImGuiParams(nlohmann::json& data) = 0;
 	virtual void getInspectorParams() = 0;
 
+	virtual nlohmann::json SaveToJSON() const = 0;
+
 };

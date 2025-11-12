@@ -27,7 +27,8 @@ using json = nlohmann::json;
 sf::RenderWindow window;
 sf::View playerView;
 
-
+std::unique_ptr<Scene> scene;
+Scene* curScene;
 
 void DrawGUI(Scene& scene) {
     GUI_CreateGameObject::instance().Draw(scene);
@@ -52,23 +53,26 @@ int main()
     
     ImGui::SFML::Init(window);
     sf::Clock deltaClock;
-    
-    std::ifstream file("../assets/prefabs/testScene.json");
+    bool sceneLoaded = false;
+    std::ifstream file("../assets/scenes/testing.scene");
     if (!file.is_open()) {
         std::cerr << "failed to open scene \n";
-        return 1;
     }
 
     json data;
     try {
         file >> data;
+        sceneLoaded = true;
     }
     catch (const json::parse_error& e) {
         std::cerr << "JSON parse error: " << e.what() << "\n";
-        return 1;
     }
+ 
+    if (sceneLoaded) scene = LoadScene(data);
+    else scene = std::make_unique<Scene>();
+    curScene = scene.get();
 
-    std::unique_ptr<Scene> scene = LoadScene(data);
+
 
 #pragma endregion
 
@@ -90,7 +94,11 @@ int main()
 
         }
 
-        DrawGUI(*scene);
+        DrawGUI(*curScene);
+
+        if (Input::GetKeyDown(sf::Keyboard::Scan::Down)) {
+            curScene->SaveToFile("testing.scene");
+        }
 
         scene->Update(deltaTime);
         scene->Draw();

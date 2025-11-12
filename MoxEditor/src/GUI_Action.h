@@ -11,6 +11,27 @@ public:
 };
 
 
+
+struct GUIA_RemoveGameObject :public GUI_Action {
+private:
+    Scene* _scene = nullptr;
+    GameObject* _toRemove;
+    std::unique_ptr<GameObject> _removedObject;
+
+
+public:
+
+    GUIA_RemoveGameObject(Scene* scene, GameObject* toRemove):
+    _scene(scene), _toRemove(toRemove){}
+
+    virtual void Execute()override{
+        _removedObject = _scene->removeObject(_toRemove);
+    }
+    virtual void Undo() override {
+        _scene->addObject(std::move(_removedObject));
+    }
+};
+
 struct  GUIA_CreateGameObject : public GUI_Action
 {
 private:
@@ -62,7 +83,7 @@ private:
     GameObject* _obj;
     const std::string _componentType;
     const nlohmann::json& _componentData;
-    Component* _componentPtrRaw = nullptr;
+    Component* _toAdd = nullptr;
 
 public:
     GUIA_AddComponent(GameObject* obj, const std::string& componentType, const nlohmann::json& componentData) :
@@ -71,14 +92,14 @@ public:
     virtual void Execute() override {
         auto newComp = ComponentFactory::instance().Create(_componentType, _componentData);
         newComp->SetParent(_obj);
-        _componentPtrRaw = newComp.get();
+        _toAdd = newComp.get();
         _obj->addComponent(std::move(newComp));
         
     }
 
     virtual void Undo() override {
-        if (_obj && _componentPtrRaw) {
-            _obj->removeComponent(_componentPtrRaw);
+        if (_obj && _toAdd) {
+            _obj->removeComponent(_toAdd);
         }
     }
 
@@ -87,16 +108,16 @@ public:
 struct GUIA_RemoveComponent : public GUI_Action {
 private:
     GameObject* _obj;
-    Component* _componentPtr; 
+    Component* _toRemove; 
     std::unique_ptr<Component> _removedComponent;
     size_t* _guiComponentIndex;
 
 public:
     GUIA_RemoveComponent(GameObject* obj, Component* component, size_t* guiComponentIndex)
-        : _obj(obj), _componentPtr(component), _guiComponentIndex(guiComponentIndex) {}
+        : _obj(obj), _toRemove(component), _guiComponentIndex(guiComponentIndex) {}
 
     virtual void Execute() override {
-        _removedComponent = _obj->removeComponent(_componentPtr);
+        _removedComponent = _obj->removeComponent(_toRemove);
         *_guiComponentIndex -=1;
     }
 

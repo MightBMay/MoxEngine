@@ -3,6 +3,7 @@
 #include "GUI_Action.h"
 #include "GUI_Inspector.h"
 #include "SceneHeirarchy.h"
+#include "Global.h"
 
 
 
@@ -46,6 +47,15 @@ public:
             ImGuiWindowFlags_NoMove
         );
 
+
+        // --- Save Button ---
+
+        if (ImGui::Button("Save Scene")) {
+            curScene->SaveToFile("testing.scene");
+        }
+
+        ImGui::SameLine();
+
         // --- Undo Button ---
         bool canUndo = !performedActions.empty();
         if (!canUndo) ImGui::BeginDisabled();
@@ -75,13 +85,6 @@ public:
         if (ImGui::Button(showInspector ? "Inspector [ON]" : "Inspector [OFF]")) {
             showInspector = !showInspector;
             GUI_Inspector::instance().SetVisible(showInspector);
-        }
-
-        ImGui::SameLine();
-
-        // --- Open Create GameObject (one-shot) ---
-        if (ImGui::Button("Create GameObject")) {
-            GUI_CreateGameObject::instance().Open();
         }
 
         ImGui::End();

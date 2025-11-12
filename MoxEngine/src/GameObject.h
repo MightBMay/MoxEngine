@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-
+#include "json.hpp"
 
 class Component;
 class Renderer;
@@ -101,6 +101,9 @@ public:
 	virtual void Update(float deltaTime);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+	nlohmann::json SaveToJSON() const;
+
 };
 
 

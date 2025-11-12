@@ -36,3 +36,22 @@ void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (_renderer != nullptr) _renderer->draw(target, states);
 
 }
+
+nlohmann::json GameObject::SaveToJSON() const {
+	sf::Vector2f pos = _transform->GetPosition();
+	sf::Vector2f scale = _transform->GetScale();
+	nlohmann::json data = {
+		{ "name", _name },
+		{ "position", { pos.x, pos.y } },
+		{ "scale", { scale.x, scale.y } },
+		{ "rotation", _transform->GetRotationDeg() },
+		{ "renderer", _renderer ? _renderer->SaveToJSON() : nlohmann::json{} },
+		{ "components", nlohmann::json::array() }
+	};
+
+	for (auto& comp : _components) {
+		data["components"].push_back(comp->SaveToJSON());
+	}
+
+	return data;
+}

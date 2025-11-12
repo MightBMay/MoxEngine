@@ -64,10 +64,18 @@ public:
 		std::copy_n(_onclicktext.begin(), std::min(_onclicktext.size(), buffer.size() - 1), buffer.begin());
 
 		// InputText modifies buffer in-place
-		if (ImGui::InputText("On Click Text", buffer.data(), buffer.size())) {
+		std::string label = "On Click Text##" + std::to_string(reinterpret_cast<uintptr_t>(this));
+		if (ImGui::InputText(label.c_str(), buffer.data(), buffer.size())) {
 			// Write back changes into member variable
 			_onclicktext = std::string(buffer.data());
 		}
+	}
+
+	virtual nlohmann::json SaveToJSON() const override {
+		nlohmann::json data;
+		data["type"] = GetName();
+		data["onclicktext"] = _onclicktext;
+		return data;
 	}
 
 private:

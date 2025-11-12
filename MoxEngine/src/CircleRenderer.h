@@ -70,6 +70,14 @@ public:
 		_circleShape->setRadius(newRadius);
 	}
 
+	virtual nlohmann::json SaveToJSON() const override {
+		nlohmann::json data;
+		data["type"] = "circle";
+		data["radius"] = _circleShape->getRadius();
+		data["vertexCount"] = _circleShape->getPointCount();
+		return data;
+	}
+
 
 private:
 	inline static bool registered = [] {
