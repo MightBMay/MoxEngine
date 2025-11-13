@@ -7,11 +7,11 @@
                 0.0,
                 0.0
             ],
-            "renderLayer": -121,
+            "renderLayer": -127,
             "renderer": {
                 "radius": 32.0,
                 "type": "circle",
-                "vertexCount": 32
+                "vertexCount": 7
             },
             "rotation": 0.0,
             "scale": [
@@ -33,8 +33,8 @@
             ],
             "name": "Player",
             "position": [
-                235.19000244140625,
-                -4.432976722717285
+                128.7358856201172,
+                -144.636962890625
             ],
             "renderLayer": 0,
             "renderer": {

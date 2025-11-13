@@ -1,7 +1,35 @@
-﻿  GUI_Inspector.cpp
+﻿  MoxEditor.cpp
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(53,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\MoxEditor.cpp(57,22): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from 'TargetType' to 'float', possible loss of data
+          with
+          [
+              TargetType=int
+          ]
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(24,15): message : see reference to function template instantiation 'std::unique_ptr<CircleRenderer,std::default_delete<CircleRenderer>> std::make_unique<CircleRenderer,float&,int&,0>(float &,int &)' being compiled
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from 'TargetType' to 'size_t', possible loss of data
+          with
+          [
+              TargetType=float
+          ]
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(28,23): message : see reference to function template instantiation 'std::unique_ptr<sf::CircleShape,std::default_delete<sf::CircleShape>> std::make_unique<sf::CircleShape,float&,float&,0>(float &,float &)' being compiled
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(21,15): message : see reference to function template instantiation 'std::unique_ptr<PlayerMovement,std::default_delete<PlayerMovement>> std::make_unique<PlayerMovement,bool&,ReturnType,0>(bool &,ReturnType &&)' being compiled
+          with
+          [
+              ReturnType=int
+          ]
+  CreateGameObject.cpp
+  GUI_Action.cpp
+  GUI_Inspector.cpp
+  SceneHeirarchy.cpp
   Generating code
-  8 of 6227 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  2 of 6227 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    48 functions had inline decision re-evaluated but remain unchanged
+    47 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MoxEditor.vcxproj -> C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release\MoxEditor.exe

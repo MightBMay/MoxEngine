@@ -41,15 +41,19 @@ public:
 		std::sort(_drawOrder.begin(), _drawOrder.end(),
 			[](GameObject* a, GameObject* b) { return a->GetLayer() < b->GetLayer(); });
 
+
+		bool usingUIView = true; // used to determine when to switch sf::views.
+		window.setView(defaultView); // start with default view to draw UI in screen space.
+
 		for (auto* obj : _drawOrder) {
-			if (obj->GetLayer() >= -127 && obj->GetLayer() <= 128) {
-				// Normal in-world objects: use playerView
-				window.setView(playerView);
+			bool isUI = obj->GetLayer() < -127 || obj->GetLayer() > 128; // UI is any object with layer <-127 or >128. 
+
+			// switch view if different from the current one
+			if (isUI != usingUIView) { 
+				window.setView(isUI ? defaultView : playerView);
+				usingUIView = isUI;
 			}
-			else {
-			 // UI objects: use default view
-				window.setView(defaultView);
-			}
+
 			window.draw(*obj);
 		}
 
