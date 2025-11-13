@@ -32,7 +32,8 @@ public:
 	Event<>& GetOnHoverExit();
 
 	static std::unique_ptr<Component> Create(const nlohmann::json& data) {
-		return std::make_unique<Button>(data.value("onclicktext", "onclickDefault\n"));
+		bool enabled = data.value("enabled", true);
+		return std::make_unique<Button>(enabled, data.value("onclicktext", "onclickDefault\n"));
 	}
 
 	virtual void Start();
@@ -40,7 +41,7 @@ public:
 	virtual void Update(float deltaTime);
 
 
-	Button(std::string onclicktext) :_onclicktext(onclicktext) {}
+	Button(bool enabled, std::string onclicktext) :_onclicktext(onclicktext) { _enabled = enabled; }
 	virtual std::string GetName() const override { static std::string name = "Button"; return  name; };
 
 

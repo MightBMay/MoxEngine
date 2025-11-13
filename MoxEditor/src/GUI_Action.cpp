@@ -20,9 +20,12 @@ void GUIA_CreateGameObject::Execute() {
     obj->_transform->SetTransform({ _pos[0], _pos[1] }, { _scale[0], _scale[1] }, _rot);
 
     // --- Create renderer ---
-    auto renderer = RendererFactory::instance().Create(_rendererType, _rendererData);
-    renderer->SetTransform(obj->_transform.get());
-    obj->setRenderer(std::move(renderer));
+    if (_rendererType != "None") {
+        auto renderer = RendererFactory::instance().Create(_rendererType, _rendererData);
+        renderer->SetTransform(obj->_transform.get());
+        obj->setRenderer(std::move(renderer));
+
+    }
 
     // --- Create and attach components ---
     GameObject* objPtr = obj.get();

@@ -153,6 +153,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ComponentImport.h" />
     <ClInclude Include="src\CreateGameObject.h" />
     <ClInclude Include="src\GUI_Action.h" />
     <ClInclude Include="src\GUI_Inspector.h" />

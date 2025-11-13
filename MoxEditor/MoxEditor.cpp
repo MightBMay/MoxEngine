@@ -14,18 +14,19 @@
 #include "SceneLoader.h"
 #include "CircleRenderer.h"
 #include "RectRenderer.h"
-#include "PlayerMovement.h"
-#include "Button.h"
 
 #include "CreateGameObject.h"
 #include "SceneHeirarchy.h"
 #include "GUI_Manager.h"
 #include "GUI_Inspector.h"
 
+#include "ComponentImport.h"
+
 using json = nlohmann::json;
 
 sf::RenderWindow window;
 sf::View playerView;
+sf::View defaultView;
 
 std::unique_ptr<Scene> scene;
 Scene* curScene;
@@ -48,7 +49,9 @@ int main()
 
     playerView = sf::View({ 0,0 }, { 1920,1080 });
     window = sf::RenderWindow(sf::VideoMode({ 1920, 1080 }), "MoxEditor");
-    window.setView(playerView);
+    defaultView = window.getDefaultView();
+   
+   
     window.setFramerateLimit(60);
     
     ImGui::SFML::Init(window);
@@ -99,9 +102,12 @@ int main()
         if (Input::GetKeyDown(sf::Keyboard::Scan::Down)) {
             curScene->SaveToFile("testing.scene");
         }
-
+        
         scene->Update(deltaTime);
+        window.setView(playerView);
         scene->Draw();
+
+        
         
 
         ImGui::SFML::Render(window);

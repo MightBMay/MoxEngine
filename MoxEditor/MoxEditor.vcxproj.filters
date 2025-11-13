@@ -107,5 +107,8 @@
     <ClInclude Include="src\GUI_Inspector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ComponentImport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

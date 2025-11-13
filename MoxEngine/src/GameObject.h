@@ -65,6 +65,7 @@ public:
 		return nullptr; // not found
 	}
 
+
 	template<typename T>
 	T* GetComponent() const {
 

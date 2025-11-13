@@ -23,7 +23,9 @@ void GUI_CreateGameObject::Draw(Scene& scene) {
     ImGui::SeparatorText("Renderer");
 
     // Renderer dropdown
-    const std::vector<std::string> rendererTypes = RendererFactory::instance().GetTypes();
+    std::vector<std::string> rendererTypes = RendererFactory::instance().GetTypes();
+    rendererTypes.insert(rendererTypes.begin(), "None"); // Add "None" as first option
+
     std::vector<const char*> rendererOptions;
     rendererOptions.reserve(rendererTypes.size());
     for (auto& s : rendererTypes) rendererOptions.push_back(s.c_str());
@@ -40,12 +42,18 @@ void GUI_CreateGameObject::Draw(Scene& scene) {
     // Renderer-specific input fields
     if (!rendererOptions.empty()) {
         std::string selectedRenderer = rendererOptions[selectedRendererIndex];
-        try {
-            auto tempRenderer = RendererFactory::instance().Create(selectedRenderer, rendererData);
-            tempRenderer->getImGuiParams(rendererData);
+
+        if (selectedRenderer != "None") { // Only show renderer params if one is chosen
+            try {
+                auto tempRenderer = RendererFactory::instance().Create(selectedRenderer, rendererData);
+                tempRenderer->getImGuiParams(rendererData);
+            }
+            catch (const std::exception& e) {
+                ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error creating renderer: %s", e.what());
+            }
         }
-        catch (const std::exception& e) {
-            ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error creating renderer: %s", e.what());
+        else {
+            ImGui::TextDisabled("No renderer selected.");
         }
     }
 #pragma endregion

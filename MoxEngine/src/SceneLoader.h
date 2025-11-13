@@ -20,13 +20,16 @@ std::unique_ptr<GameObject> LoadGameObjectFromJSON(const nlohmann::json& data) {
 	obj->_transform->SetTransform(position, scale, rotation);
 
 
-	if (data.contains("renderer")) {
+	if (data.contains("renderer") && !data["renderer"].is_null()) {
 	// read, create and assign renderer type.
 		auto& rendererData = data["renderer"];
 		std::string rendererType = rendererData["type"];
-		auto renderer = RendererFactory::instance().Create(rendererType, rendererData);
-		renderer->SetTransform(obj->_transform.get()); // manaully set transform.
-		obj->setRenderer(std::move(renderer));
+		if (rendererType != "None") {
+
+			auto renderer = RendererFactory::instance().Create(rendererType, rendererData);
+			renderer->SetTransform(obj->_transform.get()); // manaully set transform.
+			obj->setRenderer(std::move(renderer));
+		}
 	}
 
 	if (!data.contains("components")) return obj;

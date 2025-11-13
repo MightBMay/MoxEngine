@@ -16,7 +16,9 @@ protected:
 public:
 
 	static std::unique_ptr<Component> Create(const nlohmann::json& data) {
-		return std::make_unique<PlayerMovement>(data.value("speed", 50));
+		bool enabled = data.value("enabled", true);
+
+		return std::make_unique<PlayerMovement>(enabled, data.value("speed", 50));
 	}
 	virtual void SetParent(GameObject* parent) { 
 		_parent = parent; 
@@ -46,7 +48,9 @@ public:
 	
 	}
 
-	PlayerMovement(float speed = 50):_moveSpeed(speed){}
+	PlayerMovement(bool enabled, float speed = 50):_moveSpeed(speed){
+		_enabled = enabled;
+	}
 	virtual std::string GetName() const override { static std::string name = "PlayerMovement"; return  name; };
 
 	virtual void getImGuiParams(nlohmann::json& data) override{
@@ -65,6 +69,7 @@ public:
 	virtual nlohmann::json SaveToJSON() const override {
 		nlohmann::json data;
 		data["type"] = GetName();
+		data["enabled"] = _enabled;
 		data["speed"] = _moveSpeed;
 		return data;
 	}

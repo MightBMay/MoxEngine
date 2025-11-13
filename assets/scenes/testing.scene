@@ -2,7 +2,7 @@
     "objects": [
         {
             "components": [],
-            "name": "NewObject",
+            "name": "other",
             "position": [
                 0.0,
                 0.0
@@ -21,32 +21,19 @@
         {
             "components": [
                 {
-                    "speed": 500.0,
+                    "enabled": true,
+                    "speed": 300.0,
                     "type": "PlayerMovement"
+                },
+                {
+                    "enabled": true,
+                    "type": "CameraController"
                 }
             ],
-            "name": "NewObject",
+            "name": "Player",
             "position": [
-                -223.7014617919922,
-                -45.8942985534668
-            ],
-            "renderer": {
-                "height": 32.0,
-                "type": "rectangle",
-                "width": 32.0
-            },
-            "rotation": 0.0,
-            "scale": [
-                1.0,
-                1.0
-            ]
-        },
-        {
-            "components": [],
-            "name": "NewObject",
-            "position": [
-                0.0,
-                0.0
+                -37.85404968261719,
+                -89.33380889892578
             ],
             "renderer": {
                 "radius": 32.0,

@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-
+#include "Global.h"
 class Renderer {
 
 protected:
