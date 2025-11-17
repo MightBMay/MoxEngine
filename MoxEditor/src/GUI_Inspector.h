@@ -11,7 +11,7 @@ class GUI_Inspector {
 
 private:
     GUI_SceneHierarchy* _hierarchy = &GUI_SceneHierarchy::instance(); // reference to hierarchy to get selected object
-    bool _isVisible = false;
+    bool _isVisible = true;
     bool _addingComponent = false;
     int selectedComponentIndex = 0;
     int previousComponentIndex = -1;

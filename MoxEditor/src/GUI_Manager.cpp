@@ -6,7 +6,8 @@
 void GUI_Manager::Draw() {
 #pragma region Imgui Window Setup
 
-
+    static bool showHierarchy = true;
+    static bool showInspector = true;
 
     const ImVec2 windowPos = ImVec2(0, 0);
     const ImVec2 windowPivot = ImVec2(0.0f, 0.0f);
@@ -37,12 +38,12 @@ void GUI_Manager::Draw() {
     if (ImGui::BeginPopup("ScenePopup")) {
         // Save Scene
         if (ImGui::MenuItem("Save Scene")) {
-            scene->SaveToFile();
+            scene->Save();
         }
 
         // Create Scene
         if (ImGui::MenuItem("Create Scene")) {
-            scene->SaveToFile();
+            scene->Save();
             GUI_SceneHierarchy::instance().ClearSelectedObject();
             scene = std::make_unique<Scene>();
             window.setTitle("MoxEngine | Untitled Scene");
@@ -75,6 +76,32 @@ void GUI_Manager::Draw() {
     }
 #pragma endregion
     
+#pragma region Window Dropdown
+    ImGui::SameLine();
+    if (ImGui::Button("Window")) {
+        ImGui::OpenPopup("WindowPopup");
+    }
+
+    if (ImGui::BeginPopup("WindowPopup")) {
+
+        if (ImGui::MenuItem("Heirarchy",nullptr, &showHierarchy)) {
+            //showHierarchy = !showHierarchy;
+            GUI_SceneHierarchy::instance().SetVisible(showHierarchy);
+        }
+
+        if (ImGui::MenuItem("Inspector", nullptr, &showInspector)) {
+            //showInspector = !showInspector;
+            GUI_Inspector::instance().SetVisible(showInspector);
+        }
+
+        ImGui::EndPopup();
+    }
+
+
+#pragma endregion
+
+
+
 #pragma region Undo 
 
     ImGui::SameLine();
@@ -92,28 +119,5 @@ void GUI_Manager::Draw() {
     if (!canUndo) ImGui::EndDisabled();
 #pragma endregion
 
-#pragma region Scene Heirarchy
-
-
-
-    ImGui::SameLine();
-
-    // --- Toggle Hierarchy ---
-    static bool showHierarchy = false;
-    if (ImGui::Button(showHierarchy ? "Hierarchy [ON]" : "Hierarchy [OFF]")) {
-        showHierarchy = !showHierarchy;
-        GUI_SceneHierarchy::instance().SetVisible(showHierarchy);
-    }
-#pragma endregion
-
-#pragma region Inspector
-    ImGui::SameLine();
-
-    static bool showInspector = false;
-    if (ImGui::Button(showInspector ? "Inspector [ON]" : "Inspector [OFF]")) {
-        showInspector = !showInspector;
-        GUI_Inspector::instance().SetVisible(showInspector);
-    }
-#pragma endregion
     ImGui::End();
 }

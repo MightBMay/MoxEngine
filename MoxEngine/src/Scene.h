@@ -68,9 +68,6 @@ public:
 #endif
 
 private:
-#if IN_EDITOR
-	void SaveToFile();
-#endif
 	std::vector<std::unique_ptr<GameObject>> _objects;
 	std::vector<GameObject*> _drawOrder;
 	std::string _sceneName = "";

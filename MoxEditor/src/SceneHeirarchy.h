@@ -9,7 +9,7 @@
 class GUI_SceneHierarchy {
 private:
     GameObject* selectedObject = nullptr; // currently selected object
-    bool _isVisible = false;
+    bool _isVisible = true;
 public:
 
     static GUI_SceneHierarchy& instance() {

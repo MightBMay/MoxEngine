@@ -120,7 +120,7 @@ int main()
 
 #if IN_EDITOR
     ImGui::SFML::Shutdown();
-    scene->SaveToFile();
+    scene->Save();
 #endif
     return 0;
 

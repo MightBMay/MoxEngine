@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 #if IN_EDITOR
-void Scene::SaveToFile() {
+void Scene::Save() {
 
 	nlohmann::json sceneJson = {
 		{"sceneName", _sceneName},
