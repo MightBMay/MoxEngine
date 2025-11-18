@@ -34,6 +34,9 @@
     <Filter Include="ImGui">
       <UniqueIdentifier>{e71a8138-1583-4edb-9c49-bd0c2f8742cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Other\Internal">
+      <UniqueIdentifier>{84e3610a-ac00-4e76-96ae-9ea04f5bb450}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Button.h">
@@ -51,18 +54,6 @@
     <ClInclude Include="src\Event.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
-    <ClInclude Include="src\Global.h">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Input.h">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="src\json.hpp">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="src\pch.h">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
     <ClInclude Include="src\Renderer.h">
       <Filter>Header Files\Renderers</Filter>
     </ClInclude>
@@ -78,9 +69,6 @@
     <ClInclude Include="src\SpriteRenderer.h">
       <Filter>Header Files\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Transform.h">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObject.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
@@ -93,14 +81,38 @@
     <ClInclude Include="src\Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\config.h">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
     <ClInclude Include="..\MoxEditor\src\ImGuiFileDialog.h">
       <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\MoxEditor\src\ImGuiFileDialogConfig.h">
       <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config.h">
+      <Filter>Header Files\Other\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Global.h">
+      <Filter>Header Files\Other\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\json.hpp">
+      <Filter>Header Files\Other\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pch.h">
+      <Filter>Header Files\Other\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Transform.h">
+      <Filter>Header Files\Other\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TileMap.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextureManager.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TileMapRenderer.h">
+      <Filter>Header Files\Renderers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +136,12 @@
     </ClCompile>
     <ClCompile Include="..\MoxEditor\src\ImGuiFileDialog.cpp">
       <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureManager.cpp">
+      <Filter>Source Files\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TileMapRenderer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

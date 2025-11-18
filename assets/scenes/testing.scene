@@ -1,69 +1,132 @@
 {
-  "objects": [
-    {
-      "components": [],
-      "guid": 1393026650918749898,
-      "name": "Player",
-      "position": [
-        355.46783447265625,
-        -188.93360900878906
-      ],
-      "renderLayer": 0,
-      "renderer": {
-        "colour": [
-          255,
-          255,
-          255,
-          255
-        ],
-        "isRepeated": false,
-        "spritePath": "../assets/sprites/missingTexture.png",
-        "textureRect": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "type": "sprite"
-      },
-      "rotation": 0.0,
-      "scale": [
-        1.0,
-        1.0
-      ]
-    },
-    {
-      "components": [],
-      "guid": 6002269212072552577,
-      "name": "NewObject",
-      "position": [
-        0.0,
-        0.0
-      ],
-      "renderLayer": 0,
-      "renderer": {
-        "colour": [
-          255,
-          255,
-          255,
-          255
-        ],
-        "isRepeated": false,
-        "spritePath": "C:\\Users\\turtw\\OneDrive\\Desktop\\MEngine\\assets\\sprites\\player.png",
-        "textureRect": [
-          0,
-          0,
-          601,
-          505
-        ],
-        "type": "sprite"
-      },
-      "rotation": 0.0,
-      "scale": [
-        1.0,
-        1.0
-      ]
-    }
-  ],
-  "sceneName": "testing - Copy.scene"
+    "objects": [
+        {
+            "components": [],
+            "guid": 7542087752461468636,
+            "name": "NewObject",
+            "position": [
+                0.0,
+                0.0
+            ],
+            "renderLayer": 0,
+            "renderer": {
+                "height": 10,
+                "spritePath": "../assets/tilemaps/tilemap.png",
+                "tileData": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2,
+                    3,
+                    0,
+                    1,
+                    2
+                ],
+                "tileSize": [
+                    16,
+                    16
+                ],
+                "type": "tilemap",
+                "width": 10
+            },
+            "rotation": 0.0,
+            "scale": [
+                1.0,
+                1.0
+            ]
+        }
+    ],
+    "sceneName": "testing.scene"
 }

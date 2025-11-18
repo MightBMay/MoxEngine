@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-
+#include "TextureManager.h"
 
 
 #if  IN_EDITOR
@@ -15,7 +15,7 @@ class SpriteRenderer : public Renderer {
 
 private:
 	std::unique_ptr<sf::Sprite> _sprite;
-	std::unique_ptr<sf::Texture>_texture;
+	sf::Texture* _texture;
 	std::string _spritePath = "../assets/sprites/missingTexture.png";
 
 public:
@@ -34,14 +34,8 @@ public:
 	SpriteRenderer(std::string& spritePath,sf::IntRect textureRect, sf::Color colour, bool repeatTexture) {
 		_spritePath = spritePath;
 
-		sf::Texture texture;
-		_texture = std::make_unique<sf::Texture>();
-
-		if (_texture->loadFromFile(spritePath) == false)
-		{
-			_texture->loadFromFile(missing);
-		}
-
+	
+		_texture = TextureManager::get(spritePath);
 		
 		_texture->setRepeated(repeatTexture);
 		_sprite = std::make_unique<sf::Sprite>(*_texture);

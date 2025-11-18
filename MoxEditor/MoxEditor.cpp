@@ -18,6 +18,7 @@
 #include "CircleRenderer.h"
 #include "RectRenderer.h"
 #include "SpriteRenderer.h"
+#include "TileMapRenderer.h"
 
 
 #if IN_EDITOR

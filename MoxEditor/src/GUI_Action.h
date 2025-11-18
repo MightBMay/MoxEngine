@@ -63,6 +63,7 @@ public:
     )
         : _scene(scene),
         _name(name),
+        _renderLayer(renderLayer),
         _rot(rot),
         _rendererType(rendererType),
         _rendererData(rendererData),

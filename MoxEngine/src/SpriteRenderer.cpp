@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "ImGuiFileDialog.h"
+#include "TextureManager.h"
 
 
 #if IN_EDITOR
@@ -113,19 +114,13 @@ void SpriteRenderer::getInspectorParams()  {
 		{
 			std::string newPath = ImGuiFileDialog::Instance()->GetFilePathName();
 
-			sf::Texture temp;
-			if (temp.loadFromFile(newPath))
-			{
-				_texture->swap(temp);
-				_sprite->setTexture(*_texture, true);
+			 sf::Texture* tex = TextureManager::get(newPath);
 
+			if (tex) {
+				_texture = tex;
+				_sprite->setTexture(*_texture, true);
 				_spritePath = newPath;
 				std::cout << "Path changed to: " + newPath;
-			}
-			else
-			{
-				// Optional: error handling
-				// ImGui::OpenPopup("Failed to load texture");
 			}
 		}
 
@@ -133,8 +128,7 @@ void SpriteRenderer::getInspectorParams()  {
 	}
 
 	ImGui::SameLine();
-	std::string curPath = _spritePath;
-	ImGui::Text(("Path: " + curPath).c_str());
+	ImGui::Text(("Path: " + _spritePath).c_str());
 #pragma endregion
 
 #pragma region Texture Tiling

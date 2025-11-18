@@ -47,6 +47,9 @@
     <ClInclude Include="src\SceneLoader.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
     <ClInclude Include="src\RectRenderer.h" />
+    <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\TileMap.h" />
+    <ClInclude Include="src\TileMapRenderer.h" />
     <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Utility.h" />
   </ItemGroup>
@@ -66,6 +69,8 @@
     </ClCompile>
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />
+    <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\TileMapRenderer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
