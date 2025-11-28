@@ -58,6 +58,7 @@
     <ClInclude Include="src\GUID.h" />
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\json.hpp" />
+    <ClInclude Include="src\LDTK_Manager.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\RendererFactory.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\TileMap.h" />
     <ClInclude Include="src\TileMapRenderer.h" />
+    <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Transform.h" />
     <ClInclude Include="src\Utility.h" />
   </ItemGroup>

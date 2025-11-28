@@ -57,7 +57,7 @@ C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\SpriteRenderer.h(61,44): w
           [
               T=float
           ]
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\MoxEditor.cpp(75,22): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\MoxEditor.cpp(86,22): warning C4834: discarding return value of function with 'nodiscard' attribute
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
@@ -69,9 +69,8 @@ C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(25,15): m
               ReturnType=int
           ]
   Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Transform.h(47): warning C4172: returning address of local variable or temporary
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Transform.h(43): warning C4172: returning address of local variable or temporary
-  All 14140 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  914 of 14508 functions ( 6.3%) were compiled, the rest were copied from previous compilation.
+    319 functions were new in current compilation
+    878 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MoxEditor.vcxproj -> C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release\MoxEditor.exe

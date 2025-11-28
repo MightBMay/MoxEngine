@@ -22,7 +22,9 @@
 
 #include "LDtkLoader/Project.hpp"
 #include "LDtkLoader/Level.hpp"
+#include "LDTK_Manager.h"
 
+#include "Timer.h"
 
 
 #if IN_EDITOR
@@ -31,6 +33,7 @@
 #include "SceneHeirarchy.h"
 #include "GUI_Manager.h"
 #include "GUI_Inspector.h"
+
 
 #endif
 
@@ -43,6 +46,9 @@ sf::View playerView;
 sf::View defaultView;
 
 std::unique_ptr<Scene> scene;
+
+std::unique_ptr<Timer> secondTimer;
+
 
 #if IN_EDITOR
 void DrawGUI(Scene& scene) {
@@ -61,6 +67,8 @@ int main()
 {
 #pragma region pre loop
 
+    LDTK_Manager& ldtkManager = LDTK_Manager::instance();
+
     Input::Initialize();
 
     playerView = sf::View({ 0,0 }, { 1920,1080 });
@@ -69,7 +77,10 @@ int main()
    
    
     window.setFramerateLimit(60);
-    
+    secondTimer = std::make_unique<Timer>(1, true);
+
+    secondTimer->OnTimerReset() += []() {std::cout << "second\n"; };
+    secondTimer->OnTimerReset() += [&ldtkManager]() { ldtkManager.Update();};
 
 #if IN_EDITOR
     ImGui::SFML::Init(window);
@@ -80,33 +91,14 @@ int main()
 
     scene = SceneLoader::LoadSceneFromPath("../assets/scenes/testing.scene");
     if (!scene) scene = std::make_unique<Scene>();
-
-
-    auto project = ldtk::Project();
-    project.loadFromFile("../assets/ldtk/LDKT_Level.ldtk");
-
-    const auto& level = project.getWorld().getLevel("Level_0");
-
-    auto map = std::make_unique<TileMap>();
-    map->load(level);
-
-    auto renderer = std::make_unique<TileMapRenderer>();
-    renderer->setTilemap(std::move(map), "renderLayer");
-
-
-
-    auto tilemapTest = std::make_unique<GameObject>();
-    tilemapTest->setRenderer(std::move(renderer));
-    scene->addObject(
-        std::move(tilemapTest)
-    );
-    
+   
 
 #pragma endregion
 
     while (window.isOpen()) {
         sf::Time dt = deltaClock.restart();
         float deltaTime = dt.asSeconds();
+        secondTimer->Update(deltaTime);
         Input::Update();
         window.clear(sf::Color(40,40,40));
 #if IN_EDITOR

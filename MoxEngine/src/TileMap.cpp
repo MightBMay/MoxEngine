@@ -5,6 +5,7 @@
 #include <vector>
 #include "LDtkLoader/Tileset.hpp"
 #include <string>
+
 auto TileMap::Textures::instance() -> Textures& {
     static Textures instance;
     return instance;
@@ -20,7 +21,15 @@ auto TileMap::Textures::get(const std::string& name) -> sf::Texture& {
 TileMap::Layer::Layer(const ldtk::Layer& layer, sf::RenderTexture& render_texture)
     : m_render_texture(render_texture)
 {
-    m_tileset_texture = &Textures::get(layer.getTileset().path);
+
+    auto temp = layer.getTileset().path;
+
+    const std::string prefix = "../";
+    if (temp.rfind(prefix, 0) == 0) {
+        temp.insert(prefix.size(), "assets/");
+    }
+    
+    m_tileset_texture = &Textures::get(temp);
 
     const auto& tiles = layer.allTiles();
     m_vertex_array.setPrimitiveType(sf::PrimitiveType::Triangles);
@@ -63,12 +72,14 @@ void TileMap::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) con
     m_render_texture.clear(sf::Color::Transparent);
     m_render_texture.draw(m_vertex_array, states);
     m_render_texture.display();
-    target.draw(sf::Sprite(m_render_texture.getTexture()), states);
+    auto sprite = sf::Sprite(m_render_texture.getTexture());
+    target.draw(sprite, states);
 }
 
 std::string TileMap::path;
 
 void TileMap::load(const ldtk::Level& level) {
+    std::cout << level.size<< " size \n";
     m_render_texture = sf::RenderTexture( sf::Vector2u(level.size.x, level.size.y) );
     m_layers.clear();
     for (const auto& layer : level.allLayers()) {
