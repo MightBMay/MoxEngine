@@ -69,11 +69,7 @@ TileMap::Layer::Layer(const ldtk::Layer& layer, sf::RenderTexture& render_textur
 
 void TileMap::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.texture = m_tileset_texture;
-    m_render_texture.clear(sf::Color::Transparent);
-    m_render_texture.draw(m_vertex_array, states);
-    m_render_texture.display();
-    auto sprite = sf::Sprite(m_render_texture.getTexture());
-    target.draw(sprite, states);
+    target.draw(m_vertex_array, states);
 }
 
 std::string TileMap::path;
