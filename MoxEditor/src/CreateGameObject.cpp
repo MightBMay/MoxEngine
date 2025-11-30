@@ -61,6 +61,17 @@ void GUI_CreateGameObject::Draw(Scene& scene) {
     }
 #pragma endregion
 
+#pragma region Collider
+
+
+   // ImGui::SeparatorText("Collider");
+   // std::vector<std::string>
+
+
+#pragma endregion
+
+
+
 #pragma region  Component
     ImGui::SeparatorText("Components");
 

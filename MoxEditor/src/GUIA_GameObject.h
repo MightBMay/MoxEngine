@@ -131,10 +131,18 @@ public:
     GUIA_AddCollider(GameObject* obj, const ColliderType type, const nlohmann::json& data) 
         :_obj(obj), _type(type), _colliderData(data) {}
 
+    GUIA_AddCollider(GameObject* obj, const std::string& type, const nlohmann::json& data)
+        :_obj(obj), _type(Collider::FromString(type)), _colliderData(data){}
+
 
     virtual void Execute() override {
-        auto collider = ColliderFactory::instance().Create(_type, _colliderData);
+        auto collider = ColliderFactory::instance().Create(
+            Collider::ToString(_type),
+            _colliderData
+        );
+
         _obj->setCollider(std::move(collider));
+        std::cout << "ran";
     }
 
 

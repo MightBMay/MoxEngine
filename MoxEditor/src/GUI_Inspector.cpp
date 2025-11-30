@@ -99,7 +99,6 @@ void GUI_Inspector::Draw() {
 
         if (!rendererOptions.empty()) {
             ImGui::Combo("Renderer Type", &selectedRendererIndex, rendererOptions.data(), (int)rendererOptions.size());
-            std::string selectedRenderer = rendererOptions[selectedRendererIndex];
         }
 
 
@@ -123,12 +122,62 @@ void GUI_Inspector::Draw() {
 
 #pragma endregion
 
+#pragma region Collider
 
-    // --- Component Info ---
-    ImGui::SeparatorText("Components");
+    ImGui::SeparatorText("Collider");
+    Collider* collider = selected->getCollider();
+    if (!_addingCollider) {
+
+        if (!collider) {
+            ImGui::SameLine();
+            if (ImGui::Button("Add Collider")) {
+                _addingCollider = true;
+                colliderData = nlohmann::json::object();
+            }
+        }
+        else {
+            ImGui::SameLine();
+            if (ImGui::Button("Remove Collider")) {
+                auto action = std::make_unique<GUIA_RemoveCollider>(selected);
+                GUI_Manager::instance().ExecuteAction(std::move(action));
+            }
+        }
+    }
+
+    else {
+        ImGui::Indent(20);
+
+        const std::vector<std::string> colliderTypes = ColliderFactory::instance().GetTypes();
+        std::vector<const char*> colliderOptions;
+        colliderOptions.reserve(colliderTypes.size());
+        for (auto& s : colliderTypes) colliderOptions.push_back(s.c_str());
+        std::cout << "Size: " << colliderOptions.size() << "\n";
+
+        if (!colliderOptions.empty()) {
+            ImGui::Combo("Collider Type", &selectedColliderIndex, colliderOptions.data(), (int)colliderOptions.size());
+        }
+
+        if (ImGui::Button("Confirm")) {
+            auto action = std::make_unique<GUIA_AddCollider>(selected, colliderOptions[selectedRendererIndex], colliderData);
+            GUI_Manager::instance().ExecuteAction(std::move(action));
+            _addingCollider = false;
+        }
+        ImGui::Unindent(20);
+    }
+
+    if (collider)
+        collider->getInspectorParams();
+    else 
+        ImGui::SeparatorText("No Collider Assigned");
+
+
+#pragma endregion
+
+  
 
 #pragma region  add component
-
+      // --- Component Info ---
+    ImGui::SeparatorText("Components");
     if (!_addingComponent) {
         ImGui::SameLine();
         if (ImGui::Button("Add Component")) {

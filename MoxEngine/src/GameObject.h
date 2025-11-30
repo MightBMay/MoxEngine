@@ -2,10 +2,10 @@
 #include "pch.h"
 #include "json.hpp"
 #include "Renderer.h"
-
+#include "Collider.h"
 class Component;
 class Renderer;
-class Collider;
+
 //class Transform;
 
 class GameObject : public sf::Drawable{
@@ -120,7 +120,7 @@ public:
 		return _renderer.get();
 	}
 
-	
+	Collider* getCollider() { return _collider.get(); }
 
 	GameObject();
 	GameObject(uint64_t GUID);

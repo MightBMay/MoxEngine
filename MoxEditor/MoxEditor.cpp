@@ -20,6 +20,10 @@
 #include "SpriteRenderer.h"
 #include "TileMapRenderer.h"
 
+
+#include "CircleCollider.h"
+#include "BoxCollider.h"
+
 #include "LDtkLoader/Project.hpp"
 #include "LDtkLoader/Level.hpp"
 #include "LDTK_Manager.h"

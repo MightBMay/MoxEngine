@@ -21,8 +21,14 @@ private:
     int previousRendererIndex = -1;
 
 
+    bool _addingCollider = false;
+    int selectedColliderIndex = 0;
+    int previousColliderIndex = -1;
+
+
     static inline nlohmann::json componentData = nlohmann::json::object();
-    static inline nlohmann::json rendererData = nlohmann::json::object();
+    static inline nlohmann::json rendererData  = nlohmann::json::object();
+    static inline nlohmann::json colliderData  = nlohmann::json::object();
 public:
 
     static GUI_Inspector& instance() {

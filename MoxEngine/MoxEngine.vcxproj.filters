@@ -43,6 +43,9 @@
     <Filter Include="Header Files\Components\Colliders">
       <UniqueIdentifier>{cce18cbc-1272-4970-a968-652ba5a51d68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Collider">
+      <UniqueIdentifier>{d274c326-0407-4a69-8e4c-019cb88d0139}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Button.h">
@@ -223,6 +226,12 @@
     </ClCompile>
     <ClCompile Include="src\Renderer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CircleCollider.cpp">
+      <Filter>Source Files\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Collider.cpp">
+      <Filter>Source Files\Collider</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
