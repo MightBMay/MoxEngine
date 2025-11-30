@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "RendererFactory.h"
+#include "ColliderFactory.h"
 
 struct QueuedComponent
 {

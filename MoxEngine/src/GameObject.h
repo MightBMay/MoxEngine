@@ -5,6 +5,7 @@
 
 class Component;
 class Renderer;
+class Collider;
 //class Transform;
 
 class GameObject : public sf::Drawable{
@@ -14,7 +15,8 @@ public:
 	
 private:
 	std::vector<std::unique_ptr<Component>> _components;
-	std::unique_ptr<Renderer> _renderer;
+	std::unique_ptr<Renderer> _renderer = nullptr;
+	std::unique_ptr<Collider> _collider = nullptr;
 	int _renderLayer = 0;
 	std::string _name = "unnamed";
 	uint64_t _guid;
@@ -39,6 +41,25 @@ public:
 	std::unique_ptr<Renderer> RemoveRenderer() {
 		return std::move(_renderer);
 	}
+
+
+
+
+	template<typename T, typename... Args>
+	T& setCollider(Args&&... args) {
+		static_assert(std::is_base_of_v<Collider, T>, "Type must inherit from collider");
+		_collider = std::make_unique<T>(std::forward<Args>(args)...);
+		return *static_cast<T*>(_collider.get());
+	}
+
+	void setCollider(std::unique_ptr<Collider> collider) {
+		_collider = std::move(collider);
+	}
+
+	std::unique_ptr<Collider> removeCollider() {
+		return std::move(_collider);
+	}
+
 
 	template<typename T, typename... Args>
 	T& addComponent(Args&&... args) {

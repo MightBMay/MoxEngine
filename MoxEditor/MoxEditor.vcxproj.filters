@@ -25,14 +25,23 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files\GUI Actions">
-      <UniqueIdentifier>{0a27f171-a9ff-47cb-8c75-7106f6f1d6da}</UniqueIdentifier>
-    </Filter>
     <Filter Include="LDTKLoader">
       <UniqueIdentifier>{46d7c4f5-6e0c-4480-86b4-ccce075c079c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Renderers">
       <UniqueIdentifier>{48d7677d-0527-4ab4-a709-15d5cd721aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{20f32e3b-e9de-41ed-8a38-83acb1b695f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\GUI_Actions">
+      <UniqueIdentifier>{85d54459-743c-40e5-a099-715d5c72ec05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{91cb793e-3163-4347-a83c-774222e7b012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI\GUI Actions">
+      <UniqueIdentifier>{0a27f171-a9ff-47cb-8c75-7106f6f1d6da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,21 +65,6 @@
     </ClCompile>
     <ClCompile Include="src\imgui-SFML.cpp">
       <Filter>Header Files\Imgui stuff</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CreateGameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GUI_Action.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GUI_Inspector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SceneHeirarchy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GUI_Manager.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ImGuiFileDialog.cpp">
       <Filter>Header Files\Imgui stuff</Filter>
@@ -120,6 +114,21 @@
     <ClCompile Include="src\TileMapRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CreateGameObject.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI_Manager.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneHeirarchy.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI_Inspector.cpp">
+      <Filter>Source Files\GUI\GUI_Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI_Action.cpp">
+      <Filter>Source Files\GUI\GUI_Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\imconfig.h">
@@ -146,23 +155,11 @@
     <ClInclude Include="src\imstb_truetype.h">
       <Filter>Header Files\Imgui stuff</Filter>
     </ClInclude>
-    <ClInclude Include="src\GUI_CreateGameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\PlayerMovement.h">
       <Filter>Game Code\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\SceneHeirarchy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GUI_Manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\GUI_Action.h">
-      <Filter>Header Files\GUI Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GUI_Inspector.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GUI\GUI Actions</Filter>
     </ClInclude>
     <ClInclude Include="src\ComponentImport.h">
       <Filter>Header Files</Filter>
@@ -231,13 +228,25 @@
       <Filter>LDTKLoader</Filter>
     </ClInclude>
     <ClInclude Include="src\GUIA_Tilemap.h">
-      <Filter>Header Files\GUI Actions</Filter>
+      <Filter>Header Files\GUI\GUI Actions</Filter>
     </ClInclude>
     <ClInclude Include="src\GUIA_GameObject.h">
-      <Filter>Header Files\GUI Actions</Filter>
+      <Filter>Header Files\GUI\GUI Actions</Filter>
     </ClInclude>
     <ClInclude Include="src\TileMapRenderer.h">
       <Filter>Header Files\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI_Manager.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI_CreateGameObject.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI_Inspector.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneHeirarchy.h">
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

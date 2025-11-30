@@ -40,6 +40,9 @@
     <Filter Include="LDTKLoader">
       <UniqueIdentifier>{6b1ca184-444f-4a85-a448-bc1a8856cbcd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Colliders">
+      <UniqueIdentifier>{cce18cbc-1272-4970-a968-652ba5a51d68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Button.h">
@@ -53,9 +56,6 @@
     </ClInclude>
     <ClInclude Include="src\ComponentFactory.h">
       <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Event.h">
-      <Filter>Header Files\Other</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer.h">
       <Filter>Header Files\Renderers</Filter>
@@ -101,9 +101,6 @@
     </ClInclude>
     <ClInclude Include="src\pch.h">
       <Filter>Header Files\Other\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Input.h">
-      <Filter>Header Files\Other</Filter>
     </ClInclude>
     <ClInclude Include="src\Transform.h">
       <Filter>Header Files\Other\Internal</Filter>
@@ -171,11 +168,29 @@
     <ClInclude Include="src\Timer.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
-    <ClInclude Include="src\FixedStack.h">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
     <ClInclude Include="src\LDTK_Manager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Event.h">
+      <Filter>Header Files\Other\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FixedStack.h">
+      <Filter>Header Files\Other\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input.h">
+      <Filter>Header Files\Other\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Collider.h">
+      <Filter>Header Files\Components\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BoxCollider.h">
+      <Filter>Header Files\Components\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CircleCollider.h">
+      <Filter>Header Files\Components\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ColliderFactory.h">
+      <Filter>Header Files\Components\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -47,8 +47,12 @@
     <ClInclude Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\include\LDtkLoader\World.hpp" />
     <ClInclude Include="..\MoxEditor\src\ImGuiFileDialog.h" />
     <ClInclude Include="..\MoxEditor\src\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="src\BoxCollider.h" />
     <ClInclude Include="src\Button.h" />
+    <ClInclude Include="src\CircleCollider.h" />
     <ClInclude Include="src\CircleRenderer.h" />
+    <ClInclude Include="src\Collider.h" />
+    <ClInclude Include="src\ColliderFactory.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\ComponentFactory.h" />
     <ClInclude Include="src\config.h" />

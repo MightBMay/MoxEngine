@@ -1,5 +1,6 @@
 #pragma once
 #include "GUI_Action.h"
+#include "Collider.h"
 
 struct GUIA_RemoveGameObject :public GUI_Action {
 private:
@@ -120,12 +121,56 @@ public:
 
 
 
+struct GUIA_AddCollider : public GUI_Action {
+private:
+    GameObject* _obj = nullptr;
+    const ColliderType _type;
+    const nlohmann::json& _colliderData;
+
+public:
+    GUIA_AddCollider(GameObject* obj, const ColliderType type, const nlohmann::json& data) 
+        :_obj(obj), _type(type), _colliderData(data) {}
+
+
+    virtual void Execute() override {
+        auto collider = ColliderFactory::instance().Create(_type, _colliderData);
+        _obj->setCollider(std::move(collider));
+    }
+
+
+    virtual void Undo() override {
+        _obj->removeCollider();
+    }
+};
+
+
+struct GUIA_RemoveCollider :public GUI_Action {
+private:
+    GameObject* _obj = nullptr;
+    std::unique_ptr<Collider> _removed = nullptr;
+
+
+public:
+
+    GUIA_RemoveCollider(GameObject* obj) : _obj(obj) {}
+
+    virtual void Execute()override{
+        _removed = _obj->removeCollider();
+    }
+
+    virtual void Undo() override {
+        _obj->setCollider(std::move(_removed));
+    }
+
+};
+
+
+
 struct GUIA_AddRenderer :public GUI_Action {
 private:
     GameObject* _obj = nullptr;
     const std::string _rendererType;
     const nlohmann::json& _rendererData;
-    Renderer* _toAdd = nullptr;
 public:
     GUIA_AddRenderer(GameObject* obj, const std::string& rendererType, const nlohmann::json& rendererData) :
         _obj(obj), _rendererType(rendererType), _rendererData(rendererData) {}
