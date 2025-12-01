@@ -10,10 +10,17 @@ sf::Vector2f Collider::GetWorldPosition() const {
 }
 
 bool Collider::BoxVsBox(const BoxCollider& a, const BoxCollider& b) {
-	return !(a._position.x + a._size.x < b._position.x ||
-		b._position.x + b._size.x < a._position.x ||
-		a._position.y + a._size.y < b._position.y ||
-		b._position.y + b._size.y < a._position.y);
+
+	auto centerA = a.GetWorldPosition();
+	auto sizeA = a.GetSize();
+
+	auto centerB = b.GetWorldPosition();
+	auto sizeB = b.GetSize();
+
+	return !(centerA.x + sizeA.x < centerB.x ||
+			 centerB.x + sizeB.x < centerA.x ||
+			 centerA.y + sizeA.y < centerB.y ||
+			 centerB.y + sizeB.y < centerA.y);
 }
 
 
@@ -21,9 +28,11 @@ bool Collider::BoxVsCircle(const BoxCollider& box, const CircleCollider& circle)
 {
 
 	auto circleCenter = circle.GetWorldPosition();
+	auto boxCenter = box.GetWorldPosition();
+	auto boxSize = box.GetSize();
 
-	float cx = std::clamp(circleCenter.x, box._position.x, box._position.x + box._size.x);
-	float cy = std::clamp(circleCenter.y, box._position.y, box._position.y + box._size.y);
+	float cx = std::clamp(circleCenter.x, boxCenter.x, boxCenter.x + boxSize.x);
+	float cy = std::clamp(circleCenter.y, boxCenter.y, boxCenter.y + boxSize.y);
 
 	float dx = circleCenter.x - cx;
 	float dy = circleCenter.y - cy;
@@ -48,10 +57,14 @@ bool Collider::CircleVsCircle(const CircleCollider& a, const CircleCollider& b)
 
 bool Collider::PointVsBox(const sf::Vector2f& p, const BoxCollider& box)
 {
-	return (p.x >= box._position.x &&
-		p.x <= box._position.x + box._size.x &&
-		p.y >= box._position.y &&
-		p.y <= box._position.y + box._size.y);
+
+	auto boxCenter = box.GetWorldPosition();
+	auto boxSize= box.GetSize();
+
+	return (p.x >= boxCenter.x &&
+		p.x <= boxCenter.x + boxSize.x &&
+		p.y >= boxCenter.y &&
+		p.y <= boxCenter.y + boxSize.y);
 }
 
 bool Collider::PointVsCircle(const sf::Vector2f& p, const CircleCollider& c)

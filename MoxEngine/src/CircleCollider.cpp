@@ -1,5 +1,18 @@
 #include "CircleCollider.h"
 #include "Transform.h"
+
+
+
+
+
+
+
+float CircleCollider::GetRadius() const {
+	auto scale = _transform->GetScale();
+	return _radius * std::max(scale.x, scale.y);
+}
+
+
 #if IN_EDITOR
 #include "ImGuiFileDialog.h"
 
@@ -20,10 +33,7 @@ void CircleCollider::getInspectorParams() {
 
 }
 
-float CircleCollider::GetRadius() const {
-	auto scale = _transform->GetScale();
-	return _radius * std::max(scale.x, scale.y);
-}
+
 
 nlohmann::json CircleCollider::SaveToJSON() const {
 	nlohmann::json data;

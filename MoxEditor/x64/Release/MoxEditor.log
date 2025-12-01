@@ -1,7 +1,6 @@
 ﻿  Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Transform.h(47): warning C4172: returning address of local variable or temporary
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Transform.h(43): warning C4172: returning address of local variable or temporary
-  All 14850 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  123 of 14878 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
+    28 functions were new in current compilation
+    217 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MoxEditor.vcxproj -> C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release\MoxEditor.exe
