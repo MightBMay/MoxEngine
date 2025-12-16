@@ -2,7 +2,7 @@
 #include "SFML/System/Vector2.hpp"
 #include "json.hpp"
 #include <iostream>
-
+#include "Event.h"
 
 class GameObject;
 class Transform;
@@ -12,7 +12,7 @@ enum ColliderType {
 	Circle,
 	Tilemap
 };
-
+struct Manifold;
 struct CircleCollider;
 struct BoxCollider;
 
@@ -21,20 +21,27 @@ struct BoxCollider;
 
 struct Collider {
 
+private:
+
+	Event<Manifold> _onCollisionEnter{};
+	Event<Manifold> _onCollisionStay{};
+	Event<Manifold> _onCollisionExit{};
+
+
+public:
+
+	std::vector<Collider*> _prevCollisions;
+	std::vector<Collider*> _curCollisions;
 
 	sf::Vector2f _colliderOrigin = { 0,0 };
 	sf::Vector2f _halfSize = { 0,0 };
 	GameObject* _parent = nullptr;
 	Transform* _transform = nullptr;
 
-	virtual void getImGuiParams(nlohmann::json& data) = 0;
-	virtual void getInspectorParams() = 0;
-
-	virtual nlohmann::json SaveToJSON() const = 0;
-
 
 	sf::Vector2f GetWorldPosition() const;
 	
+
 
 
 
@@ -80,9 +87,37 @@ struct Collider {
 	}
 	*/
 
+	static Manifold BoxVsBoxManifold(const BoxCollider& a, const BoxCollider& b);
+
+	static Manifold CircleVsCircleManifold(const CircleCollider& a, const CircleCollider& b);
+
+	static Manifold BoxVsCircleManifold(const BoxCollider& box, const CircleCollider& circle);
+
+	static Manifold GetManifold(const Collider* a, const Collider* b);
+
+
 	static bool CheckPoint(const sf::Vector2f& p, const Collider* col);
 
 	static bool CheckCollision(const Collider* a, const Collider* b);
 
-	virtual void OnCollision(const Collider* other) const;
+	Event<Manifold>& GetOnCollisionEnter() { return _onCollisionEnter; }
+	virtual void OnCollisionEnter(const Collider* other);
+
+	Event<Manifold>& GetOnCollisionExit() { return _onCollisionExit; }
+	virtual void OnCollisionExit(const Collider* other);
+	
+	Event<Manifold>& GetOnCollisionStay() { return _onCollisionStay; }
+	virtual void OnCollisionStay(const Collider* other);
+
+#if IN_EDITOR
+
+	virtual void getImGuiParams(nlohmann::json& data) = 0;
+	virtual void getInspectorParams() = 0;
+
+	virtual void SaveToJSON(nlohmann::json& data) {
+
+		data["colliderType"] = type;
+
+	}
+#endif
 };

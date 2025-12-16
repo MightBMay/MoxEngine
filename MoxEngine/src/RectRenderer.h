@@ -13,16 +13,7 @@ public:
 		
 		float width = data.value("width", 0); 
 		float height = data.value("height", 0);
-
-
-		sf::Color colour = sf::Color::White;
-		if (data.contains("colour"))
-			sf::Color colour = sf::Color(
-				data["colour"][0],
-				data["colour"][1],
-				data["colour"][2],
-				data["colour"][3]
-			);
+		sf::Color colour = data.value("colour", sf::Color::White);
 
 		return std::make_unique<RectRenderer>(sf::Vector2f( width, height ), colour);
 	}
@@ -83,12 +74,12 @@ public:
 		float width = size.x, height = size.y;
 		if (ImGui::InputFloat("Width", &width)) {
 			if (width < 0.0f) width = 0.0f;
-			_rectShape->setSize({ width,height });
+			SetSize({ width,height });
 		}
 
 		if (ImGui::InputFloat("Height", &height)) {
 			if (height < 0) height = 0;
-			_rectShape->setSize({ width,height });
+			SetSize({ width,height });
 		}
 	}
 

@@ -39,6 +39,14 @@ private:
 			}
 		}
 
+		if (data.contains("colliderData")) {
+			auto colliderData = data["colliderData"];
+			std::string colType = colliderData["type"];
+			std::unique_ptr<Collider> collider = ColliderFactory::instance().Create(colType, colliderData);
+			obj->setCollider(std::move(collider));
+		}
+
+
 		if (!data.contains("components")) return obj;
 		for (auto& componentData : data["components"]) {
 			std::string type = componentData["type"];
@@ -46,6 +54,7 @@ private:
 			component->SetParent(obj.get());
 			obj->addComponent(std::move(component));
 		}
+
 
 		return obj;
 

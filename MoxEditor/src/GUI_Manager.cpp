@@ -1,3 +1,4 @@
+#if IN_EDITOR
 #include "GUI_Manager.h"
 #include "imgui-SFML.h"
 #include "ImGuiFileDialog.h"
@@ -121,3 +122,5 @@ void GUI_Manager::Draw() {
 
     ImGui::End();
 }
+
+#endif

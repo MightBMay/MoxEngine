@@ -25,23 +25,26 @@ void CircleCollider::getImGuiParams(nlohmann::json& data) {
 void CircleCollider::getInspectorParams() {
 
 	ImGui::InputFloat("Radius##ColliderRadius", &_radius);
-	float raw[2] = { _colliderOrigin.x,_colliderOrigin.y }; // DEBUG / TODO : rn this doesnt actually modify the origin.
-	ImGui::InputFloat2("Center", raw);
-	if (ImGui::IsItemDeactivatedAfterEdit()) {
 
+
+
+	float raw[2] = { _colliderOrigin.x,_colliderOrigin.y }; // DEBUG / TODO : rn this doesnt actually modify the origin.
+	if(ImGui::InputFloat2("Center", raw) ){
+		_colliderOrigin.x = raw[0];
+		_colliderOrigin.y = raw[1];
 	}
+
 
 }
 
 
 
-nlohmann::json CircleCollider::SaveToJSON() const {
-	nlohmann::json data;
-	data["type"] = "circle";
-	data["radius"] = _radius;
-	data["centerPos"] = { _colliderOrigin.x, _colliderOrigin.y };
-	return data;
-
+void CircleCollider::SaveToJSON(nlohmann::json& data)  {
+	nlohmann::json colliderData;
+	colliderData["type"] = "circle";
+	colliderData["radius"] = _radius;
+	colliderData["origin"] = { _colliderOrigin.x, _colliderOrigin.y };
+	data["colliderData"] = colliderData;
 }
 
 

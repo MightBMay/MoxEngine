@@ -105,7 +105,7 @@ int main()
         secondTimer->Update(deltaTime);
         Input::Update();
         
-        CollisionSystem::Update(deltaTime);
+        
 
         window.clear(sf::Color(40,40,40));
 #if IN_EDITOR
@@ -127,6 +127,8 @@ int main()
 #endif
         
         scene->Update(deltaTime);
+
+        CollisionSystem::Update(deltaTime);
         window.setView(playerView);
         scene->Draw();
 

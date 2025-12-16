@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "GameObject.h"
-
+#include "CollisionSystem.h"
 
 
 GameObject::GameObject() {
@@ -20,6 +20,14 @@ GameObject::GameObject(int renderLayer, const sf::Vector2f& position)
 	_guid = GenerateGUID();
 
 }
+
+
+
+
+
+
+
+
 
 
 void GameObject::Update(float deltaTime) {
@@ -44,6 +52,60 @@ void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	_renderer->draw(target, states);
 
 }
+
+
+
+
+void GameObject::MoveAndCollide(sf::Vector2f delta) {
+
+	   // X axis
+	float moveX = delta.x;
+	if (moveX != 0.f)
+		MoveAndCollideAxis(moveX, true);
+
+	// Y axis
+	float moveY = delta.y;
+	if (moveY != 0.f)
+		MoveAndCollideAxis(moveY, false);
+}
+
+void GameObject::MoveAndCollideAxis(float amount, bool isXAxis)
+{
+	// Try full move
+	_transform->Move(isXAxis ? sf::Vector2f{ amount, 0.f }
+	: sf::Vector2f{ 0.f, amount });
+
+	Collider* self = getCollider();
+
+	for (Collider* other : CollisionSystem::GetColliders())
+	{
+		if (other == self )//|| other->isTrigger)
+			continue;
+
+		Manifold m = Collider::GetManifold(self, other);
+		if (!m.hit)
+			continue;
+
+		// Determine push direction
+		float sign = (amount > 0.f) ? -1.f : 1.f;
+
+		if (isXAxis)
+		{
+			_transform->Move({ sign * m.penetration, 0.f });
+		}
+		else
+		{
+			_transform->Move({ 0.f, sign * m.penetration });
+		}
+
+		// Stop movement on this axis
+		break;
+	}
+}
+
+
+
+
 #if IN_EDITOR
 
 nlohmann::json GameObject::SaveToJSON() const {
@@ -57,12 +119,17 @@ nlohmann::json GameObject::SaveToJSON() const {
 		{ "scale", { scale.x, scale.y } },
 		{ "rotation", _transform->GetRotationDeg() },
 		{ "renderer", _renderer ? _renderer->SaveToJSON() : nlohmann::json{} },
-		{ "components", nlohmann::json::array() }
+		{ "components", nlohmann::json::array() },
 	};
 
 	for (auto& comp : _components) {
 		data["components"].push_back(comp->SaveToJSON());
 	}
+	if (_collider) {
+		_collider->SaveToJSON(data);
+	}
+
+
 
 	return data;
 }

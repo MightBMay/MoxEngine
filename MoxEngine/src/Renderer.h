@@ -8,7 +8,6 @@ class Renderer {
 protected:
 	Transform* _transform = nullptr;
 	sf::Drawable* _drawable = nullptr;
-	
 
 public:
 	virtual ~Renderer() = default;

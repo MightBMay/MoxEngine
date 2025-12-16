@@ -88,7 +88,7 @@ public:
 		float radius = _circleShape->getRadius();
 		if (ImGui::InputFloat("Radius", &radius)) {
 			if (radius < 0.0f) radius = 0.0f;
-			_circleShape->setRadius(radius);
+			SetRadius(radius);
 		}
 		
 		int vertexCount = _circleShape->getPointCount();

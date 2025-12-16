@@ -1,33 +1,85 @@
-﻿  MoxEditor.cpp
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(53,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from 'TargetType' to 'float', possible loss of data
+﻿  DataTypes.cpp
+  Entity.cpp
+  EntityDef.cpp
+  Enum.cpp
+  FieldsContainer.cpp
+  Layer.cpp
+  LayerDef.cpp
+  Level.cpp
+  Project.cpp
+  TagsContainer.cpp
+  Tile.cpp
+  Tileset.cpp
+  Utils.cpp
+  World.cpp
+  MoxEditor.cpp
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(18,16): warning C4244: 'initializing': conversion from 'ReturnType' to 'float', possible loss of data
           with
           [
-              TargetType=int
+              ReturnType=int
           ]
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(24,15): message : see reference to function template instantiation 'std::unique_ptr<CircleRenderer,std::default_delete<CircleRenderer>> std::make_unique<CircleRenderer,float&,int&,0>(float &,int &)' being compiled
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from 'TargetType' to 'size_t', possible loss of data
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\RectRenderer.h(14,15): warning C4244: 'initializing': conversion from 'ReturnType' to 'float', possible loss of data
           with
           [
-              TargetType=float
+              ReturnType=int
           ]
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(28,23): message : see reference to function template instantiation 'std::unique_ptr<sf::CircleShape,std::default_delete<sf::CircleShape>> std::make_unique<sf::CircleShape,float&,float&,0>(float &,float &)' being compiled
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\RectRenderer.h(15,16): warning C4244: 'initializing': conversion from 'ReturnType' to 'float', possible loss of data
+          with
+          [
+              ReturnType=int
+          ]
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\SpriteRenderer.h(61,57): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\SpriteRenderer.h(61,44): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleCollider.h(14,28): warning C4244: '=': conversion from 'ReturnType' to 'float', possible loss of data
+          with
+          [
+              ReturnType=int
+          ]
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(23,15): message : see reference to function template instantiation 'std::unique_ptr<PlayerMovement,std::default_delete<PlayerMovement>> std::make_unique<PlayerMovement,uint64_t&,bool&,ReturnType,0>(uint64_t &,bool &,ReturnType &&)' being compiled
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(27,15): message : see reference to function template instantiation 'std::unique_ptr<PlayerMovement,std::default_delete<PlayerMovement>> std::make_unique<PlayerMovement,uint64_t&,bool&,ReturnType,0>(uint64_t &,bool &,ReturnType &&)' being compiled
           with
           [
               ReturnType=int
           ]
   CreateGameObject.cpp
+  GUI_Action.cpp
+  GUI_Inspector.cpp
+  GUI_Manager.cpp
+  imgui-SFML.cpp
+  Compiling...
+  imgui.cpp
+  ImGuiFileDialog.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
   SceneHeirarchy.cpp
+  TileMapRenderer.cpp
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\TileMapRenderer.cpp(31,34): warning C4101: 'e': unreferenced local variable
   Generating code
+  Compiler switch has changed, fall back to full compilation.
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Transform.h(47): warning C4172: returning address of local variable or temporary
 C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Transform.h(43): warning C4172: returning address of local variable or temporary
-  523 of 4955 functions (10.6%) were compiled, the rest were copied from previous compilation.
-    6 functions were new in current compilation
-    711 functions had inline decision re-evaluated but remain unchanged
+  All 13308 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   MoxEditor.vcxproj -> C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release (No Editor)\MoxEditor.exe

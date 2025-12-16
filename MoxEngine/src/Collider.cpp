@@ -2,6 +2,7 @@
 #include "BoxCollider.h"
 #include "CircleCollider.h"
 #include "GameObject.h"
+#include "CollisionSystem.h"
 
 sf::Vector2f Collider::GetWorldPosition() const {
 	sf::Vector2f scale = _transform->GetScale();
@@ -46,9 +47,6 @@ bool Collider::CircleVsCircle(const CircleCollider& a, const CircleCollider& b)
 	const sf::Vector2f centerA = a.GetWorldPosition();
 	const sf::Vector2f centerB = b.GetWorldPosition();
 
-	const float radA = a.GetRadius();
-	const float radB = a.GetRadius();
-
 	float dx = centerA.x - centerB.x;
 	float dy = centerA.y - centerB.y;
 	float rad = a._radius + b._radius;
@@ -85,6 +83,164 @@ bool Collider::PointVsCircle(const sf::Vector2f& p, const CircleCollider& c)
 	return map.isSolid(tileX, tileY);
 }
 */
+
+
+
+
+Manifold Collider::BoxVsBoxManifold(const BoxCollider& a, const BoxCollider& b)
+{
+	sf::Vector2f aMin = a.GetWorldPosition();
+	sf::Vector2f aMax = aMin + a.GetSize();
+
+	sf::Vector2f bMin = b.GetWorldPosition();
+	sf::Vector2f bMax = bMin + b.GetSize();
+
+	float overlapX = std::min(aMax.x, bMax.x) - std::max(aMin.x, bMin.x);
+	float overlapY = std::min(aMax.y, bMax.y) - std::max(aMin.y, bMin.y);
+
+	if (overlapX <= 0.f || overlapY <= 0.f)
+		return {};
+
+	Manifold m;
+	m.hit = true;
+
+	if (overlapX < overlapY)
+	{
+		m.penetration = overlapX;
+		m.normal = (aMin.x < bMin.x) ? sf::Vector2f{ -1.f, 0.f }
+		: sf::Vector2f{ 1.f, 0.f };
+	}
+	else
+	{
+		m.penetration = overlapY;
+		m.normal = (aMin.y < bMin.y) ? sf::Vector2f{ 0.f, -1.f }
+		: sf::Vector2f{ 0.f,  1.f };
+	}
+
+	return m;
+}
+
+
+Manifold Collider::CircleVsCircleManifold(const CircleCollider& a, const CircleCollider& b)
+{
+	sf::Vector2f diff = a.GetWorldPosition() - b.GetWorldPosition();
+	float dist2 = diff.x * diff.x + diff.y * diff.y;
+
+	float radius = a.GetRadius() + b.GetRadius();
+	float radius2 = radius * radius;
+
+	if (dist2 >= radius2)
+		return {};
+
+	float dist = std::sqrt(dist2);
+
+	Manifold m;
+	m.hit = true;
+	m.penetration = radius - dist;
+	m.normal = (dist != 0.f) ? diff / dist : sf::Vector2f{ 1.f, 0.f };
+
+	return m;
+}
+
+
+Manifold Collider::BoxVsCircleManifold(const BoxCollider& box, const CircleCollider& circle)
+{
+	sf::Vector2f boxMin = box.GetWorldPosition();
+	sf::Vector2f boxMax = boxMin + box.GetSize();
+	sf::Vector2f center = circle.GetWorldPosition();
+
+	sf::Vector2f closest{
+		std::clamp(center.x, boxMin.x, boxMax.x),
+		std::clamp(center.y, boxMin.y, boxMax.y)
+	};
+
+	sf::Vector2f diff = center - closest;
+	float dist2 = diff.x * diff.x + diff.y * diff.y;
+	float radius = circle.GetRadius();
+
+	if (dist2 > radius * radius)
+		return {};
+
+	Manifold m;
+	m.hit = true;
+
+	float dist = std::sqrt(dist2);
+	if (dist != 0.f)
+	{
+		m.normal = diff / dist;          // normalized direction from box to circle center
+		m.penetration = radius - dist;   // how far circle overlaps
+	}
+	else
+	{
+		// circle center exactly inside box (rare corner case)
+		// pick arbitrary axis aligned normal
+		float left = center.x - boxMin.x;
+		float right = boxMax.x - center.x;
+		float top = center.y - boxMin.y;
+		float bottom = boxMax.y - center.y;
+
+		if (std::min(left, right) < std::min(top, bottom))
+			m.normal = (left < right) ? sf::Vector2f{ -1.f, 0.f } : sf::Vector2f{ 1.f, 0.f };
+		else
+			m.normal = (top < bottom) ? sf::Vector2f{ 0.f, -1.f } : sf::Vector2f{ 0.f, 1.f };
+
+		m.penetration = radius;
+	}
+
+	// Optional: axis alignment fix for discrete solver
+	if (std::abs(m.normal.x) > std::abs(m.normal.y))
+		m.normal = sf::Vector2f{ (m.normal.x > 0 ? 1.f : -1.f), 0.f };
+	else
+		m.normal = sf::Vector2f{ 0.f, (m.normal.y > 0 ? 1.f : -1.f) };
+
+	return m;
+}
+
+Manifold Collider::GetManifold(const Collider* a, const Collider* b)
+{
+	switch (a->type)
+	{
+		case ColliderType::Box:
+			switch (b->type)
+			{
+				case ColliderType::Box:
+					return BoxVsBoxManifold(
+						*(const BoxCollider*)a,
+						*(const BoxCollider*)b
+					);
+
+				case ColliderType::Circle:
+					return BoxVsCircleManifold(
+						*(const BoxCollider*)a,
+						*(const CircleCollider*)b
+					);
+			}
+			break;
+
+		case ColliderType::Circle:
+			switch (b->type)
+			{
+				case ColliderType::Box:
+					{
+						Manifold m = BoxVsCircleManifold(
+							*(const BoxCollider*)b,
+							*(const CircleCollider*)a
+						);
+						m.normal = -m.normal; // important
+						return m;
+					}
+
+				case ColliderType::Circle:
+					return CircleVsCircleManifold(
+						*(const CircleCollider*)a,
+						*(const CircleCollider*)b
+					);
+			}
+			break;
+	}
+	return {};
+}
+
 
 
 bool Collider::CheckPoint(const sf::Vector2f& p, const Collider* col)
@@ -127,9 +283,17 @@ bool Collider::CheckCollision(const Collider* a, const Collider* b) {
 }
 
 
-void Collider::OnCollision(const Collider* other) const {
+void Collider::OnCollisionEnter(const Collider* other){
+	Manifold m = Collider::GetManifold(this, other);
+	_onCollisionEnter(m);
+}
 
-	std::cout << "this col: " << _parent->GetName() << ", other col: " << other->_parent->GetName() << "\n";
+void Collider::OnCollisionExit(const Collider* other) {
+	Manifold m = Collider::GetManifold(this, other);
+	_onCollisionExit(m);
+}
 
-
+void Collider::OnCollisionStay(const Collider* other) {
+	Manifold m = Collider::GetManifold(this, other);
+	_onCollisionStay(m);
 }

@@ -25,12 +25,14 @@ struct CircleCollider : Collider {
 	float GetRadius() const;
 
 
+
+
 #if IN_EDITOR
 
 	virtual void getImGuiParams(nlohmann::json& data) override;
 	virtual void getInspectorParams() override;
 
-	virtual nlohmann::json SaveToJSON() const override;
+	virtual void SaveToJSON(nlohmann::json& data) override;
 
 
 #endif

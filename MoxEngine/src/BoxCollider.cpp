@@ -1,11 +1,11 @@
 #include "BoxCollider.h"
 #include "Transform.h"
-//#include "pch.h"
+
 
 
 const sf::Vector2f BoxCollider::GetSize() const {
 	sf::Vector2f scale = _transform->GetScale();
-	return { _size.x * scale.x, _size.y * scale.y };
+	return { _size.x * (scale.x), _size.y * (scale.y) };
 }
 
 
@@ -18,27 +18,31 @@ void BoxCollider::getImGuiParams(nlohmann::json& data) {
 
 
 }
+
+
 void BoxCollider::getInspectorParams() {
 
 	float rawSize[2] = { _size.x, _size.y };
-	ImGui::InputFloat2("Size##ColliderRadius", rawSize);
+	if(ImGui::InputFloat2("Size##ColliderRadius", rawSize) ){
+		_size.x = rawSize[0];
+		_size.y = rawSize[1];
+	}
 
 
 	float raw[2] = { _colliderOrigin.x,_colliderOrigin.y }; // DEBUG / TODO : rn this doesnt actually modify the origin.
-	ImGui::InputFloat2("Center", raw);
-	if (ImGui::IsItemDeactivatedAfterEdit()) {
-
+	if(ImGui::InputFloat2("Center", raw)) {
+		_colliderOrigin.x = raw[0];
+		_colliderOrigin.y = raw[1];
 	}
 
 }
 
-nlohmann::json BoxCollider::SaveToJSON() const {
-	nlohmann::json data;
-	data["type"] = "circle";
-	data["size"] = { _size.x, _size.y };
-	data["centerPos"] = { _colliderOrigin.x, _colliderOrigin.y };
-	return data;
-
+void BoxCollider::SaveToJSON(nlohmann::json& data) {
+	nlohmann::json colliderData;
+	colliderData["type"] = "box";
+	colliderData["size"] = { _size.x, _size.y };
+	colliderData["origin"] = { _colliderOrigin.x, _colliderOrigin.y };
+	data["colliderData"] = colliderData;
 }
 
 

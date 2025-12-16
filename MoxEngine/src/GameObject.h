@@ -9,6 +9,8 @@ class Renderer;
 
 //class Transform;
 
+
+
 class GameObject : public sf::Drawable{
 public:
 	std::unique_ptr<Transform> _transform;
@@ -64,7 +66,7 @@ public:
 	void setCollider(std::unique_ptr<Collider> collider) {
 		if (_collider) // remove old collider if already had one.
 			CollisionSystem::RemoveCollider(_collider.get());
-		
+
 		_collider = std::move(collider);
 		_collider->_transform = _transform.get();
 		CollisionSystem::AddCollider(_collider.get());
@@ -159,6 +161,11 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+	void MoveAndCollide(sf::Vector2f delta);
+	void MoveAndCollideAxis(float amount, bool isXAxis = true);
+
+
+
 #if IN_EDITOR
 	nlohmann::json SaveToJSON() const;
 #endif
@@ -167,5 +174,3 @@ public:
 
 
 
-
-	

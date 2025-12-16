@@ -20,7 +20,7 @@ public:
     }
 
         // Invoke all listeners
-    void operator()(Args... args) {
+    void operator()(Args... args)const  {
         for (auto& listener : listeners) {
             listener(args...);
         }

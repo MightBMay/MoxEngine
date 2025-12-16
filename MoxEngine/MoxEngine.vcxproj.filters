@@ -239,5 +239,8 @@
     <ClCompile Include="src\BoxCollider.cpp">
       <Filter>Source Files\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="src\CollisionSystem.cpp">
+      <Filter>Source Files\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

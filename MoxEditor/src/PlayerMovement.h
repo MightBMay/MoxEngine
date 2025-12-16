@@ -13,15 +13,17 @@ protected:
 	float _moveSpeed = 50;
 	Transform* _transform;
 	sf::Vector2f direction = sf::Vector2f(0, 0);
-
+	Collider* _collider;
 	GameObject* test = nullptr;
+
+
+	sf::Vector2f _velocity{0,0};
 
 public:
 
 	static std::unique_ptr<Component> Create(const nlohmann::json& data) {
 		bool enabled = data.value("enabled", true);
 		uint64_t guid = data.value("guid", GenerateGUID());
-
 		return std::make_unique<PlayerMovement>(guid, enabled, data.value("speed", 50));
 	}
 	virtual void SetParent(GameObject* parent) { 
@@ -45,9 +47,18 @@ public:
 
 		direction = direction.normalized();
 
-		_transform->Move(direction * _moveSpeed * deltaTime);
+		_parent->MoveAndCollide(direction * _moveSpeed * deltaTime);
 
 	
+	}
+
+	virtual void Start() override {
+		Collider* collider = _parent->getCollider();
+		if (!collider) return;
+
+		collider->GetOnCollisionEnter() += [](const Manifold m) {std::cout << "On Collision Enter \n"; };
+		collider->GetOnCollisionStay() += [](const Manifold m) {std::cout << "On Collision Stay \n"; };
+		collider->GetOnCollisionExit() += [](const Manifold m) {std::cout << "On Collision Exit \n"; };
 	}
 
 	PlayerMovement(uint64_t guid, bool enabled, float speed = 50):Component(guid),_moveSpeed(speed){
