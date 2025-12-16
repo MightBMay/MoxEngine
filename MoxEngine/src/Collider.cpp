@@ -285,15 +285,15 @@ bool Collider::CheckCollision(const Collider* a, const Collider* b) {
 
 void Collider::OnCollisionEnter(const Collider* other){
 	Manifold m = Collider::GetManifold(this, other);
-	_onCollisionEnter(m);
+	_onCollisionEnter(m, other);
 }
 
 void Collider::OnCollisionExit(const Collider* other) {
 	Manifold m = Collider::GetManifold(this, other);
-	_onCollisionExit(m);
+	_onCollisionExit(m, other);
 }
 
 void Collider::OnCollisionStay(const Collider* other) {
 	Manifold m = Collider::GetManifold(this, other);
-	_onCollisionStay(m);
+	_onCollisionStay(m, other);
 }

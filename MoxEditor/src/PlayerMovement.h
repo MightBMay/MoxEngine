@@ -56,9 +56,9 @@ public:
 		Collider* collider = _parent->getCollider();
 		if (!collider) return;
 
-		collider->GetOnCollisionEnter() += [](const Manifold m) {std::cout << "On Collision Enter \n"; };
-		collider->GetOnCollisionStay() += [](const Manifold m) {std::cout << "On Collision Stay \n"; };
-		collider->GetOnCollisionExit() += [](const Manifold m) {std::cout << "On Collision Exit \n"; };
+		collider->GetOnCollisionEnter() += [](Manifold m, const Collider* other ) {std::cout << "On Collision Enter: " << other->_parent->GetName()<<"\n"; };
+		collider->GetOnCollisionStay()  += [](Manifold m, const Collider* other) {std::cout << "On Collision Stay: " << other->_parent->GetName() << "\n"; };
+		collider->GetOnCollisionExit()  += [](Manifold m, const Collider* other) {std::cout << "On Collision Exit: " << other->_parent->GetName() << "\n"; };
 	}
 
 	PlayerMovement(uint64_t guid, bool enabled, float speed = 50):Component(guid),_moveSpeed(speed){

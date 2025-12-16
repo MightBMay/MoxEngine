@@ -23,9 +23,9 @@ struct Collider {
 
 private:
 
-	Event<Manifold> _onCollisionEnter{};
-	Event<Manifold> _onCollisionStay{};
-	Event<Manifold> _onCollisionExit{};
+	Event<Manifold, const Collider*> _onCollisionEnter{};
+	Event<Manifold, const Collider*> _onCollisionStay{};
+	Event<Manifold, const Collider*> _onCollisionExit{};
 
 
 public:
@@ -100,13 +100,13 @@ public:
 
 	static bool CheckCollision(const Collider* a, const Collider* b);
 
-	Event<Manifold>& GetOnCollisionEnter() { return _onCollisionEnter; }
+	Event<Manifold, const Collider*>& GetOnCollisionEnter() { return _onCollisionEnter; }
 	virtual void OnCollisionEnter(const Collider* other);
 
-	Event<Manifold>& GetOnCollisionExit() { return _onCollisionExit; }
+	Event<Manifold, const Collider*>& GetOnCollisionExit() { return _onCollisionExit; }
 	virtual void OnCollisionExit(const Collider* other);
 	
-	Event<Manifold>& GetOnCollisionStay() { return _onCollisionStay; }
+	Event<Manifold, const Collider*>& GetOnCollisionStay() { return _onCollisionStay; }
 	virtual void OnCollisionStay(const Collider* other);
 
 #if IN_EDITOR
