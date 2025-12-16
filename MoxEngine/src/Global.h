@@ -11,3 +11,5 @@ extern sf::View defaultView;
 extern std::unique_ptr<Scene> scene;
 
 extern std::unique_ptr<Timer> secondTimer;
+
+extern float curFps;

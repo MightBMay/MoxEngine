@@ -159,10 +159,12 @@ public:
 
 	virtual void Update(float deltaTime);
 
+
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+
 	void MoveAndCollide(sf::Vector2f delta);
-	void MoveAndCollideAxis(float amount, bool isXAxis = true);
+
 
 
 

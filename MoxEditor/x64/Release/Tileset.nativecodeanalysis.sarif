@@ -1,0 +1,245 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26819",
+          "message": {
+            "text": "Unannotated fallthrough between switch labels (es.78)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/ProgrammingStuff/LDtkLoader-1.5.3.1/src/json.hpp"
+                },
+                "region": {
+                  "startLine": 8240,
+                  "startColumn": 18
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "nlohmann::json_abi_v3_11_3::detail::lexer<nlohmann::json_abi_v3_11_3::basic_json<std::map,std::vector,std::basic_string<char,std::char_traits<char>,std::allocator<char> >,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_11_3::adl_serializer,std::vector<unsigned char,std::allocator<unsigned char> >,void>,nlohmann::json_abi_v3_11_3::detail::iterator_input_adapter<char const *> >::scan_comment",
+                  "decoratedName": "?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@V?$iterator_input_adapter@PEBD@detail@23@@detail@json_abi_v3_11_3@nlohmann@@AEAA_NXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26819",
+          "message": {
+            "text": "Unannotated fallthrough between switch labels (es.78)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/ProgrammingStuff/LDtkLoader-1.5.3.1/src/json.hpp"
+                },
+                "region": {
+                  "startLine": 8277,
+                  "startColumn": 17,
+                  "endLine": 8277,
+                  "endColumn": 33
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "nlohmann::json_abi_v3_11_3::detail::lexer<nlohmann::json_abi_v3_11_3::basic_json<std::map,std::vector,std::basic_string<char,std::char_traits<char>,std::allocator<char> >,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_11_3::adl_serializer,std::vector<unsigned char,std::allocator<unsigned char> >,void>,nlohmann::json_abi_v3_11_3::detail::iterator_input_adapter<char const *> >::scan_comment",
+                  "decoratedName": "?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@V?$iterator_input_adapter@PEBD@detail@23@@detail@json_abi_v3_11_3@nlohmann@@AEAA_NXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.37.32825.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/ProgrammingStuff/LDtkLoader-1.5.3.1/src/json.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "9bea4c8066ef4a1c206b2be5a36302f8926f7fdc6087af5d20b417d0cf103ea6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/src/tileset.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "92e48eabccdc3fa5b06641e94df8904519716f1a9ec12c2da75c989fba9bb4a4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/tileset.hpp"
+          },
+          "hashes": {
+            "sha-256": "7d68986d53a4b7543775ef98324785bb2677c764a4f47071d9641ec88d219fa4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/thirdparty/optional.hpp"
+          },
+          "hashes": {
+            "sha-256": "d70f407a4e33928baef1bb2fc042a8d25af18ea96442f5176df2bd019ead0cd6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/thirdparty/json_fwd.hpp"
+          },
+          "hashes": {
+            "sha-256": "5cefbba751baf5243033fd894c70be9b37103d64b3d3a959e4173197d71137b9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/datatypes.hpp"
+          },
+          "hashes": {
+            "sha-256": "944e8a5a82e47633527e17272b070037cf7356747fb0dc82495d50555f9063a0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/enum.hpp"
+          },
+          "hashes": {
+            "sha-256": "264ae02df781c1524ef8610086c00157e753c2ddc5f0826eaf59b87a91f70985"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/containers/tagscontainer.hpp"
+          },
+          "hashes": {
+            "sha-256": "db550acf62f6abe963cd464c68423ec01fa72f1cd519d7966f9728c0c8e3fd7e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/project.hpp"
+          },
+          "hashes": {
+            "sha-256": "9b6a6affaa6620692d528eda91dd90e5fc8f8fd4dad1bfee896e25b7dee15872"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/defs/entitydef.hpp"
+          },
+          "hashes": {
+            "sha-256": "d0d0b737eec2a3ad471504c9ee440fe1815b87798f3f63c7fe038a15e3db119c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/defs/fielddef.hpp"
+          },
+          "hashes": {
+            "sha-256": "24211a77f812a524287d0a46483f7f0a009b8ae3b001dd39014dd2ec2e683997"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/defs/layerdef.hpp"
+          },
+          "hashes": {
+            "sha-256": "ffb89f129e3f25652b6446839d0d63b37334374d612c5c1db56da89cd8bc2a00"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/level.hpp"
+          },
+          "hashes": {
+            "sha-256": "8a57b5e0ce506b7cd1ff72d6d3ab7e0618f0d274cba37daaa081aa946328f794"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/containers/fieldscontainer.hpp"
+          },
+          "hashes": {
+            "sha-256": "8fef0eb70fa497bb14237a71542a93d06d5d0acf29c9ffdb42f1400f2d36dbb6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/field.hpp"
+          },
+          "hashes": {
+            "sha-256": "0d3e86b6319a6bd5a9ef9a7512d2460ad01786d5ce2e0cb442ffacd10b464f16"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/utils.hpp"
+          },
+          "hashes": {
+            "sha-256": "c021f587d4d49817ca31ebf5eb4e42028751a1aaa3d6f73e2a5ad2e147c986b4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/layer.hpp"
+          },
+          "hashes": {
+            "sha-256": "e1adf8c155b529f0e4f4ee4c5f3d154b8b283b2372e77420c6e90823ea6f8125"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/tile.hpp"
+          },
+          "hashes": {
+            "sha-256": "5a983766e6b88b9cc7c36421030178ab1775240a548101db38d9d0ca9425dd14"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/entity.hpp"
+          },
+          "hashes": {
+            "sha-256": "96c6641a8fbfaeedb7d78dedd3e3c489ce65dcd9f13c575713f6686d44bbe1a9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/world.hpp"
+          },
+          "hashes": {
+            "sha-256": "b888348c339ec4ba7aecc765e98f6e282cb58bb8dc6b4988294b294eebb02b83"
+          }
+        }
+      ]
+    }
+  ]
+}

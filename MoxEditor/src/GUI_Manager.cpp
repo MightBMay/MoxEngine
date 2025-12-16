@@ -3,6 +3,7 @@
 #include "imgui-SFML.h"
 #include "ImGuiFileDialog.h"
 #include "SceneLoader.h"
+#include "Global.h"
 
 void GUI_Manager::Draw() {
 #pragma region Imgui Window Setup
@@ -95,6 +96,20 @@ void GUI_Manager::Draw() {
             GUI_Inspector::instance().SetVisible(showInspector);
         }
 
+        ImGui::EndPopup();
+    }
+
+
+#pragma endregion
+
+#pragma region Debug Info Dropdown
+
+    ImGui::SameLine();
+    if (ImGui::Button("Debug")) ImGui::OpenPopup("DebugPopup");
+
+
+    if (ImGui::BeginPopup("DebugPopup")) {
+        ImGui::Text("FPS: %.1f", curFps);
         ImGui::EndPopup();
     }
 

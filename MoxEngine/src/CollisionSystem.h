@@ -17,7 +17,7 @@ private:
 	static inline std::vector<Collider*> _Colliders;
 
     CollisionSystem() = default;
-
+    static inline const float maxStepDistance = 4.f;
 public:
 
     static CollisionSystem instance() {
@@ -34,5 +34,14 @@ public:
     static void Update(float deltaTime);
 
     static void ResolveCollisions(GameObject& obj, bool isXAxis = true);
+
+
+    static void MoveKinematic(
+        Transform& transform,
+        Collider* collider, 
+        const sf::Vector2f& delta
+    );
+
+    static void MoveAxis(Transform& transform, Collider* collider, float amount, bool isXAxis = true);
 
 };

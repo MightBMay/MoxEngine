@@ -100,3 +100,59 @@ void CollisionSystem::ResolveCollisions(GameObject& obj, bool isXAxis) {
     }
 
 }
+
+
+void CollisionSystem::MoveKinematic(
+    Transform& transform,
+    Collider* collider,
+    const sf::Vector2f& delta
+) {
+    float dist = std::hypot(delta.x, delta.y);
+    if (dist == 0.f) return;
+
+    int steps = std::ceil(dist / maxStepDistance);
+    sf::Vector2f step = delta / (float)steps;
+
+    for (int i = 0; i < steps; ++i)
+    {
+        if(step.x != 0)
+            MoveAxis(transform, collider, step.x, true);
+
+        if(step.y != 0) // don't move if step has 0 y movement
+            MoveAxis(transform, collider, step.y, false);
+    }
+}
+
+
+void CollisionSystem::MoveAxis(Transform& transform, Collider* collider, float amount, bool isXAxis)
+{
+    // Try full move
+    transform.Move(isXAxis ? sf::Vector2f{ amount, 0.f }
+    : sf::Vector2f{ 0.f, amount });
+
+    for (Collider* other : CollisionSystem::GetColliders())
+    {
+        if (other == collider)//|| other->isTrigger)
+            continue;
+
+        Manifold m = Collider::GetManifold(collider, other);
+        if (!m.hit)
+            continue;
+
+        // Determine push direction
+        float sign = (amount > 0.f) ? -1.f : 1.f;
+
+        if (isXAxis)
+        {
+
+            transform.Move({ sign * m.penetration, 0.f });
+        }
+        else
+        {
+            transform.Move({ 0.f, sign * m.penetration });
+        }
+
+        // Stop movement on this axis
+        break;
+    }
+}

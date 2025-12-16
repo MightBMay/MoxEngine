@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\</FILEPATH>
+      <FILENAME>Button.h</FILENAME>
+      <LINE>44</LINE>
+      <COLUMN>1</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Button::_renderer' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Button::{ctor}</FUNCTION>
+    <DECORATED>??0Button@@QEAA@_K_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>44</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Button::_renderer</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\</FILEPATH>
+      <FILENAME>imgui.h</FILENAME>
+      <LINE>3488</LINE>
+      <COLUMN>113</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>ImTextureData::GetPixelsAt</FUNCTION>
+    <DECORATED>?GetPixelsAt@ImTextureData@@QEAAPEAXHH@Z</DECORATED>
+    <FUNCLINE>3488</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\</FILEPATH>
+      <FILENAME>imgui.h</FILENAME>
+      <LINE>3488</LINE>
+      <COLUMN>100</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>ImTextureData::GetPixelsAt</FUNCTION>
+    <DECORATED>?GetPixelsAt@ImTextureData@@QEAAPEAXHH@Z</DECORATED>
+    <FUNCLINE>3488</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\</FILEPATH>
+      <FILENAME>json.hpp</FILENAME>
+      <LINE>7891</LINE>
+      <COLUMN>17</COLUMN>
+    </SFA>
+    <DEFECTCODE>26819</DEFECTCODE>
+    <DESCRIPTION>Unannotated fallthrough between switch labels (es.78).</DESCRIPTION>
+    <FUNCTION>nlohmann::json_abi_v3_12_0::detail::lexer&lt;nlohmann::json_abi_v3_12_0::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt;,void&gt;,nlohmann::json_abi_v3_12_0::detail::iterator_input_adapter&lt;char const *&gt; &gt;::scan_comment</FUNCTION>
+    <DECORATED>?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_12_0@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_12_0@nlohmann@@V?$iterator_input_adapter@PEBD@detail@23@@detail@json_abi_v3_12_0@nlohmann@@AEAA_NXZ</DECORATED>
+    <FUNCLINE>7867</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\</FILEPATH>
+      <FILENAME>json.hpp</FILENAME>
+      <LINE>7928</LINE>
+      <COLUMN>30</COLUMN>
+    </SFA>
+    <DEFECTCODE>26819</DEFECTCODE>
+    <DESCRIPTION>Unannotated fallthrough between switch labels (es.78).</DESCRIPTION>
+    <FUNCTION>nlohmann::json_abi_v3_12_0::detail::lexer&lt;nlohmann::json_abi_v3_12_0::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt;,void&gt;,nlohmann::json_abi_v3_12_0::detail::iterator_input_adapter&lt;char const *&gt; &gt;::scan_comment</FUNCTION>
+    <DECORATED>?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_12_0@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_12_0@nlohmann@@V?$iterator_input_adapter@PEBD@detail@23@@detail@json_abi_v3_12_0@nlohmann@@AEAA_NXZ</DECORATED>
+    <FUNCLINE>7867</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\</FILEPATH>
+      <FILENAME>json.hpp</FILENAME>
+      <LINE>21163</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'nlohmann::json_abi_v3_12_0::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt;,void&gt;::m_data' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>nlohmann::json_abi_v3_12_0::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt;,void&gt;::{ctor}</FUNCTION>
+    <DECORATED>??$?0V?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_12_0@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_12_0@nlohmann@@@detail@json_abi_v3_12_0@nlohmann@@$0A@@?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_12_0@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_12_0@nlohmann@@QEAA@AEBV?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_12_0@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_12_0@nlohmann@@@detail@12@@Z</DECORATED>
+    <FUNCLINE>21163</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>nlohmann::json_abi_v3_12_0::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_12_0::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt;,void&gt;::m_data</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

@@ -48,7 +48,6 @@ public:
 		direction = direction.normalized();
 
 		_parent->MoveAndCollide(direction * _moveSpeed * deltaTime);
-
 	
 	}
 

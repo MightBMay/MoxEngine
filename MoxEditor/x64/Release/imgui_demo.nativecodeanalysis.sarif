@@ -1,0 +1,111 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/turtw/OneDrive/Desktop/MEngine/MoxEditor/src/imgui.h"
+                },
+                "region": {
+                  "startLine": 3488,
+                  "startColumn": 99,
+                  "endLine": 3488,
+                  "endColumn": 116
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ImTextureData::GetPixelsAt",
+                  "decoratedName": "?GetPixelsAt@ImTextureData@@QEAAPEAXHH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/turtw/OneDrive/Desktop/MEngine/MoxEditor/src/imgui.h"
+                },
+                "region": {
+                  "startLine": 3488,
+                  "startColumn": 99,
+                  "endLine": 3488,
+                  "endColumn": 107
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ImTextureData::GetPixelsAt",
+                  "decoratedName": "?GetPixelsAt@ImTextureData@@QEAAPEAXHH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.37.32825.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Users/turtw/OneDrive/Desktop/MEngine/MoxEditor/src/imgui.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "0b2eff08ab2c207abecfcc22ce9793d757c6a4d67f6c861fd40eb3c398bdbcfd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/turtw/onedrive/desktop/mengine/moxeditor/src/imgui_demo.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "b0a36d9e8447dbcafa481eac1beea72bc404d64f84010708d956f55763bc804f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/turtw/onedrive/desktop/mengine/moxeditor/src/imconfig.h"
+          },
+          "hashes": {
+            "sha-256": "b265fa9c4f6cb5d33885a6b2039a4714ae1274643eca53d9348aae5ff050bd0f"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -58,50 +58,11 @@ void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void GameObject::MoveAndCollide(sf::Vector2f delta) {
 
-	   // X axis
-	float moveX = delta.x;
-	if (moveX != 0.f)
-		MoveAndCollideAxis(moveX, true);
-
-	// Y axis
-	float moveY = delta.y;
-	if (moveY != 0.f)
-		MoveAndCollideAxis(moveY, false);
+	if (!_collider) return;
+	CollisionSystem::MoveKinematic(*_transform, _collider.get(), delta);
 }
 
-void GameObject::MoveAndCollideAxis(float amount, bool isXAxis)
-{
-	// Try full move
-	_transform->Move(isXAxis ? sf::Vector2f{ amount, 0.f }
-	: sf::Vector2f{ 0.f, amount });
 
-	Collider* self = getCollider();
-
-	for (Collider* other : CollisionSystem::GetColliders())
-	{
-		if (other == self )//|| other->isTrigger)
-			continue;
-
-		Manifold m = Collider::GetManifold(self, other);
-		if (!m.hit)
-			continue;
-
-		// Determine push direction
-		float sign = (amount > 0.f) ? -1.f : 1.f;
-
-		if (isXAxis)
-		{
-			_transform->Move({ sign * m.penetration, 0.f });
-		}
-		else
-		{
-			_transform->Move({ 0.f, sign * m.penetration });
-		}
-
-		// Stop movement on this axis
-		break;
-	}
-}
 
 
 

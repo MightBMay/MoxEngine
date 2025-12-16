@@ -53,6 +53,7 @@ sf::View defaultView;
 std::unique_ptr<Scene> scene;
 
 std::unique_ptr<Timer> secondTimer;
+float curFps = 0;
 
 
 #if IN_EDITOR
@@ -81,7 +82,7 @@ int main()
     defaultView = window.getDefaultView();
    
    
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(144);
     secondTimer = std::make_unique<Timer>(1, true);
 
     secondTimer->OnTimerReset() += [&ldtkManager]() { ldtkManager.Update();};
@@ -103,6 +104,7 @@ int main()
         sf::Time dt = deltaClock.restart();
         float deltaTime = dt.asSeconds();
         secondTimer->Update(deltaTime);
+        curFps = 1 / deltaTime;
         Input::Update();
         
         

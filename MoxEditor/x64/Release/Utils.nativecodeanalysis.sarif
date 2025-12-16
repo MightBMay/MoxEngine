@@ -1,0 +1,51 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.37.32825.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/src/utils.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "d9e8348e3ddfc9f4ad3e833636a323bf862be1e1b2a07c1002786d1c67312f6a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/utils.hpp"
+          },
+          "hashes": {
+            "sha-256": "c021f587d4d49817ca31ebf5eb4e42028751a1aaa3d6f73e2a5ad2e147c986b4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/programmingstuff/ldtkloader-1.5.3.1/include/ldtkloader/datatypes.hpp"
+          },
+          "hashes": {
+            "sha-256": "944e8a5a82e47633527e17272b070037cf7356747fb0dc82495d50555f9063a0"
+          }
+        }
+      ]
+    }
+  ]
+}

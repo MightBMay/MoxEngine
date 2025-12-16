@@ -17,7 +17,7 @@
             "name": "Floor (g)",
             "position": [
                 0.0,
-                0.0
+                -400.0
             ],
             "renderLayer": 0,
             "renderer": {
@@ -40,37 +40,95 @@
         {
             "colliderData": {
                 "origin": [
-                    0.0,
-                    0.0
+                    -16.0,
+                    -16.0
                 ],
-                "radius": 32.0,
-                "type": "circle"
+                "size": [
+                    32.0,
+                    32.0
+                ],
+                "type": "box"
             },
             "components": [
                 {
                     "enabled": true,
                     "guid": 7967862570696753867,
-                    "speed": 500.0,
+                    "speed": 250.0,
                     "type": "PlayerMovement"
                 }
             ],
             "guid": 13077656098056108542,
             "name": "Player (r)",
             "position": [
-                -17.613712310791016,
-                -257.25665283203125
+                -291.9462890625,
+                -85.60798645019531
             ],
             "renderLayer": 0,
             "renderer": {
                 "colour": [
                     255,
-                    0,
-                    0,
+                    255,
+                    255,
                     255
                 ],
-                "radius": 32.0,
+                "height": 32.0,
+                "type": "rectangle",
+                "width": 32.0
+            },
+            "rotation": 0.0,
+            "scale": [
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "colliderData": {
+                "origin": [
+                    0.0,
+                    0.0
+                ],
+                "radius": 48.0,
+                "type": "circle"
+            },
+            "components": [],
+            "guid": 2618932021375951219,
+            "name": "Circle (b)",
+            "position": [
+                -400.0,
+                -150.0
+            ],
+            "renderLayer": 0,
+            "renderer": {
+                "colour": [
+                    0,
+                    0,
+                    255,
+                    255
+                ],
+                "radius": 48.0,
                 "type": "circle",
                 "vertexCount": 32
+            },
+            "rotation": 0.0,
+            "scale": [
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "components": [],
+            "guid": 8327190294976617090,
+            "name": "Tilemap",
+            "position": [
+                0.0,
+                0.0
+            ],
+            "renderLayer": 0,
+            "renderer": {
+                "layer": "renderLayer",
+                "levelName": "Level_0",
+                "projectPath": "C:\\Users\\turtw\\OneDrive\\Desktop\\MEngine\\assets\\ldtk\\LDKT_Level.ldtk",
+                "type": "tilemap"
             },
             "rotation": 0.0,
             "scale": [

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MOXEngineGame\src\</FILEPATH>
+      <FILENAME>imgui.h</FILENAME>
+      <LINE>3488</LINE>
+      <COLUMN>113</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>ImTextureData::GetPixelsAt</FUNCTION>
+    <DECORATED>?GetPixelsAt@ImTextureData@@QEAAPEAXHH@Z</DECORATED>
+    <FUNCLINE>3488</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MOXEngineGame\src\</FILEPATH>
+      <FILENAME>imgui.h</FILENAME>
+      <LINE>3488</LINE>
+      <COLUMN>100</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>ImTextureData::GetPixelsAt</FUNCTION>
+    <DECORATED>?GetPixelsAt@ImTextureData@@QEAAPEAXHH@Z</DECORATED>
+    <FUNCLINE>3488</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\</FILEPATH>
+      <FILENAME>imgui-SFML.cpp</FILENAME>
+      <LINE>935</LINE>
+      <COLUMN>36</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>`anonymous-namespace'::SetupRenderState</FUNCTION>
+    <DECORATED>?SetupRenderState@?A0x0d3a1f2c@@YAXPEAUImDrawData@@HH@Z</DECORATED>
+    <FUNCLINE>895</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\</FILEPATH>
+      <FILENAME>imgui-SFML.cpp</FILENAME>
+      <LINE>936</LINE>
+      <COLUMN>36</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>`anonymous-namespace'::SetupRenderState</FUNCTION>
+    <DECORATED>?SetupRenderState@?A0x0d3a1f2c@@YAXPEAUImDrawData@@HH@Z</DECORATED>
+    <FUNCLINE>895</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\ProgrammingStuff\SFML-3.0.0\include\SFML\System\</FILEPATH>
+      <FILENAME>Utf.inl</FILENAME>
+      <LINE>78</LINE>
+      <COLUMN>15</COLUMN>
+    </SFA>
+    <DEFECTCODE>28020</DEFECTCODE>
+    <DESCRIPTION>The expression '0&lt;=_Param_(1)&amp;&amp;_Param_(1)&lt;=256-1' is not true at this call.</DESCRIPTION>
+    <FUNCTION>sf::Utf&lt;8&gt;::decode</FUNCTION>
+    <DECORATED>??$decode@PEBD@?$Utf@$07@sf@@SAPEBDPEBD0AEA_U_U@Z</DECORATED>
+    <FUNCLINE>55</FUNCLINE>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\programmingstuff\sfml-3.0.0\include\sfml\system\</FILEPATH>
+        <FILENAME>utf.inl</FILENAME>
+        <LINE>59</LINE>
+        <COLUMN>51</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\programmingstuff\sfml-3.0.0\include\sfml\system\</FILEPATH>
+        <FILENAME>utf.inl</FILENAME>
+        <LINE>71</LINE>
+        <COLUMN>50</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\programmingstuff\sfml-3.0.0\include\sfml\system\</FILEPATH>
+        <FILENAME>utf.inl</FILENAME>
+        <LINE>78</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>

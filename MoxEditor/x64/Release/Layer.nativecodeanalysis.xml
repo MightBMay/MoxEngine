@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\ProgrammingStuff\LDtkLoader-1.5.3.1\src\</FILEPATH>
+      <FILENAME>json.hpp</FILENAME>
+      <LINE>8240</LINE>
+      <COLUMN>17</COLUMN>
+    </SFA>
+    <DEFECTCODE>26819</DEFECTCODE>
+    <DESCRIPTION>Unannotated fallthrough between switch labels (es.78).</DESCRIPTION>
+    <FUNCTION>nlohmann::json_abi_v3_11_3::detail::lexer&lt;nlohmann::json_abi_v3_11_3::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_11_3::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt;,void&gt;,nlohmann::json_abi_v3_11_3::detail::iterator_input_adapter&lt;char const *&gt; &gt;::scan_comment</FUNCTION>
+    <DECORATED>?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@V?$iterator_input_adapter@PEBD@detail@23@@detail@json_abi_v3_11_3@nlohmann@@AEAA_NXZ</DECORATED>
+    <FUNCLINE>8216</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\ProgrammingStuff\LDtkLoader-1.5.3.1\src\</FILEPATH>
+      <FILENAME>json.hpp</FILENAME>
+      <LINE>8277</LINE>
+      <COLUMN>30</COLUMN>
+    </SFA>
+    <DEFECTCODE>26819</DEFECTCODE>
+    <DESCRIPTION>Unannotated fallthrough between switch labels (es.78).</DESCRIPTION>
+    <FUNCTION>nlohmann::json_abi_v3_11_3::detail::lexer&lt;nlohmann::json_abi_v3_11_3::basic_json&lt;std::map,std::vector,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt;,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_11_3::adl_serializer,std::vector&lt;unsigned char,std::allocator&lt;unsigned char&gt; &gt;,void&gt;,nlohmann::json_abi_v3_11_3::detail::iterator_input_adapter&lt;char const *&gt; &gt;::scan_comment</FUNCTION>
+    <DECORATED>?scan_comment@?$lexer@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@V?$iterator_input_adapter@PEBD@detail@23@@detail@json_abi_v3_11_3@nlohmann@@AEAA_NXZ</DECORATED>
+    <FUNCLINE>8216</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
