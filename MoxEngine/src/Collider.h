@@ -15,6 +15,7 @@ enum ColliderType {
 struct Manifold;
 struct CircleCollider;
 struct BoxCollider;
+struct TileMapCollider;
 
 
 
@@ -35,13 +36,14 @@ public:
 
 	sf::Vector2f _colliderOrigin = { 0,0 };
 	sf::Vector2f _halfSize = { 0,0 };
+	sf::Vector2f _backupPosition = { 0,0 };
 	GameObject* _parent = nullptr;
 	Transform* _transform = nullptr;
 
 
 	sf::Vector2f GetWorldPosition() const;
 	
-
+	virtual void OnAddedToGameObject(){}
 
 
 
@@ -65,8 +67,14 @@ public:
 	ColliderType type;
 	virtual ~Collider() = default;
 
-
-	
+	//static sf::IntRect GetTileRange( const sf::FloatRect& bounds,int cellSize) {
+	//	return {
+	//		int(bounds.left / cellSize),
+	//		int(bounds.top / cellSize),
+	//		int(std::ceil(bounds.width / cellSize)) + 1,
+	//		int(std::ceil(bounds.height / cellSize)) + 1
+	//	};
+	//}
 
 
 	static bool BoxVsBox(const BoxCollider& a, const BoxCollider& b);
@@ -91,7 +99,11 @@ public:
 
 	static Manifold CircleVsCircleManifold(const CircleCollider& a, const CircleCollider& b);
 
+	static Manifold CircleVsTilemapManifold(const CircleCollider& box, const TileMapCollider& tilemap);
+
 	static Manifold BoxVsCircleManifold(const BoxCollider& box, const CircleCollider& circle);
+
+	static Manifold BoxVsTilemapManifold(const BoxCollider& box, const TileMapCollider& tilemap);
 
 	static Manifold GetManifold(const Collider* a, const Collider* b);
 

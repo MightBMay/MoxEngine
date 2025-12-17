@@ -60,6 +60,7 @@ public:
 		CollisionSystem::AddCollider(_collider.get());
 		_collider->_parent = this;
 		_collider->_transform = _transform.get();
+		_collider->OnAddedToGameObject();
 		return *static_cast<T*>(_collider.get());
 	}
 
@@ -71,6 +72,7 @@ public:
 		_collider->_transform = _transform.get();
 		CollisionSystem::AddCollider(_collider.get());
 		_collider->_parent = this;
+		_collider->OnAddedToGameObject();
 	}
 
 	std::unique_ptr<Collider> removeCollider() {

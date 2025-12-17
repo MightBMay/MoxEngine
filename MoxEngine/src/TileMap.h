@@ -30,9 +30,30 @@ public:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     };
 
+
+    struct IntGridCollisionLayer {
+        std::string name;
+        sf::Vector2i gridSize; // in cells
+        int cellSize;          // pixels
+        std::vector<uint8_t> cells; // 0 = empty, 1 = solid (or store raw value)
+
+    };
+
+
+
+
     TileMap() = default;
     void load(const ldtk::Level& level);
     auto getLayer(const std::string& name) const -> const Layer&;
+
+    inline IntGridCollisionLayer getCollisionLayer(const std::string& name) const {
+        return m_collisionLayers.at(name);
+    }
+
+
+    bool isSolidTile(const std::string& layerName, int x, int y) const;
+    bool isSolidTile(const IntGridCollisionLayer& layer, int x, int y) const;
+    sf::FloatRect getTileBounds(const std::string& layer, int x, int y) const;
 
     void CheckLayers() {
         if (m_layers.empty()) std::cout << "empty layuers";
@@ -41,7 +62,12 @@ public:
         }
     }
 
+
+
+
 private:
     mutable sf::RenderTexture m_render_texture;
     std::map<std::string, Layer> m_layers;
+    std::map<std::string, IntGridCollisionLayer> m_collisionLayers;
+
 };

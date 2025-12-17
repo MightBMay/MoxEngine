@@ -73,6 +73,8 @@ public:
 	std::string GetLayerName() const { return _layerName; }
 	void SetLayerName(std::string newName) { _layerName = newName; }
 
+	TileMap* GetTilemap() const{ return _tileMap.get(); }
+
 
 
 #if IN_EDITOR

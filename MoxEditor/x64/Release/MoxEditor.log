@@ -62,7 +62,7 @@ C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleCollider.h(14,28): w
           [
               ReturnType=int
           ]
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\MoxEditor.cpp(91,22): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\MoxEditor.cpp(92,22): warning C4834: discarding return value of function with 'nodiscard' attribute
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3477,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
@@ -73,9 +73,5 @@ C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(27,15): m
           [
               ReturnType=int
           ]
-  Generating code
-  5 of 15066 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    70 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  MoxEditor.vcxproj -> C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release\MoxEditor.exe
+MoxEditor.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl TileMapCollider::OnAddedToGameObject(void)" (?OnAddedToGameObject@TileMapCollider@@UEAAXXZ)
+C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release\MoxEditor.exe : fatal error LNK1120: 1 unresolved externals

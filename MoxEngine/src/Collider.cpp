@@ -1,6 +1,7 @@
 #include "Collider.h"
 #include "BoxCollider.h"
 #include "CircleCollider.h"
+#include "TilemapCollider.h"
 #include "GameObject.h"
 #include "CollisionSystem.h"
 
@@ -19,9 +20,9 @@ bool Collider::BoxVsBox(const BoxCollider& a, const BoxCollider& b) {
 	auto sizeB = b.GetSize();
 
 	return !(centerA.x + sizeA.x < centerB.x ||
-			 centerB.x + sizeB.x < centerA.x ||
-			 centerA.y + sizeA.y < centerB.y ||
-			 centerB.y + sizeB.y < centerA.y);
+		centerB.x + sizeB.x < centerA.x ||
+		centerA.y + sizeA.y < centerB.y ||
+		centerB.y + sizeB.y < centerA.y);
 }
 
 
@@ -39,7 +40,7 @@ bool Collider::BoxVsCircle(const BoxCollider& box, const CircleCollider& circle)
 	float dy = circleCenter.y - cy;
 
 	float radius = circle.GetRadius();
-	return (dx * dx + dy * dy) <= radius * radius ;
+	return (dx * dx + dy * dy) <= radius * radius;
 }
 
 bool Collider::CircleVsCircle(const CircleCollider& a, const CircleCollider& b)
@@ -57,7 +58,7 @@ bool Collider::PointVsBox(const sf::Vector2f& p, const BoxCollider& box)
 {
 
 	auto boxCenter = box.GetWorldPosition();
-	auto boxSize= box.GetSize();
+	auto boxSize = box.GetSize();
 
 	return (p.x >= boxCenter.x &&
 		p.x <= boxCenter.x + boxSize.x &&
@@ -142,6 +143,11 @@ Manifold Collider::CircleVsCircleManifold(const CircleCollider& a, const CircleC
 	return m;
 }
 
+Manifold Collider::CircleVsTilemapManifold(const CircleCollider& box, const TileMapCollider& tilemap) {
+
+
+
+}
 
 Manifold Collider::BoxVsCircleManifold(const BoxCollider& box, const CircleCollider& circle)
 {
@@ -196,8 +202,65 @@ Manifold Collider::BoxVsCircleManifold(const BoxCollider& box, const CircleColli
 	return m;
 }
 
+
+static sf::IntRect GetTileRange(
+	const sf::FloatRect& bounds,
+	int cellSize
+) {
+	const float left = bounds.position.x;
+	const float top = bounds.position.y;
+	const float right = bounds.position.x + bounds.size.x;
+	const float bottom = bounds.position.y + bounds.size.y;
+
+	const int startX = static_cast<int>(std::floor(left / cellSize));
+	const int startY = static_cast<int>(std::floor(top / cellSize));
+
+	const int endX = static_cast<int>(std::floor((right - 1.f) / cellSize));
+	const int endY = static_cast<int>(std::floor((bottom - 1.f) / cellSize));
+
+	return {
+		{startX,startY},
+		{endX - startX + 1, endY - startY + 1 }
+	};
+}
+
+Manifold Collider::BoxVsTilemapManifold(const BoxCollider& box, const TileMapCollider& tilemapC) {
+
+	Manifold best;
+	const auto Bounds = sf::FloatRect(box.GetWorldPosition(), box.GetSize());
+	const auto tilemap = tilemapC.getTileMap();
+	const auto& layer = tilemap->getCollisionLayer(tilemapC.layerName);
+	const int cellSize = layer.cellSize;
+	
+	auto range = GetTileRange(Bounds, cellSize);
+
+	for (int y = range.position.y; y < range.position.y + range.size.y; ++y) {
+		for (int x = range.position.x; x < range.position.x + range.size.x; ++x) {
+			if (!tilemap->isSolidTile(layer,x, y))
+				continue;
+
+			BoxCollider tile;
+			tile._backupPosition = {
+				float(x * cellSize),
+				float(y * cellSize)
+				};
+			tile._size = { (float)cellSize, (float)cellSize };
+			tile._halfSize = { cellSize / 2.0f, cellSize / 2.0f };
+
+			Manifold m = BoxVsBoxManifold(box, tile);
+			if (!m.hit) continue;
+
+			if (!best.hit || m.penetration > best.penetration)
+				best = m;
+		}
+	}
+	return best;
+
+}
+
 Manifold Collider::GetManifold(const Collider* a, const Collider* b)
 {
+	
 	switch (a->type)
 	{
 		case ColliderType::Box:
@@ -214,6 +277,14 @@ Manifold Collider::GetManifold(const Collider* a, const Collider* b)
 						*(const BoxCollider*)a,
 						*(const CircleCollider*)b
 					);
+
+				case ColliderType::Tilemap:
+					return BoxVsTilemapManifold(
+						*(const BoxCollider*)a,
+						*(const TileMapCollider*)b
+					);
+
+
 			}
 			break;
 
@@ -235,8 +306,16 @@ Manifold Collider::GetManifold(const Collider* a, const Collider* b)
 						*(const CircleCollider*)a,
 						*(const CircleCollider*)b
 					);
+
+
+				case ColliderType::Tilemap:
+					return CircleVsTilemapManifold(
+						*(const CircleCollider*)a,
+						*(const TileMapCollider*)b
+					);
 			}
 			break;
+
 	}
 	return {};
 }
@@ -283,7 +362,7 @@ bool Collider::CheckCollision(const Collider* a, const Collider* b) {
 }
 
 
-void Collider::OnCollisionEnter(const Collider* other){
+void Collider::OnCollisionEnter(const Collider* other) {
 	Manifold m = Collider::GetManifold(this, other);
 	_onCollisionEnter(m, other);
 }

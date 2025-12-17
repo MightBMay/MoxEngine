@@ -43,6 +43,9 @@
     <Filter Include="Header Files\GUI\GUI Actions">
       <UniqueIdentifier>{0a27f171-a9ff-47cb-8c75-7106f6f1d6da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Colliders">
+      <UniqueIdentifier>{b17fe730-51ca-46c0-a843-7206d22ec7bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MoxEditor.cpp">
@@ -233,9 +236,6 @@
     <ClInclude Include="src\GUIA_GameObject.h">
       <Filter>Header Files\GUI\GUI Actions</Filter>
     </ClInclude>
-    <ClInclude Include="src\TileMapRenderer.h">
-      <Filter>Header Files\Renderers</Filter>
-    </ClInclude>
     <ClInclude Include="src\GUI_Manager.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
@@ -247,6 +247,12 @@
     </ClInclude>
     <ClInclude Include="src\SceneHeirarchy.h">
       <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TileMapRenderer.h">
+      <Filter>Header Files\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TilemapCollider.h">
+      <Filter>Header Files\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -272,6 +272,7 @@
     <ClInclude Include="src\imstb_truetype.h" />
     <ClInclude Include="src\PlayerMovement.h" />
     <ClInclude Include="src\SceneHeirarchy.h" />
+    <ClInclude Include="src\TilemapCollider.h" />
     <ClInclude Include="src\TileMapRenderer.h" />
   </ItemGroup>
   <ItemGroup>

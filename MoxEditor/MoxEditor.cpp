@@ -23,6 +23,7 @@
 
 #include "CircleCollider.h"
 #include "BoxCollider.h"
+#include "TilemapCollider.h"
 
 #include "LDtkLoader/Project.hpp"
 #include "LDtkLoader/Level.hpp"
