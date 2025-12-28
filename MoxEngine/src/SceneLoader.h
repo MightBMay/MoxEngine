@@ -27,6 +27,16 @@ private:
 		obj->_transform->SetTransform(position, scale, rotation);
 
 
+		if (data.contains("components")) {
+			for (auto& componentData : data["components"]) {
+				std::string type = componentData["type"];
+				auto component = ComponentFactory::instance().Create(type, componentData);
+				component->SetParent(obj.get());
+				obj->addComponent(std::move(component));
+			}
+		}
+
+
 		if (data.contains("renderer") && !data["renderer"].is_null()) {
 		// read, create and assign renderer type.
 			auto& rendererData = data["renderer"];
@@ -47,13 +57,6 @@ private:
 		}
 
 
-		if (!data.contains("components")) return obj;
-		for (auto& componentData : data["components"]) {
-			std::string type = componentData["type"];
-			auto component = ComponentFactory::instance().Create(type, componentData);
-			component->SetParent(obj.get());
-			obj->addComponent(std::move(component));
-		}
 
 
 		return obj;

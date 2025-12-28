@@ -2,37 +2,41 @@
 #include "ColliderFactory.h"
 #include "Collider.h"
 #include "GameObject.h"
-class TileMapRenderer;
+
+class TileMapComponent;
 class TileMap;
 
-
 struct TileMapCollider: Collider{
-	std::string layerName = "";
-
 	static std::unique_ptr<Collider> Create(const nlohmann::json& data) {
 		std::unique_ptr<TileMapCollider> col = std::make_unique<TileMapCollider>();
 		col->type = ColliderType::Tilemap;
-		col->layerName = data.value("collisionLayerName", "");
 
 		return col;
 
 	}
 
+	void setTileMap(TileMapComponent* tmc);
 
+	TileMapComponent* getTileMapComponent() const{ return _tilemapC; }
 
-	void OnAddedToGameObject() override;
+	virtual void OnAddedToGameObject() override {
+		if (_tilemapC) return;
 
+		auto tmc = _parent->GetComponent<TileMapComponent>();
+		if (tmc) _tilemapC = tmc;
+		else {
+			std::cerr << "Tilemap Collider attempted to get non existant tilemap component. remove collider and add a tilemap component first.";
+		}
 
-
-
-	TileMap* getTileMap() const{ return _tilemap; }
-
+	
+	}
+	
 
 
 #if IN_EDITOR
 
 	virtual void getImGuiParams(nlohmann::json& data) {};
-	virtual void getInspectorParams() {};
+	virtual void getInspectorParams() override;
 
 	virtual void SaveToJSON(nlohmann::json& data) {
 
@@ -44,7 +48,7 @@ struct TileMapCollider: Collider{
 
 private:
 
-	TileMap* _tilemap = nullptr;
+	TileMapComponent* _tilemapC = nullptr;
 
 	static inline bool registered = []() {
 		ColliderFactory::instance().Register("tilemap", &TileMapCollider::Create);

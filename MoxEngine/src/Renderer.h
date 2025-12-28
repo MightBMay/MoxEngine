@@ -9,14 +9,16 @@ protected:
 	Transform* _transform = nullptr;
 	sf::Drawable* _drawable = nullptr;
 
+
 public:
+	GameObject* _parent = nullptr;
 	virtual ~Renderer() = default;
 	Renderer(){}
 	Renderer(GameObject* obj);
 	Renderer(Transform* transform);
 
 
-	virtual void AfterAddedToGameObject() {
+	virtual void OnAddedToGameObject() {
 
 	}
 

@@ -1,5 +1,5 @@
 #pragma once
-
+#include <functional>
 template<typename... Args>
 class Event {
 private:

@@ -77,29 +77,54 @@ std::string TileMap::path;
 void TileMap::load(const ldtk::Level& level) {
     m_render_texture = sf::RenderTexture( sf::Vector2u(level.size.x, level.size.y) );
     m_layers.clear();
-
+    std::string layerName = "";
     for (const auto& layer : level.allLayers()) {
         if (layer.getType() == ldtk::LayerType::AutoLayer) {
-            m_layers.insert({ layer.getName(), {layer, m_render_texture} });
+            layerName = layer.getName();
+            m_layers.insert({ layerName, {layer, m_render_texture} });
+
+
+            /* see message in intgrid if case below - this is temporary
+            IntGridCollisionLayer col; 
+            col.name = layerName;
+
+            auto gridSize = layer.getGridSize();
+            col.gridSize = { gridSize.x, gridSize.y };
+            col.cellSize = layer.getCellSize();
+            col.cells.resize(col.gridSize.x * col.gridSize.y);
+
+            for (int y = 0; y < col.gridSize.y; y++)
+                for (int x = 0; x < col.gridSize.x; x++) {
+                    auto temp = (int)layer.getIntGridVal(x, y).value;
+                    col.cells[x + y * col.gridSize.x] = temp;
+                    std::cout << "value: " << temp << "\n";
+                }
+
+            */ // m_collisionLayers.insert({ layerName, std::move(col) });
+            
+            // see message in intgrid if case below- this is temporary
+
+
         }
 
 
         if (layer.getType() == ldtk::LayerType::IntGrid) {
+            /*
+             DEBUG / TODO : right now we index m_collisionlayers with the rendering layer, meaning since we do layer.getName here and assign
+             to collision layer, it will never be found when indexing. temporary solution is to just use the rendering layers for collision for now.
 
+            */
             IntGridCollisionLayer coll;
-            coll.name = layer.getName();
+            coll.name = layerName.empty() ? layer.getName() : layerName;
+            std::cout << "phys layer found : " << coll.name<<"\n";
             coll.gridSize = { layer.getGridSize().x, layer.getGridSize().y };
             coll.cellSize = layer.getCellSize();
             coll.cells.resize(coll.gridSize.x * coll.gridSize.y);
 
             for (int y = 0; y < coll.gridSize.y; y++)
-            {
                 for (int x = 0; x < coll.gridSize.x; x++)
-                {
-                    coll.cells[x + y * coll.gridSize.x] =
-                        (int)layer.getIntGridVal(x, y).value;
-                }
-            }
+                    coll.cells[x + y * coll.gridSize.x] = layer.getIntGridVal(x, y).value;
+
 
             m_collisionLayers.insert({ coll.name, std::move(coll) });
         }
@@ -107,12 +132,14 @@ void TileMap::load(const ldtk::Level& level) {
 
     }
 
+    //onTileMapLoad();
+
 
 
 
 }
 
-inline bool TileMap::isSolidTile(const std::string& layerName, int x, int y) const
+bool TileMap::isSolidTile(const std::string& layerName, int x, int y) const
 {
 
     auto it = m_collisionLayers.find(layerName);
@@ -125,17 +152,16 @@ inline bool TileMap::isSolidTile(const std::string& layerName, int x, int y) con
 
     const int index = x + y * layer.gridSize.x;
 
-    return layer.cells[index]!= 0;
+    return layer.cells[index] >0;
 }
 
-inline bool TileMap::isSolidTile(const IntGridCollisionLayer& layer, int x, int y) const
+bool TileMap::isSolidTile(const IntGridCollisionLayer& layer, int x, int y) const
 {
 
     if (x < 0 || y < 0 || x >= layer.gridSize.x || y >= layer.gridSize.y)return false;
 
     const int index = x + y * layer.gridSize.x;
-
-    return layer.cells[index] != 0;
+    return layer.cells[index] >0;
 }
 
 

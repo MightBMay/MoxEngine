@@ -151,7 +151,6 @@ void GUI_Inspector::Draw() {
         std::vector<const char*> colliderOptions;
         colliderOptions.reserve(colliderTypes.size());
         for (auto& s : colliderTypes) colliderOptions.push_back(s.c_str());
-        std::cout << "Size: " << colliderOptions.size() << "\n";
 
         if (!colliderOptions.empty()) {
             ImGui::Combo("Collider Type", &selectedColliderIndex, colliderOptions.data(), (int)colliderOptions.size());

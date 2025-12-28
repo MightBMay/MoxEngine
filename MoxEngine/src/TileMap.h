@@ -4,7 +4,7 @@
 
 #include <vector>
 #include <map>
-
+#include "Event.h"
 #include <SFML/Graphics.hpp>
 #include <LDtkLoader/Level.hpp>
 
@@ -35,7 +35,7 @@ public:
         std::string name;
         sf::Vector2i gridSize; // in cells
         int cellSize;          // pixels
-        std::vector<uint8_t> cells; // 0 = empty, 1 = solid (or store raw value)
+        std::vector<int> cells; // 0 = empty, 1 = solid (or store raw value)
 
     };
 
@@ -46,8 +46,12 @@ public:
     void load(const ldtk::Level& level);
     auto getLayer(const std::string& name) const -> const Layer&;
 
-    inline IntGridCollisionLayer getCollisionLayer(const std::string& name) const {
-        return m_collisionLayers.at(name);
+    inline const IntGridCollisionLayer* getCollisionLayer(const std::string& name)  const { 
+        //TODO make this safer in case invalid input.
+        auto it = m_collisionLayers.find(name);
+        if (it == m_collisionLayers.end()) return {};
+        return &it->second;
+
     }
 
 
@@ -66,6 +70,8 @@ public:
 
 
 private:
+
+    //Event<> onTileMapLoad{};
     mutable sf::RenderTexture m_render_texture;
     std::map<std::string, Layer> m_layers;
     std::map<std::string, IntGridCollisionLayer> m_collisionLayers;

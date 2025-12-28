@@ -6,7 +6,6 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "imgui_internal.h"
-#include "config.h"
 #include <fstream>
 #include "json.hpp"
 #include "SFML/Graphics.hpp"

@@ -2,7 +2,9 @@
 #include "ColliderFactory.h"
 #include "Collider.h"
 #include "GameObject.h"
-#include "TileMapRenderer.h"
+class TileMapRenderer;
+class TileMap;
+
 
 struct TileMapCollider: Collider{
 	std::string layerName = "";
@@ -37,22 +39,8 @@ struct TileMapCollider: Collider{
 
 
 
+
 	TileMap* getTileMap() const{ return _tilemap; }
-
-
-
-#if IN_EDITOR
-
-	virtual void getImGuiParams(nlohmann::json& data) {};
-	virtual void getInspectorParams() {};
-
-	virtual void SaveToJSON(nlohmann::json& data) {
-
-		data["colliderType"] = type;
-
-	}
-#endif
-
 
 private:
 

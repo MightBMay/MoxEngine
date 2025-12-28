@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "Event.h"
 
+
+
 class Button : public Component {
 
 protected:
@@ -36,9 +38,9 @@ public:
 		return std::make_unique<Button>(guid, enabled, data.value("onclicktext", "onclickDefault\n"));
 	}
 
-	virtual void Start();
+	virtual void Start() override;
 
-	virtual void Update(float deltaTime);
+	virtual void Update(float deltaTime) override;
 
 
 	Button(uint64_t guid, bool enabled, std::string onclicktext) :Component(guid), _onclicktext(onclicktext) { _enabled = enabled; }

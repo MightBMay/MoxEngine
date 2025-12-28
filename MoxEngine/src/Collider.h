@@ -16,6 +16,7 @@ struct Manifold;
 struct CircleCollider;
 struct BoxCollider;
 struct TileMapCollider;
+class TileMap;
 
 
 
@@ -96,6 +97,8 @@ public:
 	*/
 
 	static Manifold BoxVsBoxManifold(const BoxCollider& a, const BoxCollider& b);
+
+	static Manifold BoxVsBoxManifold(const BoxCollider& a, Transform* aTrans, const BoxCollider& b);
 
 	static Manifold CircleVsCircleManifold(const CircleCollider& a, const CircleCollider& b);
 

@@ -40,11 +40,11 @@
     <Filter Include="LDTKLoader">
       <UniqueIdentifier>{6b1ca184-444f-4a85-a448-bc1a8856cbcd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\Colliders">
-      <UniqueIdentifier>{cce18cbc-1272-4970-a968-652ba5a51d68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Collider">
       <UniqueIdentifier>{d274c326-0407-4a69-8e4c-019cb88d0139}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Colliders">
+      <UniqueIdentifier>{cce18cbc-1272-4970-a968-652ba5a51d68}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -184,19 +184,28 @@
       <Filter>Header Files\Other\Internal</Filter>
     </ClInclude>
     <ClInclude Include="src\Collider.h">
-      <Filter>Header Files\Components\Colliders</Filter>
+      <Filter>Header Files\Colliders</Filter>
     </ClInclude>
     <ClInclude Include="src\BoxCollider.h">
-      <Filter>Header Files\Components\Colliders</Filter>
+      <Filter>Header Files\Colliders</Filter>
     </ClInclude>
     <ClInclude Include="src\CircleCollider.h">
-      <Filter>Header Files\Components\Colliders</Filter>
+      <Filter>Header Files\Colliders</Filter>
     </ClInclude>
     <ClInclude Include="src\ColliderFactory.h">
-      <Filter>Header Files\Components\Colliders</Filter>
+      <Filter>Header Files\Colliders</Filter>
     </ClInclude>
     <ClInclude Include="src\CollisionSystem.h">
-      <Filter>Header Files\Components\Colliders</Filter>
+      <Filter>Header Files\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TilemapCollider.h">
+      <Filter>Header Files\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TilemapComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TileMapRenderer.h">
+      <Filter>Header Files\Renderers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +250,18 @@
     </ClCompile>
     <ClCompile Include="src\CollisionSystem.cpp">
       <Filter>Source Files\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TilemapComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TileMapRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TilemapCollider.cpp">
+      <Filter>Source Files\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ComponentFactory.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

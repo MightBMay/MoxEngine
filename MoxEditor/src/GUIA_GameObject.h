@@ -84,6 +84,7 @@ public:
 
     virtual void Execute() override {
         auto newComp = ComponentFactory::instance().Create(_componentType, _componentData);
+        if (!_obj) std::cerr << "no obj somehow\n";
         newComp->SetParent(_obj);
         _toAdd = newComp.get();
         _obj->addComponent(std::move(newComp));
@@ -140,7 +141,6 @@ public:
             Collider::ToString(_type),
             _colliderData
         );
-        if (collider)std::cout << "valid~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
         _obj->setCollider(std::move(collider));
 

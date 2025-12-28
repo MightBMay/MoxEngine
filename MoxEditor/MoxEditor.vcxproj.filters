@@ -114,9 +114,6 @@
     <ClCompile Include="..\..\..\..\..\..\ProgrammingStuff\LDtkLoader-1.5.3.1\src\FieldsContainer.cpp">
       <Filter>LDTKLoader</Filter>
     </ClCompile>
-    <ClCompile Include="src\TileMapRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\CreateGameObject.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
@@ -247,12 +244,6 @@
     </ClInclude>
     <ClInclude Include="src\SceneHeirarchy.h">
       <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TileMapRenderer.h">
-      <Filter>Header Files\Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TilemapCollider.h">
-      <Filter>Header Files\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

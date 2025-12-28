@@ -4,6 +4,7 @@
 
 
 const sf::Vector2f BoxCollider::GetSize() const {
+	if (!_transform) return { _size.x, _size.y };
 	sf::Vector2f scale = _transform->GetScale();
 	return { _size.x * (scale.x), _size.y * (scale.y) };
 }

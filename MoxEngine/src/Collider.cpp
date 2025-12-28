@@ -2,12 +2,19 @@
 #include "BoxCollider.h"
 #include "CircleCollider.h"
 #include "TilemapCollider.h"
+#include "TilemapComponent.h"
+#include "TileMap.h"
 #include "GameObject.h"
 #include "CollisionSystem.h"
 
+
+
 sf::Vector2f Collider::GetWorldPosition() const {
+
+	if (!_transform) return _backupPosition;// +offset;
 	sf::Vector2f scale = _transform->GetScale();
 	sf::Vector2f offset{ _colliderOrigin.x * scale.x, _colliderOrigin.y * scale.y };
+	
 	return _transform->GetPosition() + offset;
 }
 
@@ -146,7 +153,7 @@ Manifold Collider::CircleVsCircleManifold(const CircleCollider& a, const CircleC
 Manifold Collider::CircleVsTilemapManifold(const CircleCollider& box, const TileMapCollider& tilemap) {
 
 
-
+	return {};
 }
 
 Manifold Collider::BoxVsCircleManifold(const BoxCollider& box, const CircleCollider& circle)
@@ -224,20 +231,22 @@ static sf::IntRect GetTileRange(
 	};
 }
 
-Manifold Collider::BoxVsTilemapManifold(const BoxCollider& box, const TileMapCollider& tilemapC) {
+Manifold Collider::BoxVsTilemapManifold(const BoxCollider& box, const TileMapCollider& tilemapCol) {
 
 	Manifold best;
 	const auto Bounds = sf::FloatRect(box.GetWorldPosition(), box.GetSize());
-	const auto tilemap = tilemapC.getTileMap();
-	const auto& layer = tilemap->getCollisionLayer(tilemapC.layerName);
+	const auto tilemapComp= tilemapCol.getTileMapComponent();
+
+	const auto tilemap = tilemapComp->GetTilemap();
+	const auto& layer = *tilemap->getCollisionLayer(tilemapComp->GetLayerName());
 	const int cellSize = layer.cellSize;
 	
 	auto range = GetTileRange(Bounds, cellSize);
 
 	for (int y = range.position.y; y < range.position.y + range.size.y; ++y) {
 		for (int x = range.position.x; x < range.position.x + range.size.x; ++x) {
-			if (!tilemap->isSolidTile(layer,x, y))
-				continue;
+			if (!tilemap->isSolidTile(layer, x, y)) continue;
+
 
 			BoxCollider tile;
 			tile._backupPosition = {

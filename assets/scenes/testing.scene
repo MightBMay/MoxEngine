@@ -60,8 +60,8 @@
             "guid": 13077656098056108542,
             "name": "Player (r)",
             "position": [
-                -291.9462890625,
-                -85.60798645019531
+                -178.1810302734375,
+                96.48233795166016
             ],
             "renderLayer": 0,
             "renderer": {
@@ -116,7 +116,15 @@
             ]
         },
         {
-            "components": [],
+            "colliderType": 3,
+            "components": [
+                {
+                    "layer": "renderLayer",
+                    "levelName": "Level_0",
+                    "projectPath": "C:\\Users\\turtw\\OneDrive\\Desktop\\MEngine\\assets\\ldtk\\LDKT_Level.ldtk",
+                    "type": "TileMapComponent"
+                }
+            ],
             "guid": 8327190294976617090,
             "name": "Tilemap",
             "position": [
@@ -124,12 +132,7 @@
                 0.0
             ],
             "renderLayer": 0,
-            "renderer": {
-                "layer": "renderLayer",
-                "levelName": "Level_0",
-                "projectPath": "C:\\Users\\turtw\\OneDrive\\Desktop\\MEngine\\assets\\ldtk\\LDKT_Level.ldtk",
-                "type": "tilemap"
-            },
+            "renderer": null,
             "rotation": 0.0,
             "scale": [
                 1.0,
