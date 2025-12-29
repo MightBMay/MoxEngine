@@ -39,8 +39,10 @@ struct TileMapCollider: Collider{
 	virtual void getInspectorParams() override;
 
 	virtual void SaveToJSON(nlohmann::json& data) {
-
-		data["colliderType"] = type;
+		nlohmann::json colliderData;
+		colliderData["type"] = "tilemap";
+		data["colliderData"] = colliderData;
+		
 
 	}
 #endif

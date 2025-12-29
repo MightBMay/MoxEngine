@@ -77,9 +77,17 @@ int main()
 
     Input::Initialize();
 
-    playerView = sf::View({ 0,0 }, { 1920,1080 });
+    /* 
+    DEBUG / REMINDER set player view center to :
+        window resolution * zoom * .5 
+        to properly center the room.
+
+    */
+    playerView = sf::View({ 648/2,360/2 }, { 1920,1080 });
+    playerView.zoom(0.33f);
     window = sf::RenderWindow(sf::VideoMode({ 1920, 1080 }), "MoxEditor");
     defaultView = window.getDefaultView();
+    window.setView(playerView);
    
    
     window.setFramerateLimit(144);

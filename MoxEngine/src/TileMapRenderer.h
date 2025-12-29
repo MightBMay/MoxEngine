@@ -47,6 +47,7 @@ public:
 
 	virtual nlohmann::json SaveToJSON() const override {
 		nlohmann::json data;
+		data["type"] = "tilemap";
 		return data;
 	}
 #endif

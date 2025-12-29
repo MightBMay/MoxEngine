@@ -40,12 +40,12 @@
         {
             "colliderData": {
                 "origin": [
-                    -16.0,
-                    -16.0
+                    -4.0,
+                    -8.0
                 ],
                 "size": [
-                    32.0,
-                    32.0
+                    8.0,
+                    16.0
                 ],
                 "type": "box"
             },
@@ -53,15 +53,15 @@
                 {
                     "enabled": true,
                     "guid": 7967862570696753867,
-                    "speed": 250.0,
+                    "speed": 175.0,
                     "type": "PlayerMovement"
                 }
             ],
             "guid": 13077656098056108542,
             "name": "Player (r)",
             "position": [
-                -178.1810302734375,
-                96.48233795166016
+                299.48297119140625,
+                288.0
             ],
             "renderLayer": 0,
             "renderer": {
@@ -71,9 +71,9 @@
                     255,
                     255
                 ],
-                "height": 32.0,
+                "height": 16.0,
                 "type": "rectangle",
-                "width": 32.0
+                "width": 8.0
             },
             "rotation": 0.0,
             "scale": [
@@ -116,7 +116,9 @@
             ]
         },
         {
-            "colliderType": 3,
+            "colliderData": {
+                "type": "tilemap"
+            },
             "components": [
                 {
                     "layer": "renderLayer",
@@ -132,7 +134,9 @@
                 0.0
             ],
             "renderLayer": 0,
-            "renderer": null,
+            "renderer": {
+                "type": "tilemap"
+            },
             "rotation": 0.0,
             "scale": [
                 1.0,
