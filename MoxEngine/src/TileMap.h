@@ -11,6 +11,7 @@
 class TileMap {
 public:
     static std::string path;
+    Event<TileMap*> onTileMapLoad = {};
 
     class Textures {
         Textures() = default;

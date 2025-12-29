@@ -28,7 +28,9 @@ public:
 		if (_tilemap) return;
 
 		auto tmc = _parent->GetComponent<TileMapComponent>();
-		if (tmc) _tilemap= tmc;
+		if (tmc) {
+			_tilemap = tmc;
+		}
 		else {
 			std::cerr << "Tilemap Renderer attempted to get non existant tilemap component. remove renderer and add a tilemap component first.";
 		}

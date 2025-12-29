@@ -77,6 +77,7 @@ std::string TileMap::path;
 void TileMap::load(const ldtk::Level& level) {
     m_render_texture = sf::RenderTexture( sf::Vector2u(level.size.x, level.size.y) );
     m_layers.clear();
+    m_collisionLayers.clear();
     std::string layerName = "";
     for (const auto& layer : level.allLayers()) {
         if (layer.getType() == ldtk::LayerType::AutoLayer) {
@@ -132,7 +133,7 @@ void TileMap::load(const ldtk::Level& level) {
 
     }
 
-    //onTileMapLoad();
+    onTileMapLoad(this);
 
 
 
