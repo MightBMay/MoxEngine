@@ -43,6 +43,13 @@ void GameObject::Update(float deltaTime) {
 void GameObject::addComponent(std::unique_ptr<Component> component) {
 	component->SetParent(this);
 	component->Start();
+
+	auto componentRaw = component.get();
+
+	for (auto& comp : _components) {
+		comp->ComponentAdded(componentRaw);
+	}
+
 	_components.emplace_back(std::move(component));
 
 }

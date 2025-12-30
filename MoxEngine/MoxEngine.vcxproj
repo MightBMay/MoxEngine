@@ -68,6 +68,7 @@
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\RendererFactory.h" />
+    <ClInclude Include="src\RigidBody.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\SceneLoader.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
@@ -123,6 +124,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release (No Editor)|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\RigidBody.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release (No Editor)|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />

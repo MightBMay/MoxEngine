@@ -31,6 +31,8 @@ public:
 
 	virtual std::string GetName() const = 0;
 
+	virtual void ComponentAdded(Component* newComponent) {};
+
 
 #if IN_EDITOR
 	virtual void getImGuiParams(nlohmann::json& data) = 0;

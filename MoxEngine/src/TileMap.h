@@ -31,7 +31,6 @@ public:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     };
 
-
     struct IntGridCollisionLayer {
         std::string name;
         sf::Vector2i gridSize; // in cells

@@ -90,6 +90,11 @@ public:
 		auto component = std::make_unique<T>(std::forward<Args>(args)...);
 		component->SetParent(this);
 		component->Start();
+		auto componentRaw = component.get();
+
+		for (auto& comp : _components) {
+			comp->ComponentAdded(componentRaw);
+		}
 
 		T& ref = *component;
 		_components.emplace_back(std::move(component));

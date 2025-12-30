@@ -3,43 +3,6 @@
         {
             "colliderData": {
                 "origin": [
-                    -250.0,
-                    -10.0
-                ],
-                "size": [
-                    500.0,
-                    20.0
-                ],
-                "type": "box"
-            },
-            "components": [],
-            "guid": 7558484407566598574,
-            "name": "Floor (g)",
-            "position": [
-                0.0,
-                -400.0
-            ],
-            "renderLayer": 0,
-            "renderer": {
-                "colour": [
-                    0,
-                    255,
-                    0,
-                    255
-                ],
-                "height": 20.0,
-                "type": "rectangle",
-                "width": 500.0
-            },
-            "rotation": 0.0,
-            "scale": [
-                1.0,
-                1.0
-            ]
-        },
-        {
-            "colliderData": {
-                "origin": [
                     -4.0,
                     -8.0
                 ],
@@ -51,17 +14,22 @@
             },
             "components": [
                 {
+                    "acceleration": 100.0,
+                    "deceleration": 250.0,
                     "enabled": true,
-                    "guid": 7967862570696753867,
-                    "speed": 175.0,
+                    "gravity": 100.0,
+                    "guid": 16766230100559683154,
                     "type": "PlayerMovement"
+                },
+                {
+                    "type": "RigidBody"
                 }
             ],
             "guid": 13077656098056108542,
             "name": "Player (r)",
             "position": [
-                296.8190612792969,
-                288.0
+                115.34332275390625,
+                320.0
             ],
             "renderLayer": 0,
             "renderer": {
@@ -74,40 +42,6 @@
                 "height": 16.0,
                 "type": "rectangle",
                 "width": 8.0
-            },
-            "rotation": 0.0,
-            "scale": [
-                1.0,
-                1.0
-            ]
-        },
-        {
-            "colliderData": {
-                "origin": [
-                    0.0,
-                    0.0
-                ],
-                "radius": 48.0,
-                "type": "circle"
-            },
-            "components": [],
-            "guid": 2618932021375951219,
-            "name": "Circle (b)",
-            "position": [
-                -400.0,
-                -150.0
-            ],
-            "renderLayer": 0,
-            "renderer": {
-                "colour": [
-                    0,
-                    0,
-                    255,
-                    255
-                ],
-                "radius": 48.0,
-                "type": "circle",
-                "vertexCount": 32
             },
             "rotation": 0.0,
             "scale": [
