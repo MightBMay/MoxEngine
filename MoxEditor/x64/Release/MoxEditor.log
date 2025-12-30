@@ -1,17 +1,23 @@
 ﻿  MoxEditor.cpp
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(27,43): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Component.h(8,15): warning C4099: 'Collider': type name first seen using 'struct' now seen using 'class'
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\Collider.h(27,8): message : see declaration of 'Collider'
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(31,43): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(28,42): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(32,42): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(127,55): warning C4390: ';': empty controlled statement found; is this the intent?
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(129,56): warning C4390: ';': empty controlled statement found; is this the intent?
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(131,51): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(197,55): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(200,56): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(203,51): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(206,54): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(209,53): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(212,53): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(215,52): warning C4390: ';': empty controlled statement found; is this the intent?
 C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEngine\src\CircleRenderer.h(18,16): warning C4244: 'initializing': conversion from 'ReturnType' to 'float', possible loss of data
           with
           [
@@ -81,14 +87,14 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.3282
           [
               _Ty=int
           ]
-C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(42,15): message : see reference to function template instantiation 'std::unique_ptr<PlayerMovement,std::default_delete<PlayerMovement>> std::make_unique<PlayerMovement,uint64_t&,bool&,ReturnType,ReturnType,ReturnType,0>(uint64_t &,bool &,ReturnType &&,ReturnType &&,ReturnType &&)' being compiled
+C:\Users\turtw\OneDrive\Desktop\MEngine\MoxEditor\src\PlayerMovement.h(46,15): message : see reference to function template instantiation 'std::unique_ptr<PlayerMovement,std::default_delete<PlayerMovement>> std::make_unique<PlayerMovement,uint64_t&,bool&,ReturnType,ReturnType,ReturnType,ReturnType,ReturnType,ReturnType,0>(uint64_t &,bool &,ReturnType &&,ReturnType &&,ReturnType &&,ReturnType &&,ReturnType &&,ReturnType &&)' being compiled
           with
           [
               ReturnType=int
           ]
   Generating code
-  118 of 15280 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
-    6 functions were new in current compilation
-    151 functions had inline decision re-evaluated but remain unchanged
+  4 of 15543 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    62 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MoxEditor.vcxproj -> C:\Users\turtw\OneDrive\Desktop\MEngine\build\x64\Release\MoxEditor.exe

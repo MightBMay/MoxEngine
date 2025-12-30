@@ -27,12 +27,15 @@ private:
 
 public:
 
+	void OnRendererSet();
+
 	template<typename T, typename... Args>
 	T& setRenderer(Args&&... args) {
 		static_assert(std::is_base_of_v<Renderer, T>, "Type must inherit from renderer");
 		_renderer = std::make_unique<T>(std::forward<Args>(args)...);
 		_renderer->_parent = this;
 		_renderer->OnAddedToGameObject();
+		OnRendererSet();
 		return *static_cast<T*>(_renderer.get());
 	}
 
@@ -40,6 +43,7 @@ public:
 		_renderer = std::move(renderer);
 		_renderer->_parent = this;
 		_renderer->OnAddedToGameObject();
+		OnRendererSet();
 	}
 
 	std::unique_ptr<Renderer> RemoveRenderer() {
@@ -48,6 +52,7 @@ public:
 
 
 
+	void OnColliderSet();
 
 	template<typename T, typename... Args>
 	T& setCollider(Args&&... args) {
@@ -62,6 +67,7 @@ public:
 		_collider->_parent = this;
 		_collider->_transform = _transform.get();
 		_collider->OnAddedToGameObject();
+		OnColliderSet();
 		return *static_cast<T*>(_collider.get());
 	}
 
@@ -74,6 +80,7 @@ public:
 		CollisionSystem::AddCollider(_collider.get());
 		_collider->_parent = this;
 		_collider->OnAddedToGameObject();
+		OnColliderSet();
 	}
 
 	std::unique_ptr<Collider> removeCollider() {

@@ -1,5 +1,9 @@
 #include "CollisionSystem.h"
 #include "GameObject.h"
+#include "RigidBody.h"
+void CollisionSystem::RegisterContact(Collider* a, Collider* b, const Manifold& m) {
+    _Contacts.insert({a,b, m});
+}
 
 void CollisionSystem::AddCollider(Collider* col) {
     _Colliders.push_back(col);
@@ -17,51 +21,69 @@ void CollisionSystem::Update(float deltaTime)
 {
     const size_t count = _Colliders.size();
 
-    // 1. Clear current collisions
     for (Collider* c : _Colliders)
         c->_curCollisions.clear();
 
-    // 2. Collect all collisions for this frame
-    for (size_t i = 0; i < count; ++i) {
-        Collider* a = _Colliders[i];
+    for (const Contact& contact : _Contacts) {
+        Collider* a = contact.a;
+        Collider* b = contact.b;
+        const Manifold& m = contact.m;
 
-        for (size_t j = i + 1; j < count; ++j) {
-            Collider* b = _Colliders[j];
-
-            if (Collider::CheckCollision(a, b)) {
-                a->_curCollisions.push_back(b);
-                b->_curCollisions.push_back(a);
-            }
+        if (std::find(
+            a->_curCollisions.begin(),
+            a->_curCollisions.end(), b) 
+            == a->_curCollisions.end()) {
+            a->_curCollisions.push_back(b);
+            b->_curCollisions.push_back(a);
         }
+
+
+        // invoke events for A
+        if (std::find(a->_prevCollisions.begin(), a->_prevCollisions.end(), b) == a->_prevCollisions.end())
+        {
+            a->OnCollisionEnter(b, m); // pass stored manifold
+        }
+        else
+        {
+            a->OnCollisionStay(b, m); // pass stored manifold
+        }
+
+        // invoke events for B
+        if (std::find(b->_prevCollisions.begin(), b->_prevCollisions.end(), a) == b->_prevCollisions.end())
+        {
+            b->OnCollisionEnter(a, m);
+        }
+        else
+        {
+            b->OnCollisionStay(a, m);
+        }
+
     }
-
-    // 3. Compare previous vs current
-    for (Collider* c : _Colliders)
-    {
-        // oncollisionenter
-        for (Collider* cur : c->_curCollisions) {
-            if (std::find(c->_prevCollisions.begin(), c->_prevCollisions.end(), cur)
-                == c->_prevCollisions.end())
-            {
-                c->OnCollisionEnter(cur);
-            }
-            else {
-                c->OnCollisionStay(cur);
-            }
-        }
-
-        // oncollisionexit
+    // handle / invoke exit event.
+    for (Collider* c : _Colliders) {
         for (Collider* prev : c->_prevCollisions) {
-            if (std::find(c->_curCollisions.begin(), c->_curCollisions.end(), prev)
-                == c->_curCollisions.end())
-            {
+            if (std::find(c->_curCollisions.begin(), c->_curCollisions.end(), prev) == c->_curCollisions.end())
                 c->OnCollisionExit(prev);
-            }
         }
 
-        // 4. Prepare for next frame
         c->_prevCollisions.swap(c->_curCollisions);
     }
+
+
+ 
+    _Contacts.clear();
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 void CollisionSystem::ResolveCollisions(GameObject& obj, bool isXAxis) {
@@ -139,6 +161,7 @@ void CollisionSystem::MoveAxis(Transform& transform, Collider* collider, float a
         if (!m.hit)
             continue;
 
+        CollisionSystem::RegisterContact(collider, other, m);
         // Determine push direction
         float sign = (amount > 0.f) ? -1.f : 1.f;
 
@@ -151,8 +174,8 @@ void CollisionSystem::MoveAxis(Transform& transform, Collider* collider, float a
         {
             transform.Move({ 0.f, sign * m.penetration });
         }
-
-        // Stop movement on this axis
+        auto rb = collider->_parent->GetComponent<RigidBody>();
+        if (rb) rb->CollisionCancelVelocity(m, other);
         break;
     }
 }

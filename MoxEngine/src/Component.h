@@ -5,11 +5,12 @@
 
 
 
-
+class Collider;
+class Renderer;
 
 class Component {
-
 protected:
+
 	GameObject* _parent = nullptr;
 	bool _enabled = true;
 	uint64_t _guid;
@@ -31,7 +32,9 @@ public:
 
 	virtual std::string GetName() const = 0;
 
-	virtual void ComponentAdded(Component* newComponent) {};
+	virtual void OnComponentAdded(Component* newComponent) {};
+	virtual void OnColliderAdded(Collider* newCollider) {};
+	virtual void OnRendererAdded(Renderer* newRenderer) {};
 
 
 #if IN_EDITOR

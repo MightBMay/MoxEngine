@@ -84,7 +84,7 @@ int main()
 
     */
     playerView = sf::View({ 648/2,360/2 }, { 1920,1080 });
-    playerView.zoom(0.33f);
+    playerView.zoom(0.55f);
     window = sf::RenderWindow(sf::VideoMode({ 1920, 1080 }), "MoxEditor");
     defaultView = window.getDefaultView();
     window.setView(playerView);

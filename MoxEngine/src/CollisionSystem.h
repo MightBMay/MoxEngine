@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include "Collider.h"
+#include <unordered_set>
 
 
 
@@ -12,13 +13,37 @@ struct Manifold {
     float penetration = 0;
 };
 
+// contacts are done using a key/hash system with a set, as i was having issues with collision substeps registering the same collision
+// multiple times in one frame.
+struct Contact{
+    Collider* a;
+    Collider* b;
+    Manifold m;
+
+    bool operator==(const Contact& other) const { 
+        return (a == other.a && b == other.b) ||
+            (a == other.b && b == other.a);
+    }
+};
+
+struct ContactKeyHash {
+    size_t operator()(const Contact& k) const {
+        return std::hash<Collider*>()(k.a) ^ std::hash<Collider*>()(k.b);
+    }
+};
+
 class CollisionSystem {
 private:
 	static inline std::vector<Collider*> _Colliders;
+    static inline std::unordered_set<Contact, ContactKeyHash> _Contacts;
 
     CollisionSystem() = default;
     static inline const float maxStepDistance = 4.f;
 public:
+
+    static const std::unordered_set<Contact, ContactKeyHash>& GetContacts() { return _Contacts; }
+
+    static void RegisterContact(Collider* a, Collider* b, const Manifold& m);
 
     static CollisionSystem instance() {
         static CollisionSystem inst;

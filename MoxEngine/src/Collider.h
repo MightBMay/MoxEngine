@@ -7,10 +7,10 @@
 class GameObject;
 class Transform;
 enum ColliderType {
-	None,
 	Box,
 	Circle,
-	Tilemap
+	Tilemap,
+	None,
 };
 struct Manifold;
 struct CircleCollider;
@@ -19,6 +19,9 @@ struct TileMapCollider;
 class TileMap;
 
 
+struct Manifold;
+struct Collider;
+using ManifoldFn = Manifold(*)(const Collider&, const Collider&);
 
 
 struct Collider {
@@ -27,10 +30,30 @@ private:
 
 	Event<Manifold, const Collider*> _onCollisionEnter{};
 	Event<Manifold, const Collider*> _onCollisionStay{};
-	Event<Manifold, const Collider*> _onCollisionExit{};
+	Event<const Collider*> _onCollisionExit{};
+
+	bool _isTrigger = false;
+
+
+
+private:
+	static Manifold Dispatch(const Collider& a, const Collider& b);
+
+	static Manifold BoxBox(const Collider& a, const Collider& b);
+	static Manifold BoxCircle(const Collider& a, const Collider& b);
+	static Manifold CircleBox(const Collider& a, const Collider& b);
+	static Manifold CircleCircle(const Collider& a, const Collider& b);
+	static Manifold BoxTilemap(const Collider& a, const Collider& b);
+	static Manifold CircleTilemap(const Collider& a, const Collider& b);
+
+	static ManifoldFn collisionDispatch[3][3];
+
 
 
 public:
+
+
+	static Manifold Collide(const Collider& a, const Collider& b);
 
 	std::vector<Collider*> _prevCollisions;
 	std::vector<Collider*> _curCollisions;
@@ -46,6 +69,9 @@ public:
 	
 	virtual void OnAddedToGameObject(){}
 
+	bool IsTrigger() { return _isTrigger; }
+
+	void SetIsTrigger(bool value) { _isTrigger = value; }
 
 
 	static constexpr const char* ToString(const ColliderType type) {
@@ -87,6 +113,7 @@ public:
 	static bool PointVsBox(const sf::Vector2f& p, const BoxCollider& box);
 
 	static bool PointVsCircle(const sf::Vector2f& p, const CircleCollider& c);
+
 	/*bool PointVsTilemap(const sf::Vector2f& p, const TilemapCollider& map)
 	{
 		int tileX = static_cast<int>(p.x) / map.tileSize.x;
@@ -116,13 +143,13 @@ public:
 	static bool CheckCollision(const Collider* a, const Collider* b);
 
 	Event<Manifold, const Collider*>& GetOnCollisionEnter() { return _onCollisionEnter; }
-	virtual void OnCollisionEnter(const Collider* other);
+	virtual void OnCollisionEnter(const Collider* other, const Manifold& m);
 
-	Event<Manifold, const Collider*>& GetOnCollisionExit() { return _onCollisionExit; }
+	Event<const Collider*>& GetOnCollisionExit() { return _onCollisionExit; }
 	virtual void OnCollisionExit(const Collider* other);
 	
 	Event<Manifold, const Collider*>& GetOnCollisionStay() { return _onCollisionStay; }
-	virtual void OnCollisionStay(const Collider* other);
+	virtual void OnCollisionStay(const Collider* other, const Manifold& m);
 
 #if IN_EDITOR
 

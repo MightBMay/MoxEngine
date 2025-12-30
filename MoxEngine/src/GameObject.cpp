@@ -23,9 +23,15 @@ GameObject::GameObject(int renderLayer, const sf::Vector2f& position)
 
 
 
+void GameObject::OnRendererSet() {
+	auto rendererRaw = _renderer.get();
+	for (auto& comp : _components)  comp->OnRendererAdded(rendererRaw);
+}
 
-
-
+void GameObject::OnColliderSet() {
+	auto colliderRaw = _collider.get();
+	for (auto& comp : _components)  comp->OnColliderAdded(colliderRaw);
+}
 
 
 
@@ -47,7 +53,7 @@ void GameObject::addComponent(std::unique_ptr<Component> component) {
 	auto componentRaw = component.get();
 
 	for (auto& comp : _components) {
-		comp->ComponentAdded(componentRaw);
+		comp->OnComponentAdded(componentRaw);
 	}
 
 	_components.emplace_back(std::move(component));

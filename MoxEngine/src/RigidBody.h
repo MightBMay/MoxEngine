@@ -31,6 +31,31 @@ public:
 		_parent->MoveAndCollide(_velocity*deltaTime);
 	}
 
+	void CollisionCancelVelocity(const Manifold& m, const Collider* other) {
+		const sf::Vector2f& n = m.normal;
+
+		float vn = _velocity.x * n.x + _velocity.y * n.y;
+		std::cout << "vn: " << vn << "\n";
+
+		// Only cancel if moving into the collision
+		if (vn >= 0.f)
+			return;
+
+		// Remove velocity along the normal
+		sf::Vector2f newVel = _velocity - vn * n;
+
+		SetVelocity(newVel.x, newVel.y);
+
+		if (std::abs(n.x) > std::abs(n.y)) { // find dominant axis.
+
+			SetVelocity(0, _velocity.y);
+		}
+		else {
+			SetVelocity(_velocity.x, 0);
+		}
+
+
+	}
 
 	const sf::Vector2f& getVelocity() const { return _velocity; }
 

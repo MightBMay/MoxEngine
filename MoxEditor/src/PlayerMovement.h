@@ -14,6 +14,10 @@ protected:
 	float _acceleration = 100;
 	float _deceleration = 250;
 	float _gravity = 100;
+	float _jumpHeight = 100;
+	float _maxHSpeed = 250.f;
+	float _maxVSpeed = 100;
+	bool _isGrounded = true;
 	Transform* _transform;
 	sf::Vector2f direction = sf::Vector2f(0, 0);
 	Collider* _collider;
@@ -44,7 +48,10 @@ public:
 			enabled,
 			data.value("acceleration", 100),
 			data.value("deceleration", 250),
-			data.value("gravity", 100)
+			data.value("gravity", 100),
+			data.value("jumpHeight", 100),
+			data.value("maxHSpeed", 100),
+			data.value("maxVSpeed", 100)
 		);
 	}
 	virtual void SetParent(GameObject* parent) { 
@@ -54,62 +61,125 @@ public:
 
 	virtual void Update(float deltaTime) {
 
-		constexpr float maxHorizontalSpeed = 250.f;
-
 		if (!_rb) return;
 		GetMoveDirection();
 
-		auto curVel = _rb->getVelocity();
+		auto& curVel = _rb->getVelocity();
 		
 		// Apply deceleration if no horizontal input
 		float decelX = 0.f;
 		if (direction.x == 0.f) {
 			// deceleration opposes current velocity, clamp to zero
 			if (curVel.x > 0.f)
-				decelX = -std::min(_deceleration * deltaTime, curVel.x);
+				decelX = -std::min(_deceleration*1.8f * deltaTime, curVel.x);
 			else if (curVel.x < 0.f)
-				decelX = std::min(_deceleration * deltaTime, -curVel.x);
+				decelX = std::min(_deceleration *1.8f* deltaTime, -curVel.x);
 		}
 
-		// extra deceleration if going too fast.
-		if (std::abs(curVel.x) >= maxHorizontalSpeed) {
+		// extra deceleration if going too fast. lets you go faster if u have a faster acceleration source.
+		if (std::abs(curVel.x) >= _maxHSpeed) {
 			decelX += std::copysign(_deceleration * deltaTime, -curVel.x);
+		} 
+		if (curVel.y > _maxVSpeed) { // clamp fall speed to maxVSpeed.
+			_rb->SetVelocity(curVel.x, _maxVSpeed);
 		}
 
 		// Horizontal acceleration from input
 		float accelX = direction.x * _acceleration * deltaTime;
 
 		// Vertical movement: gravity
-		float accelY = _gravity * deltaTime;
+		float accelY = 0;
+		if(!_isGrounded)
+			accelY += _gravity * deltaTime;
+
+
+		if (direction.x != 0.f && std::signbit(curVel.x) != std::signbit(direction.x)) {
+			
+			_rb->SetVelocity(-curVel.x, curVel.y);
+		}
 
 		// Update velocity
 		sf::Vector2f change = sf::Vector2f(accelX + decelX, accelY);
 		_rb->AddVelocity(change);
+
+		if (Input::GetKeyDown(sf::Keyboard::Scan::Space) && _isGrounded) {
+			_isGrounded = false;
+			float jumpVelocity = std::sqrt(2 * _gravity * _jumpHeight);
+			_rb->SetVelocity(curVel.x, -jumpVelocity );
+		}
 	
 	}
 
-
-
-
 	virtual void Start() override {
-		Collider* collider = _parent->getCollider();
-		if (!collider) return;
+		_collider = _parent->getCollider();
+		if (!_collider) return;
+		_collider->GetOnCollisionEnter() += [this](const Manifold& m, const Collider* other) {
+			_rb->CollisionCancelVelocity(m, other);
+			_isGrounded = GroundCheck(m.normal.y); // set grounded if collision entered is beneath.
+			};
+		_collider->GetOnCollisionStay() += [this](const Manifold& m, const Collider* other) { _rb->CollisionCancelVelocity(m, other);  };
 
-		collider->GetOnCollisionEnter() += [](Manifold m, const Collider* other ) {std::cout << "On Collision Enter: " << other->_parent->GetName()<<"\n"; };
-		collider->GetOnCollisionStay()  += [](Manifold m, const Collider* other) {std::cout << "On Collision Stay: " << other->_parent->GetName() << "\n"; };
-		collider->GetOnCollisionExit()  += [](Manifold m, const Collider* other) {std::cout << "On Collision Exit: " << other->_parent->GetName() << "\n"; };
+		_collider->GetOnCollisionExit() += [this](const Collider* other) {
+			//_isGrounded = false;// CheckStillGrounded();
+			};
 	}
 
-	PlayerMovement(uint64_t guid, bool enabled, float accel, float decel, float grav):Component(guid),_acceleration(accel), _deceleration(decel), _gravity(grav){
+	PlayerMovement(uint64_t guid, bool enabled, float accel, float decel, float grav, float jumpheight, float maxH, float maxV) :
+		Component(guid), _acceleration(accel), _deceleration(decel), _gravity(grav),_jumpHeight(jumpheight), _maxHSpeed(maxH), _maxVSpeed(maxV) {
 		_enabled = enabled;
 	}
 	virtual std::string GetName() const override { static std::string name = "PlayerMovement"; return  name; };
 
-	virtual void ComponentAdded(Component* newComponent) override {
+	virtual void OnComponentAdded(Component* newComponent) override {
 		if (auto* rb = dynamic_cast<RigidBody*>(newComponent)) {
 			_rb = rb;
 		}
 	}
+
+	virtual void OnColliderAdded(Collider* newCollider) override {
+		_collider = newCollider;
+		_collider->GetOnCollisionEnter() += [this](const Manifold& m, const Collider* other) {
+			_rb->CollisionCancelVelocity(m, other);
+			_isGrounded = GroundCheck(m.normal.y);// set grounded if collision entered is beneath.
+			};
+		_collider->GetOnCollisionStay() += [this](const Manifold& m, const Collider* other) { 
+			_rb->CollisionCancelVelocity(m, other);
+			};
+
+		_collider->GetOnCollisionExit() += [this](const Collider* other) {
+			//_isGrounded = false;
+
+		};
+
+
+	}
+
+	virtual bool GroundCheck(const float& collisionNormalY) const {
+		return collisionNormalY <= -0.5;
+
+	}
+
+	bool CheckStillGrounded() const {
+		const auto& Contacts = CollisionSystem::GetContacts();
+
+		for (const Contact& contact : Contacts) {
+			Collider* other = nullptr;
+
+			if (contact.a == _collider) other = contact.b;
+			else if (contact.b == _collider) other = contact.a;
+			else continue;
+
+			if (contact.m.hit && GroundCheck(contact.m.normal.y)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+
+
 
 #if IN_EDITOR
 
@@ -125,10 +195,25 @@ public:
 
 		std::string label = "Acceleration##" + std::to_string(reinterpret_cast<uintptr_t>(this));
 		if(ImGui::InputFloat(label.c_str(), &_acceleration));
+
 		label = "Deceleration##" + std::to_string(reinterpret_cast<uintptr_t>(this));
 		if (ImGui::InputFloat(label.c_str(), &_deceleration));
+
 		label = "Gravity##" + std::to_string(reinterpret_cast<uintptr_t>(this));
 		if (ImGui::InputFloat(label.c_str(), &_gravity));
+
+		label = "Jump Height##" + std::to_string(reinterpret_cast<uintptr_t>(this));
+		if (ImGui::InputFloat(label.c_str(), &_jumpHeight));
+
+		label = "Max Horizontal Speed##" + std::to_string(reinterpret_cast<uintptr_t>(this));
+		if (ImGui::InputFloat(label.c_str(), &_maxHSpeed));
+
+		label = "Max Vertical Speed##" + std::to_string(reinterpret_cast<uintptr_t>(this));
+		if (ImGui::InputFloat(label.c_str(), &_maxVSpeed));
+
+		label = "Is Grounded##" + std::to_string(reinterpret_cast<uintptr_t>(this));
+		if (ImGui::Checkbox(label.c_str(), &_isGrounded));
+
 
 
 	}
@@ -141,6 +226,9 @@ public:
 		data["acceleration"] = _acceleration;
 		data["deceleration"] = _deceleration;
 		data["gravity"] = _gravity;
+		data["jumpHeight"] = _jumpHeight;
+		data["maxHSpeed"] = _maxHSpeed;
+		data["maxVSpeed"] = _maxVSpeed;
 		return data;
 	}
 #endif

@@ -14,11 +14,14 @@
             },
             "components": [
                 {
-                    "acceleration": 100.0,
-                    "deceleration": 250.0,
+                    "acceleration": 300.0,
+                    "deceleration": 500.0,
                     "enabled": true,
-                    "gravity": 100.0,
+                    "gravity": 500.0,
                     "guid": 16766230100559683154,
+                    "jumpHeight": 40.0,
+                    "maxHSpeed": 125.0,
+                    "maxVSpeed": 350.0,
                     "type": "PlayerMovement"
                 },
                 {
@@ -28,7 +31,7 @@
             "guid": 13077656098056108542,
             "name": "Player (r)",
             "position": [
-                115.34332275390625,
+                196.73580932617188,
                 320.0
             ],
             "renderLayer": 0,

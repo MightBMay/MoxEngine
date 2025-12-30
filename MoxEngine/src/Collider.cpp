@@ -7,6 +7,87 @@
 #include "GameObject.h"
 #include "CollisionSystem.h"
 
+ManifoldFn Collider::collisionDispatch[3][3] = {
+	/* Box */
+	{
+		&Collider::BoxBox,
+		&Collider::BoxCircle,
+		&Collider::BoxTilemap
+	},
+	/* Circle */
+	{
+		&Collider::CircleBox,
+		&Collider::CircleCircle,
+		&Collider::CircleTilemap
+	},
+	/* Tilemap */
+	{
+		nullptr,
+		nullptr,
+		nullptr
+	}
+};
+
+
+
+Manifold Collider::Collide(const Collider& a, const Collider& b) {
+	if (b._isTrigger) return Manifold{};
+	auto fn = collisionDispatch[(int)a.type][(int)b.type];
+	return fn ? fn(a, b) : Manifold{};
+}
+
+
+
+
+Manifold Collider::BoxBox(const Collider& a, const Collider& b)
+{
+	return BoxVsBoxManifold(
+		static_cast<const BoxCollider&>(a),
+		static_cast<const BoxCollider&>(b)
+	);
+}
+
+Manifold Collider::BoxCircle(const Collider& a, const Collider& b)
+{
+	return BoxVsCircleManifold(
+		static_cast<const BoxCollider&>(a),
+		static_cast<const CircleCollider&>(b)
+	);
+}
+
+Manifold Collider::CircleBox(const Collider& a, const Collider& b)
+{
+	Manifold m = BoxVsCircleManifold(
+		static_cast<const BoxCollider&>(b),
+		static_cast<const CircleCollider&>(a)
+	);
+	m.normal = -m.normal;
+	return m;
+}
+
+Manifold Collider::CircleCircle(const Collider& a, const Collider& b)
+{
+	return CircleVsCircleManifold(
+		static_cast<const CircleCollider&>(a),
+		static_cast<const CircleCollider&>(b)
+	);
+}
+
+Manifold Collider::BoxTilemap(const Collider& a, const Collider& b)
+{
+	return BoxVsTilemapManifold(
+		static_cast<const BoxCollider&>(a),
+		static_cast<const TileMapCollider&>(b)
+	);
+}
+
+Manifold Collider::CircleTilemap(const Collider& a, const Collider& b)
+{
+	return CircleVsTilemapManifold(
+		static_cast<const CircleCollider&>(a),
+		static_cast<const TileMapCollider&>(b)
+	);
+}
 
 
 sf::Vector2f Collider::GetWorldPosition() const {
@@ -17,82 +98,6 @@ sf::Vector2f Collider::GetWorldPosition() const {
 	
 	return _transform->GetPosition() + offset;
 }
-
-bool Collider::BoxVsBox(const BoxCollider& a, const BoxCollider& b) {
-
-	auto centerA = a.GetWorldPosition();
-	auto sizeA = a.GetSize();
-
-	auto centerB = b.GetWorldPosition();
-	auto sizeB = b.GetSize();
-
-	return !(centerA.x + sizeA.x < centerB.x ||
-		centerB.x + sizeB.x < centerA.x ||
-		centerA.y + sizeA.y < centerB.y ||
-		centerB.y + sizeB.y < centerA.y);
-}
-
-
-bool Collider::BoxVsCircle(const BoxCollider& box, const CircleCollider& circle)
-{
-
-	auto circleCenter = circle.GetWorldPosition();
-	auto boxCenter = box.GetWorldPosition();
-	auto boxSize = box.GetSize();
-
-	float cx = std::clamp(circleCenter.x, boxCenter.x, boxCenter.x + boxSize.x);
-	float cy = std::clamp(circleCenter.y, boxCenter.y, boxCenter.y + boxSize.y);
-
-	float dx = circleCenter.x - cx;
-	float dy = circleCenter.y - cy;
-
-	float radius = circle.GetRadius();
-	return (dx * dx + dy * dy) <= radius * radius;
-}
-
-bool Collider::CircleVsCircle(const CircleCollider& a, const CircleCollider& b)
-{
-	const sf::Vector2f centerA = a.GetWorldPosition();
-	const sf::Vector2f centerB = b.GetWorldPosition();
-
-	float dx = centerA.x - centerB.x;
-	float dy = centerA.y - centerB.y;
-	float rad = a._radius + b._radius;
-	return (dx * dx + dy * dy) <= rad * rad;
-}
-
-bool Collider::PointVsBox(const sf::Vector2f& p, const BoxCollider& box)
-{
-
-	auto boxCenter = box.GetWorldPosition();
-	auto boxSize = box.GetSize();
-
-	return (p.x >= boxCenter.x &&
-		p.x <= boxCenter.x + boxSize.x &&
-		p.y >= boxCenter.y &&
-		p.y <= boxCenter.y + boxSize.y);
-}
-
-bool Collider::PointVsCircle(const sf::Vector2f& p, const CircleCollider& c)
-{
-	auto circleCenter = c.GetWorldPosition();
-	float radius = c.GetRadius();
-
-	float dx = p.x - circleCenter.x;
-	float dy = p.y - circleCenter.y;
-	return (dx * dx + dy * dy) <= (radius * radius);
-}
-
-/*bool PointVsTilemap(const sf::Vector2f& p, const TilemapCollider& map)
-{
-	int tileX = static_cast<int>(p.x) / map.tileSize.x;
-	int tileY = static_cast<int>(p.y) / map.tileSize.y;
-
-	return map.isSolid(tileX, tileY);
-}
-*/
-
-
 
 
 Manifold Collider::BoxVsBoxManifold(const BoxCollider& a, const BoxCollider& b)
@@ -269,119 +274,23 @@ Manifold Collider::BoxVsTilemapManifold(const BoxCollider& box, const TileMapCol
 
 Manifold Collider::GetManifold(const Collider* a, const Collider* b)
 {
-	
-	switch (a->type)
-	{
-		case ColliderType::Box:
-			switch (b->type)
-			{
-				case ColliderType::Box:
-					return BoxVsBoxManifold(
-						*(const BoxCollider*)a,
-						*(const BoxCollider*)b
-					);
-
-				case ColliderType::Circle:
-					return BoxVsCircleManifold(
-						*(const BoxCollider*)a,
-						*(const CircleCollider*)b
-					);
-
-				case ColliderType::Tilemap:
-					return BoxVsTilemapManifold(
-						*(const BoxCollider*)a,
-						*(const TileMapCollider*)b
-					);
-
-
-			}
-			break;
-
-		case ColliderType::Circle:
-			switch (b->type)
-			{
-				case ColliderType::Box:
-					{
-						Manifold m = BoxVsCircleManifold(
-							*(const BoxCollider*)b,
-							*(const CircleCollider*)a
-						);
-						m.normal = -m.normal; // important
-						return m;
-					}
-
-				case ColliderType::Circle:
-					return CircleVsCircleManifold(
-						*(const CircleCollider*)a,
-						*(const CircleCollider*)b
-					);
-
-
-				case ColliderType::Tilemap:
-					return CircleVsTilemapManifold(
-						*(const CircleCollider*)a,
-						*(const TileMapCollider*)b
-					);
-			}
-			break;
-
-	}
-	return {};
+	return Collide(*a, *b);
 }
 
-
-
-bool Collider::CheckPoint(const sf::Vector2f& p, const Collider* col)
-{
-	switch (col->type)
-	{
-		case ColliderType::Box:
-			return PointVsBox(p, *(BoxCollider*)col);
-
-		case ColliderType::Circle:
-			return PointVsCircle(p, *(CircleCollider*)col);
-
-		/*case ColliderType::Tilemap:
-			return PointVsTilemap(p, *(TilemapCollider*)col);*/
-	}
-	return false;
-}
 
 bool Collider::CheckCollision(const Collider* a, const Collider* b) {
-	if (a->type == ColliderType::Box && b->type == ColliderType::Box)
-		return BoxVsBox(*(BoxCollider*)a, *(BoxCollider*)b);
-
-	else if (a->type == ColliderType::Circle && b->type == ColliderType::Circle)
-		return CircleVsCircle(*(CircleCollider*)a, *(CircleCollider*)b);
-
-	else if (a->type == ColliderType::Box && b->type == ColliderType::Circle)
-		return BoxVsCircle(*(BoxCollider*)a, *(CircleCollider*)b);
-
-	else if (a->type == ColliderType::Circle && b->type == ColliderType::Box)
-		return BoxVsCircle(*(BoxCollider*)b, *(CircleCollider*)a);
-
-	/*else if (a->type == ColliderType::Box && b->type == ColliderType::Tilemap)
-		return BoxVsTilemap(*(BoxCollider*)a, *(TilemapCollider*)b);
-
-	else if (a->type == ColliderType::Tilemap && b->type == ColliderType::Box)
-		return BoxVsTilemap(*(BoxCollider*)b, *(TilemapCollider*)a);*/
-
-
-	return false;
+	return Collide(*a, *b).hit;
 }
 
 
-void Collider::OnCollisionEnter(const Collider* other) {
-	Manifold m = Collider::GetManifold(this, other);
+void Collider::OnCollisionEnter(const Collider* other, const Manifold& m) {
 	_onCollisionEnter(m, other);
 }
 
 void Collider::OnCollisionExit(const Collider* other) {
-	Manifold m = Collider::GetManifold(this, other);
-	_onCollisionExit(m, other);
+	_onCollisionExit(other);
 }
 
-void Collider::OnCollisionStay(const Collider* other) {
-	Manifold m = Collider::GetManifold(this, other);
+void Collider::OnCollisionStay(const Collider* other, const Manifold& m) {
 	_onCollisionStay(m, other);
 }
