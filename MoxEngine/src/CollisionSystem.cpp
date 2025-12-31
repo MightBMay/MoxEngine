@@ -19,69 +19,68 @@ void CollisionSystem::RemoveCollider(Collider* col) {
 
 void CollisionSystem::Update(float deltaTime)
 {
+
     const size_t count = _Colliders.size();
 
     for (Collider* c : _Colliders)
         c->_curCollisions.clear();
 
+
     for (const Contact& contact : _Contacts) {
         Collider* a = contact.a;
         Collider* b = contact.b;
+
         const Manifold& m = contact.m;
 
-        if (std::find(
-            a->_curCollisions.begin(),
-            a->_curCollisions.end(), b) 
-            == a->_curCollisions.end()) {
-            a->_curCollisions.push_back(b);
-            b->_curCollisions.push_back(a);
-        }
+        a->_curCollisions.push_back(b);
+        b->_curCollisions.push_back(a);
 
 
-        // invoke events for A
-        if (std::find(a->_prevCollisions.begin(), a->_prevCollisions.end(), b) == a->_prevCollisions.end())
+        // A side
+        if (std::find(a->_prevCollisions.begin(),
+            a->_prevCollisions.end(), b)
+            == a->_prevCollisions.end())
         {
-            a->OnCollisionEnter(b, m); // pass stored manifold
+            a->OnCollisionEnter(b, m);
         }
         else
         {
-            a->OnCollisionStay(b, m); // pass stored manifold
+            a->OnCollisionStay(b, m);
         }
 
-        // invoke events for B
-        if (std::find(b->_prevCollisions.begin(), b->_prevCollisions.end(), a) == b->_prevCollisions.end())
+        // B side (normal should be flipped if needed)
+        if (std::find(b->_prevCollisions.begin(),
+            b->_prevCollisions.end(), a)
+            == b->_prevCollisions.end())
         {
-            b->OnCollisionEnter(a, m);
+            Manifold flipped = m;
+            flipped.normal = -flipped.normal;
+            b->OnCollisionEnter(a, flipped);
         }
         else
         {
-            b->OnCollisionStay(a, m);
+            Manifold flipped = m;
+            flipped.normal = -flipped.normal;
+            b->OnCollisionStay(a, flipped);
         }
 
     }
+
     // handle / invoke exit event.
     for (Collider* c : _Colliders) {
         for (Collider* prev : c->_prevCollisions) {
-            if (std::find(c->_curCollisions.begin(), c->_curCollisions.end(), prev) == c->_curCollisions.end())
+            if (std::find(c->_curCollisions.begin(), c->_curCollisions.end(), prev) == c->_curCollisions.end()) {
                 c->OnCollisionExit(prev);
+            }   
         }
 
         c->_prevCollisions.swap(c->_curCollisions);
     }
 
 
+    ClearContacts();
  
-    _Contacts.clear();
-
-
-
-
-
-
-
-
-
-
+   
 
 
 }

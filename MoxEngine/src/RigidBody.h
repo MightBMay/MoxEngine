@@ -26,7 +26,7 @@ public:
 
 	virtual void Update(float deltaTime) override {
 
-		if (_velocity.lengthSquared() <= 0) return;
+		//if (_velocity.lengthSquared() <= 0) return;
 
 		_parent->MoveAndCollide(_velocity*deltaTime);
 	}

@@ -114,6 +114,7 @@ int main()
         secondTimer->Update(deltaTime);
         curFps = 1 / deltaTime;
         Input::Update();
+   
         
         
 

@@ -42,6 +42,7 @@ private:
 public:
 
     static const std::unordered_set<Contact, ContactKeyHash>& GetContacts() { return _Contacts; }
+    static void ClearContacts() { _Contacts.clear(); }
 
     static void RegisterContact(Collider* a, Collider* b, const Manifold& m);
 

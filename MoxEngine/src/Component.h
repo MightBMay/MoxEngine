@@ -10,7 +10,6 @@ class Renderer;
 
 class Component {
 protected:
-
 	GameObject* _parent = nullptr;
 	bool _enabled = true;
 	uint64_t _guid;

@@ -31,7 +31,7 @@ protected:
 		direction.x = Input::GetAction("right") - Input::GetAction("left");
 		direction.y = Input::GetAction("down") - Input::GetAction("up");
 
-		if (direction.x != 0.f || direction.y != 0.f)
+		if (direction.x != 0.f && direction.y != 0.f)
 			direction = direction.normalized();
 
 	}
@@ -89,8 +89,7 @@ public:
 
 		// Vertical movement: gravity
 		float accelY = 0;
-		if(!_isGrounded)
-			accelY += _gravity * deltaTime;
+		if(!_isGrounded) accelY += _gravity * deltaTime;
 
 
 		if (direction.x != 0.f && std::signbit(curVel.x) != std::signbit(direction.x)) {
@@ -120,7 +119,8 @@ public:
 		_collider->GetOnCollisionStay() += [this](const Manifold& m, const Collider* other) { _rb->CollisionCancelVelocity(m, other);  };
 
 		_collider->GetOnCollisionExit() += [this](const Collider* other) {
-			//_isGrounded = false;// CheckStillGrounded();
+			//_isGrounded = CheckStillGrounded();
+			std::cout << "onc Exit\n";
 			};
 	}
 
@@ -147,9 +147,9 @@ public:
 			};
 
 		_collider->GetOnCollisionExit() += [this](const Collider* other) {
-			//_isGrounded = false;
-
-		};
+			//_isGrounded = CheckStillGrounded();
+			std::cout << "onc Exit\n";
+			};
 
 
 	}
