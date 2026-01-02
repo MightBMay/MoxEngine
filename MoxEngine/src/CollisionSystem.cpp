@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "RigidBody.h"
 void CollisionSystem::RegisterContact(Collider* a, Collider* b, const Manifold& m) {
-    _Contacts.insert({a,b, m});
+   // _Contacts.emplace(MakeContact(a, b), m);
 }
 
 void CollisionSystem::AddCollider(Collider* col) {
@@ -17,69 +17,139 @@ void CollisionSystem::RemoveCollider(Collider* col) {
     }
 }
 
+
+
+
+
+
+
+
+
+
 void CollisionSystem::Update(float deltaTime)
 {
 
     const size_t count = _Colliders.size();
+    
 
-    for (Collider* c : _Colliders)
-        c->_curCollisions.clear();
+    for (int i = 0; i < count ; i++) {
+        for (int j = i + 1; j < count; j++) {
 
+            Collider* a = _Colliders[i];
+            Collider* b = _Colliders[j];
+            Manifold m = Collider::GetManifold(a,b);
+            if (m.hit) _Contacts.emplace(MakeContact(a, b), m);
 
-    for (const Contact& contact : _Contacts) {
-        Collider* a = contact.a;
-        Collider* b = contact.b;
-
-        const Manifold& m = contact.m;
-
-        a->_curCollisions.push_back(b);
-        b->_curCollisions.push_back(a);
-
-
-        // A side
-        if (std::find(a->_prevCollisions.begin(),
-            a->_prevCollisions.end(), b)
-            == a->_prevCollisions.end())
-        {
-            a->OnCollisionEnter(b, m);
-        }
-        else
-        {
-            a->OnCollisionStay(b, m);
         }
 
-        // B side (normal should be flipped if needed)
-        if (std::find(b->_prevCollisions.begin(),
-            b->_prevCollisions.end(), a)
-            == b->_prevCollisions.end())
-        {
-            Manifold flipped = m;
+    }
+
+#pragma region Collision Events
+
+
+
+#pragma region OnCollision Enter/Stay
+
+
+
+    for (auto& [key, manifold] : _Contacts) {
+
+        auto it = _PrevContacts.find(key);
+
+        Collider* a = key.a;
+        Collider* b = key.b;
+
+        if (it == _PrevContacts.end()) {
+            a->OnCollisionEnter(b, manifold);
+
+            Manifold flipped = manifold;
             flipped.normal = -flipped.normal;
             b->OnCollisionEnter(a, flipped);
         }
-        else
-        {
-            Manifold flipped = m;
+        else{
+            a->OnCollisionEnter(b, manifold);
+
+            Manifold flipped = manifold;
             flipped.normal = -flipped.normal;
-            b->OnCollisionStay(a, flipped);
+            b->OnCollisionEnter(a, flipped);
         }
 
     }
+#pragma endregion
+#pragma region OnCollision Exit
 
-    // handle / invoke exit event.
-    for (Collider* c : _Colliders) {
-        for (Collider* prev : c->_prevCollisions) {
-            if (std::find(c->_curCollisions.begin(), c->_curCollisions.end(), prev) == c->_curCollisions.end()) {
-                c->OnCollisionExit(prev);
-            }   
+
+
+    for (auto& [ key, _ ] : _PrevContacts) {
+        if (_Contacts.find(key) == _Contacts.end()) {
+            Collider* a = key.a;
+            Collider* b = key.b;
+
+            a->OnCollisionExit(b);
+            b->OnCollisionExit(a);
         }
+    }
+#pragma endregion
 
-        c->_prevCollisions.swap(c->_curCollisions);
+#pragma endregion
+
+
+#pragma region Collision Resolution
+
+
+
+
+    for (auto& [contact, manifold] : _Contacts) {
+
+
+        Collider* a = contact.a;
+        Collider* b = contact.b;
+
+        RigidBody* aRB = a->_parent->GetComponent<RigidBody>();
+        bool aStatic = true;
+        if (aRB) aStatic = aRB->isKinematic;
+
+        RigidBody* bRB = b->_parent->GetComponent<RigidBody>();
+        bool bStatic = true;
+        if (bRB) bStatic = bRB->isKinematic;
+
+
+        float mass = 1; // unused rn.
+        float aMoveFactor = 0.5f; // default- movement split 50/50 .
+
+        if (aStatic && !bStatic) {
+            aMoveFactor = 0;
+        }
+        else if (!aStatic && bStatic) {
+            aMoveFactor = 1;
+        }
+        
+
+        sf::Vector2f separation = manifold.normal * manifold.penetration;
+
+        a->_parent->_transform->Move(-separation * aMoveFactor);
+        b->_parent->_transform->Move(separation * (1.0f - aMoveFactor));
+    
+        if (aRB) aRB->CollisionCancelVelocity(manifold, b);
+        if (bRB) bRB->CollisionCancelVelocity(manifold, a);
     }
 
 
-    ClearContacts();
- 
+
+
+
+
+
+#pragma endregion
+
+
+
+
+
+    _PrevContacts.swap(_Contacts);
+    _Contacts.clear();
+   
+    
    
 
 
@@ -148,33 +218,31 @@ void CollisionSystem::MoveKinematic(
 void CollisionSystem::MoveAxis(Transform& transform, Collider* collider, float amount, bool isXAxis)
 {
     // Try full move
-    transform.Move(isXAxis ? sf::Vector2f{ amount, 0.f }
-    : sf::Vector2f{ 0.f, amount });
+    transform.Move(isXAxis ? sf::Vector2f{ amount, 0.f } : sf::Vector2f{ 0.f, amount });
 
-    for (Collider* other : CollisionSystem::GetColliders())
-    {
-        if (other == collider)//|| other->isTrigger)
-            continue;
+    //for (Collider* other : CollisionSystem::GetColliders())
+    //{
+    //    if (other == collider)//|| other->isTrigger)
+    //        continue;
 
-        Manifold m = Collider::GetManifold(collider, other);
-        if (!m.hit)
-            continue;
+    //    Manifold m = Collider::GetManifold(collider, other);
+    //    if (!m.hit)
+    //        continue;
 
-        CollisionSystem::RegisterContact(collider, other, m);
-        // Determine push direction
-        float sign = (amount > 0.f) ? -1.f : 1.f;
+    //    // Determine push direction
+    //    float sign = (amount > 0.f) ? -1.f : 1.f;
 
-        if (isXAxis)
-        {
+    //    if (isXAxis)
+    //    {
 
-            transform.Move({ sign * m.penetration, 0.f });
-        }
-        else
-        {
-            transform.Move({ 0.f, sign * m.penetration });
-        }
-        auto rb = collider->_parent->GetComponent<RigidBody>();
-        if (rb) rb->CollisionCancelVelocity(m, other);
-        break;
-    }
+    //        transform.Move({ sign * m.penetration, 0.f });
+    //    }
+    //    else
+    //    {
+    //        transform.Move({ 0.f, sign * m.penetration });
+    //    }
+    //    auto rb = collider->_parent->GetComponent<RigidBody>();
+    //    if (rb) rb->CollisionCancelVelocity(m, other);
+    //
+    //}
 }

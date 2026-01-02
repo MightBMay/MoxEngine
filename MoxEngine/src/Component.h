@@ -5,7 +5,7 @@
 
 
 
-class Collider;
+struct Collider;
 class Renderer;
 
 class Component {

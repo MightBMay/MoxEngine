@@ -76,6 +76,7 @@ public:
 				decelX = std::min(_deceleration *1.8f* deltaTime, -curVel.x);
 		}
 
+
 		// extra deceleration if going too fast. lets you go faster if u have a faster acceleration source.
 		if (std::abs(curVel.x) >= _maxHSpeed) {
 			decelX += std::copysign(_deceleration * deltaTime, -curVel.x);
@@ -116,10 +117,13 @@ public:
 			_rb->CollisionCancelVelocity(m, other);
 			_isGrounded = GroundCheck(m.normal.y); // set grounded if collision entered is beneath.
 			};
-		_collider->GetOnCollisionStay() += [this](const Manifold& m, const Collider* other) { _rb->CollisionCancelVelocity(m, other);  };
+		_collider->GetOnCollisionStay() += [this](const Manifold& m, const Collider* other) { 
+			_rb->CollisionCancelVelocity(m, other);  
+			_isGrounded = true;
+			};
 
 		_collider->GetOnCollisionExit() += [this](const Collider* other) {
-			//_isGrounded = CheckStillGrounded();
+			//_isGrounded = false;// CheckStillGrounded();
 			std::cout << "onc Exit\n";
 			};
 	}
@@ -139,6 +143,7 @@ public:
 	virtual void OnColliderAdded(Collider* newCollider) override {
 		_collider = newCollider;
 		_collider->GetOnCollisionEnter() += [this](const Manifold& m, const Collider* other) {
+			std::cout << "onc Enter\n";
 			_rb->CollisionCancelVelocity(m, other);
 			_isGrounded = GroundCheck(m.normal.y);// set grounded if collision entered is beneath.
 			};
@@ -147,7 +152,7 @@ public:
 			};
 
 		_collider->GetOnCollisionExit() += [this](const Collider* other) {
-			//_isGrounded = CheckStillGrounded();
+			//_isGrounded = false;// CheckStillGrounded();
 			std::cout << "onc Exit\n";
 			};
 
@@ -160,7 +165,7 @@ public:
 	}
 
 	bool CheckStillGrounded() const {
-		const auto& Contacts = CollisionSystem::GetContacts();
+		/*const auto& Contacts = CollisionSystem::GetContacts();
 
 		for (const Contact& contact : Contacts) {
 			Collider* other = nullptr;
@@ -174,6 +179,7 @@ public:
 			}
 		}
 
+		return false;*/
 		return false;
 	}
 

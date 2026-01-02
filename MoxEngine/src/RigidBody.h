@@ -12,6 +12,9 @@ private:
 
 
 public:
+
+	bool isKinematic = false;
+
 	void SetVelocity(sf::Vector2f& newV) { _velocity = newV; }
 	void SetVelocity(float x, float y) { _velocity = { x,y }; }
 
@@ -27,7 +30,7 @@ public:
 	virtual void Update(float deltaTime) override {
 
 		//if (_velocity.lengthSquared() <= 0) return;
-
+		if (isKinematic) return;
 		_parent->MoveAndCollide(_velocity*deltaTime);
 	}
 
@@ -35,8 +38,6 @@ public:
 		const sf::Vector2f& n = m.normal;
 
 		float vn = _velocity.x * n.x + _velocity.y * n.y;
-		std::cout << "vn: " << vn << "\n";
-
 		// Only cancel if moving into the collision
 		if (vn >= 0.f)
 			return;

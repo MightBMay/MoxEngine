@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "Collider.h"
 #include <unordered_set>
+#include <unordered_map>
 
 
 
@@ -18,30 +19,38 @@ struct Manifold {
 struct Contact{
     Collider* a;
     Collider* b;
-    Manifold m;
+
+    Contact(Collider* c1, Collider* c2) {
+        if (c1 < c2) { a = c1; b = c2; }
+        else { a = c2; b = c1; }
+    }
 
     bool operator==(const Contact& other) const { 
-        return (a == other.a && b == other.b) ||
-            (a == other.b && b == other.a);
+        return a == other.a && b == other.b;
     }
 };
 
 struct ContactKeyHash {
     size_t operator()(const Contact& k) const {
-        return std::hash<Collider*>()(k.a) ^ std::hash<Collider*>()(k.b);
+        return std::hash<Collider*>()(k.a) ^ std::hash<Collider*>()(k.b)<<1;
     }
 };
 
 class CollisionSystem {
 private:
 	static inline std::vector<Collider*> _Colliders;
-    static inline std::unordered_set<Contact, ContactKeyHash> _Contacts;
+    static inline std::unordered_map<Contact, Manifold, ContactKeyHash> _PrevContacts;
+    static inline std::unordered_map<Contact, Manifold, ContactKeyHash> _Contacts;
+
+    static Contact MakeContact(Collider* a, Collider* b) { 
+        return (a < b) ? Contact{ a,b } : Contact{ b,a };
+    }
 
     CollisionSystem() = default;
     static inline const float maxStepDistance = 4.f;
 public:
 
-    static const std::unordered_set<Contact, ContactKeyHash>& GetContacts() { return _Contacts; }
+    static const std::unordered_map<Contact, Manifold, ContactKeyHash>& GetContacts() { return _Contacts; }
     static void ClearContacts() { _Contacts.clear(); }
 
     static void RegisterContact(Collider* a, Collider* b, const Manifold& m);
