@@ -19,24 +19,54 @@ void CollisionSystem::RemoveCollider(Collider* col) {
 
 void CollisionSystem::Update(float deltaTime)
 {
-
-    const size_t count = _Colliders.size();
-
+    // 1) Clear per-frame collision lists
     for (Collider* c : _Colliders)
         c->_curCollisions.clear();
 
+    _Contacts.clear();
 
-    for (const Contact& contact : _Contacts) {
+    // 2) Broad + narrow phase: build contacts ONLY
+    for (size_t i = 0; i < _Colliders.size(); ++i)
+    {
+        for (size_t j = i + 1; j < _Colliders.size(); ++j)
+        {
+            Collider* a = _Colliders[i];
+            Collider* b = _Colliders[j];
+
+            Manifold m = Collider::GetManifold(a, b);
+            if (!m.hit)
+                continue;
+
+            RegisterContact(a, b, m);
+        }
+    }
+
+    // 3) Resolve contacts
+    for (const Contact& contact : _Contacts)
+    {
         Collider* a = contact.a;
         Collider* b = contact.b;
+        const Manifold& m = contact.m;
 
+        // Simple positional correction (static assumed for now)
+        Transform* ta = a->_parent->_transform.get();
+        Transform* tb = b->_parent->_transform.get();
+
+        // Push A out of B (or vice versa — adjust as needed)
+        ta->Move(m.normal * m.penetration);
+    }
+
+    // 4) Build current collision sets + fire Enter/Stay
+    for (const Contact& contact : _Contacts)
+    {
+        Collider* a = contact.a;
+        Collider* b = contact.b;
         const Manifold& m = contact.m;
 
         a->_curCollisions.push_back(b);
         b->_curCollisions.push_back(a);
 
-
-        // A side
+        // --- A side ---
         if (std::find(a->_prevCollisions.begin(),
             a->_prevCollisions.end(), b)
             == a->_prevCollisions.end())
@@ -48,41 +78,37 @@ void CollisionSystem::Update(float deltaTime)
             a->OnCollisionStay(b, m);
         }
 
-        // B side (normal should be flipped if needed)
+        // --- B side ---
+        Manifold flipped = m;
+        flipped.normal = -flipped.normal;
+
         if (std::find(b->_prevCollisions.begin(),
             b->_prevCollisions.end(), a)
             == b->_prevCollisions.end())
         {
-            Manifold flipped = m;
-            flipped.normal = -flipped.normal;
             b->OnCollisionEnter(a, flipped);
         }
         else
         {
-            Manifold flipped = m;
-            flipped.normal = -flipped.normal;
             b->OnCollisionStay(a, flipped);
         }
-
     }
 
-    // handle / invoke exit event.
-    for (Collider* c : _Colliders) {
-        for (Collider* prev : c->_prevCollisions) {
-            if (std::find(c->_curCollisions.begin(), c->_curCollisions.end(), prev) == c->_curCollisions.end()) {
+    // 5) Fire Exit events
+    for (Collider* c : _Colliders)
+    {
+        for (Collider* prev : c->_prevCollisions)
+        {
+            if (std::find(c->_curCollisions.begin(),
+                c->_curCollisions.end(), prev)
+                == c->_curCollisions.end())
+            {
                 c->OnCollisionExit(prev);
-            }   
+            }
         }
 
         c->_prevCollisions.swap(c->_curCollisions);
     }
-
-
-    ClearContacts();
- 
-   
-
-
 }
 
 void CollisionSystem::ResolveCollisions(GameObject& obj, bool isXAxis) {
@@ -150,31 +176,5 @@ void CollisionSystem::MoveAxis(Transform& transform, Collider* collider, float a
     // Try full move
     transform.Move(isXAxis ? sf::Vector2f{ amount, 0.f }
     : sf::Vector2f{ 0.f, amount });
-
-    for (Collider* other : CollisionSystem::GetColliders())
-    {
-        if (other == collider)//|| other->isTrigger)
-            continue;
-
-        Manifold m = Collider::GetManifold(collider, other);
-        if (!m.hit)
-            continue;
-
-        CollisionSystem::RegisterContact(collider, other, m);
-        // Determine push direction
-        float sign = (amount > 0.f) ? -1.f : 1.f;
-
-        if (isXAxis)
-        {
-
-            transform.Move({ sign * m.penetration, 0.f });
-        }
-        else
-        {
-            transform.Move({ 0.f, sign * m.penetration });
-        }
-        auto rb = collider->_parent->GetComponent<RigidBody>();
-        if (rb) rb->CollisionCancelVelocity(m, other);
-        break;
-    }
+    
 }

@@ -136,9 +136,9 @@ int main()
 #if IN_EDITOR
         DrawGUI(*scene);
 #endif
-        
+     
         scene->Update(deltaTime);
-
+        CollisionSystem::TestExit();
         CollisionSystem::Update(deltaTime);
         window.setView(playerView);
         scene->Draw();

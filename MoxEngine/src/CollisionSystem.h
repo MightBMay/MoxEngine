@@ -51,6 +51,21 @@ public:
         return inst;
     }
 
+
+    static void TestExit() {
+        // handle / invoke exit event.
+        for (Collider* c : _Colliders) {
+            for (Collider* prev : c->_prevCollisions) {
+                if (std::find(c->_curCollisions.begin(), c->_curCollisions.end(), prev) == c->_curCollisions.end()) {
+                    c->OnCollisionExit(prev);
+                }
+            }
+
+            c->_prevCollisions.swap(c->_curCollisions);
+        }
+
+    }
+
     static const std::vector<Collider*> GetColliders() { return _Colliders; }
 
     static void AddCollider(Collider* col);

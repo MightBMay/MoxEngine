@@ -12,6 +12,8 @@ private:
 
 
 public:
+
+	bool IsKinematic = true;
 	void SetVelocity(sf::Vector2f& newV) { _velocity = newV; }
 	void SetVelocity(float x, float y) { _velocity = { x,y }; }
 
@@ -33,18 +35,6 @@ public:
 
 	void CollisionCancelVelocity(const Manifold& m, const Collider* other) {
 		const sf::Vector2f& n = m.normal;
-
-		float vn = _velocity.x * n.x + _velocity.y * n.y;
-		std::cout << "vn: " << vn << "\n";
-
-		// Only cancel if moving into the collision
-		if (vn >= 0.f)
-			return;
-
-		// Remove velocity along the normal
-		sf::Vector2f newVel = _velocity - vn * n;
-
-		SetVelocity(newVel.x, newVel.y);
 
 		if (std::abs(n.x) > std::abs(n.y)) { // find dominant axis.
 

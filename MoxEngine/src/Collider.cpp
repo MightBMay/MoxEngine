@@ -111,7 +111,8 @@ Manifold Collider::BoxVsBoxManifold(const BoxCollider& a, const BoxCollider& b)
 	float overlapX = std::min(aMax.x, bMax.x) - std::max(aMin.x, bMin.x);
 	float overlapY = std::min(aMax.y, bMax.y) - std::max(aMin.y, bMin.y);
 
-	if (overlapX < -EPSILON || overlapY < -EPSILON)
+	std::cout << "X: " << overlapX << ", Y: " << overlapY << "\n";
+	if (overlapX < 0 || overlapY < 0)
 		return {};
 
 	Manifold m;
@@ -119,13 +120,13 @@ Manifold Collider::BoxVsBoxManifold(const BoxCollider& a, const BoxCollider& b)
 
 	if (overlapX < overlapY)
 	{
-		m.penetration = std::max(overlapX, 0.f);
+		m.penetration = overlapX;
 		m.normal = (aMin.x < bMin.x) ? sf::Vector2f{ -1.f, 0.f }
 		: sf::Vector2f{ 1.f, 0.f };
 	}
 	else
 	{
-		m.penetration = std::max(overlapY, 0.f);
+		m.penetration = overlapY;
 		m.normal = (aMin.y < bMin.y) ? sf::Vector2f{ 0.f, -1.f }
 		: sf::Vector2f{ 0.f,  1.f };
 	}

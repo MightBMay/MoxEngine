@@ -26,7 +26,7 @@ using ManifoldFn = Manifold(*)(const Collider&, const Collider&);
 
 struct Collider {
 protected:
-	static const inline  float EPSILON = 1000.f;
+	
 private:
 
 	Event<Manifold, const Collider*> _onCollisionEnter{};
@@ -52,7 +52,7 @@ private:
 
 
 public:
-
+	static const inline  float EPSILON = .1f;
 
 	static Manifold Collide(const Collider& a, const Collider& b);
 
